@@ -75,7 +75,7 @@ is not used in this fleet, and no GPT-6.1 Luna or Astra id is published.
 
 | `model` / effort | When to use |
 |-------------------|-------------|
-| `gpt-6.1-sol` / `medium` | Every agent except `design-expert` (36) — the default for any new agent |
+| `gpt-6.1-sol` / `medium` | Every agent except `design-expert` (37) — the default for any new agent |
 | `gpt-6.1-sol` / `high` | Highest-judgment gate: `design-expert` only |
 
 Valid efforts: the Codex catalog lists `low` through `ultra` for

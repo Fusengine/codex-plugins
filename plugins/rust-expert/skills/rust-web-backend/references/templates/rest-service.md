@@ -8,7 +8,7 @@ priority: medium
 
 # Minimal REST Service (complete)
 
-A single-file service showing the standard stack wired together. Split into modules (`routes/`, `error.rs`, `state.rs`, `db.rs`) once it grows past ~100 lines per file (SOLID).
+A single-file service showing the standard stack wired together. Split into modules (`routes/`, `error.rs`, `state.rs`, `db.rs`) as soon as it holds more than one responsibility (SOLID; only `FUSE_SOLID_MAX_LINES` caps file size).
 
 ## Cargo.toml
 

@@ -102,7 +102,28 @@ Return the following applicable evidence to the lead:
 1. Run `build_sim` with XcodeBuildMCP when available; otherwise run the equivalent `xcodebuild` or `swift build` command — build succeeds.
 2. Run `test_sim` with XcodeBuildMCP when available; otherwise run the equivalent `xcodebuild test` or `swift test` command — all tests pass.
 
+3. **UI changed?** Run the HIG UI Gate below before handing off to the lead's sniper. No `done` while any item is `fail`.
+
 Final acceptance requires **eLicit → challenger → Verify → challenger → sniper**, with all findings resolved and sniper reporting ZERO errors.
+
+### HIG UI Gate (any UI change)
+
+Load the `swiftui-core` HIG references (`hig-accessibility.md`, `hig-rtl.md`, `hig-modality.md`, `hig-system-surfaces.md`, `hig-iphone-duo.md`) for any UI work. Verify with XcodeBuildMCP: `session_show_defaults` → `build_run_sim` on a booted simulator, then capture evidence with `screenshot` / `snapshot_ui`. Procedure and commands: `mcp-tools` → `xcodebuild-mcp-ui-verification.md`. Without XcodeBuildMCP, report the affected items as `not verified` with the reason.
+
+| # | Check | Pass criterion (HIG source) |
+|---|-------|-----------------------------|
+| 1 | Baseline | Light mode, default text size screenshot, no layout errors |
+| 2 | Dynamic Type AX5 | `simctl ui <udid> content_size accessibility-extra-extra-extra-large`: no clipping/overlap, no truncation in scrollable text, rows stacked (/typography) |
+| 3 | Dark mode + Increase Contrast | Text ≥ 4.5:1 (target 7:1 small text); custom colors adapt (/dark-mode, /color) |
+| 4 | VoiceOver labels | `snapshot_ui`: every interactive element labeled, icon-only controls included (/voiceover) |
+| 5 | Hit targets | Frames ≥ 44×44 pt iOS/iPadOS/watchOS, 60 visionOS, 66 tvOS, 28 macOS; below platform minimum = fail (/accessibility) |
+| 6 | RTL | `launch_app_sim` args `-AppleTextDirection YES`: navigation/progress mirrored, logos/checkmarks not (/right-to-left) |
+| 7 | Reduce Motion / Transparency | Custom animations become fades; custom glass/material falls back to opaque (/accessibility, /materials) |
+| 8 | Liquid Glass | No `glassEffect` on content layer, standard bars, sidebars; tint only on primary action (/materials) |
+| 9 | Screen sizes | Compact iPhone + iPad regular (+ iPhone Duo poses if available); no fixed widths (/layout, /designing-for-iphone-duo) |
+| 10 | Modality & order | Sheet Cancel leading / Done trailing; `snapshot_ui` order = sensible VoiceOver order (/sheets, /voiceover) |
+
+Report every item as `pass`, `fail` or `not verified` (with reason, e.g. "ui-automation workflow disabled", "no iPad simulator"). Never `pass` without a screenshot or snapshot proving it.
 
 ## Output Format
 
@@ -110,6 +131,7 @@ Report back to the lead with:
 - **status**: `done` | `failed` | `blocked`
 - **files_changed**: list of modified/created files
 - **verification**: local build/test evidence, including the tool or fallback used, produced for the lead-coordinated gates
+- **hig_gate**: the 10 items above, each `pass` / `fail` / `not verified` + evidence path (screenshot/snapshot) — or `n/a (no UI change)`
 - **remaining_issues**: any known gaps or follow-ups, or `none`
 - **sources_verified**: official Apple docs, Context7, Exa, and optional Apple Docs MCP references consulted (Core Rule)
 '''

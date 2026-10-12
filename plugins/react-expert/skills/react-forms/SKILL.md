@@ -13,7 +13,7 @@ Also covers array/nested fields with dot notation, listeners for side effects (o
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Analyze existing form components and validation patterns
 2. **research-expert** - Verify latest TanStack Form v1 docs via Context7/Exa
@@ -30,7 +30,7 @@ After implementation, run **sniper** for validation.
 → See `../solid-react/SKILL.md` for complete rules
 
 **Key Rules:**
-- Files < 100 lines (split at 90)
+- Source files stay within `FUSE_SOLID_MAX_LINES` (default 200) and split by responsibility when cohesion drops
 - Interfaces in `modules/[feature]/src/interfaces/`
 - JSDoc mandatory on all exports
 - No business logic in components

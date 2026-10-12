@@ -1,11 +1,11 @@
 # Agents
 
-37 specialized Codex agents across all plugins.
+38 specialized Codex agents across all plugins.
 
 ## Model Policy
 
 **Current, since 2026-09-30 (owner decision, verbatim): "okay passe les tous
-en v 6.1".** Every shipped agent runs on `gpt-6.1-sol`: 36 at `medium`, plus
+en v 6.1".** Every shipped agent runs on `gpt-6.1-sol`: 37 at `medium`, plus
 `design-expert` alone at `high` (the sole highest-judgment gate) — the
 2026-09-27 efforts, unchanged. No shipped agent uses `gpt-6-luna`; no GPT-6.1
 Luna or Astra id is published (Codex catalog, 2026-09-30). `gpt-6-astra`
@@ -13,8 +13,9 @@ stays excluded fleet-wide on cost; GPT-6 has no `terra` tier. The
 coordinator (the owner's own Codex session) is not a shipped agent TOML and
 stays outside this policy.
 
-The exact groups (37 total): `gpt-6.1-sol` / `high` (1) — `design-expert`;
-`gpt-6.1-sol` / `medium` (36) — every other agent in the Inventory below.
+The exact groups (38 total): `gpt-6.1-sol` / `high` (1) — `design-expert`;
+`gpt-6.1-sol` / `medium` (37) — every other agent in the Inventory below
+(`skill-creator` joined on 2026-10-12 at the new-agent default).
 New agents default to `gpt-6.1-sol` / `medium`; `high` is reserved for
 `design-expert`, and any other effort needs a new owner decision. Valid
 efforts: the Codex catalog lists `low` through `ultra` (catalog default
@@ -130,7 +131,7 @@ files under `/Users/<username>/.codex/plugins/cache/fusengine-codex/
 
 | Plugin | Agents |
 |--------|--------|
-| `ai-pilot` | `brainstorming`, `explore-codebase`, `research-expert`, `sniper`, `sniper-faster`, `websearch` |
+| `ai-pilot` | `brainstorming`, `challenger`, `commit`, `explore-codebase`, `research-expert`, `skill-creator`, `sniper`, `sniper-faster`, `websearch` |
 | `astro-expert` | `astro-expert` |
 | `cartographer` | `cartographer` |
 | `changelog-watcher` | `changelog-watcher` |
@@ -138,6 +139,7 @@ files under `/Users/<username>/.codex/plugins/cache/fusengine-codex/
 | `design-expert` | `design-expert` |
 | `go-expert` | `go-expert` |
 | `laravel-expert` | `laravel-expert` |
+| `lessons` | `lessons-compactor` |
 | `nextjs-expert` | `nextjs-expert` |
 | `php-expert` | `php-expert` |
 | `prompt-engineer` | `prompt-engineer` |

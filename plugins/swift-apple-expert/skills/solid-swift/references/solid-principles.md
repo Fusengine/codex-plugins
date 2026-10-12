@@ -48,16 +48,18 @@ Sources/
 
 ---
 
-## File Size Limits
+## File Size
 
-| Type | Max Lines | Split At |
-|------|-----------|----------|
-| View | 80 | 60 |
-| ViewModel | 100 | 80 |
-| Service | 100 | 80 |
-| Model | 50 | 40 |
-| Protocol | 30 | 25 |
-| **Any file** | **100** | **90** |
+The only line limit is the hook ceiling (`FUSE_SOLID_MAX_LINES`). Split on responsibility, not on an invented count:
+
+| Type | Split signal |
+|------|--------------|
+| View | Body ~30+ lines: extract subviews |
+| ViewModel | Several roles: split by responsibility |
+| Service | Several domains: split by domain |
+| Model | Nested types pile up: separate them |
+| Protocol | Several roles: split (ISP) |
+| **Any file** | Near/over the hook ceiling: split; report if a fix cannot fit |
 
 ---
 
@@ -73,7 +75,7 @@ Sources/
 
 ## Quick Checklist
 
-- [ ] Files < 100 lines (Views < 80)
+- [ ] One responsibility per file; under the hook ceiling (`FUSE_SOLID_MAX_LINES`)
 - [ ] Protocols in `Features/[Feature]/Protocols/` or `Core/Protocols/`
 - [ ] ViewModels use `@Observable` + `@MainActor`
 - [ ] Dependencies injected via protocols

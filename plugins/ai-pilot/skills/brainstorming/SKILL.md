@@ -4,20 +4,22 @@ description: Use when creating a feature/component or adding functionality. Fire
 ---
 
 <objective>
-Brainstorming runs a design-first, no-code-before-approval process ahead of any non-trivial feature, component, or behavior change: explore project context, consult documentation afresh for this mandate, ask clarifying questions one at a time, diverge to 6-8 approaches via a named technique before converging on 2-3 with a trade-off table, present the design for explicit approval, save it to `docs/plans/`, then hand the resulting current-mandate research record to APEX Analyze.
+Brainstorming runs a design-first, no-code-before-approval process ahead of any non-trivial feature, component, or behavior change: explore project context, consult documentation afresh for this mandate, ask clarifying questions one at a time, diverge to 6-8 approaches via a named technique before converging on 2-3 with a trade-off table, present the design for explicit approval (unless an owner mandate already settled it), save it to `docs/plans/`, then hand the resulting current-mandate research record to APEX Analyze.
 
 Skip it entirely for trivial fixes, typos, or simple renames -- those go straight to APEX.
 </objective>
 
 # Brainstorming Skill
 
-**Design-first approach: no code before design approval.**
+**Design-first approach: no code before design approval (or a settled owner mandate).**
+
+**Authorized mandate:** when the owner has already given a go-ahead or settled the design, skip questions and approval — state assumptions in one line and proceed. Brainstorm and seek approval only for a material unresolved design choice; an owner refinement mid-mandate amends it, it is not a stop.
 
 ---
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY brainstorming session, use `TeamCreate` to spawn agents:
+Before ANY brainstorming session, spawn agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Understand project context, patterns, constraints
 2. **research-expert** - Fetch best practices and documentation
@@ -51,7 +53,7 @@ Gather context before asking questions:
 
 ### Step 2: Ask Clarifying Questions (ONE AT A TIME)
 
-Ask focused questions sequentially. Wait for each answer before the next.
+Ask focused questions sequentially. Wait for each answer before the next (only if no mandate settled the design — see Authorized mandate).
 
 Categories: purpose, constraints, success criteria, users, integrations.
 
@@ -78,7 +80,7 @@ Break design into digestible sections:
 3. Data flow and state management
 4. Edge cases and error handling
 
-**Wait for explicit user approval before proceeding.**
+**Wait for explicit user approval before proceeding, unless the owner's mandate already settled the design.**
 
 ### Step 5: Save Design Document
 
@@ -102,6 +104,7 @@ Hand off to APEX Analyze phase with the approved design as input.
 ## Quick Reference
 
 ```text
+   (Steps 2-4 only when no mandate settled the design — see Authorized mandate)
 1. Explore   → git log, codebase, docs (agents in parallel)
 2. Question  → ONE AT A TIME, wait for answers
 3. Diverge   → 6-8 options (named technique), converge to 2-3 with trade-offs table
@@ -114,8 +117,8 @@ Hand off to APEX Analyze phase with the approved design as input.
 
 ## Critical Rules
 
-1. **NEVER write code before design approval** - Design first, always
-2. **Ask questions ONE AT A TIME** - Never dump a list of 10 questions
-3. **Always propose alternatives** - Minimum 2 approaches with trade-offs
+1. **NEVER write code before design approval** - An owner go-ahead that settles the design counts as approval
+2. **Ask questions ONE AT A TIME** - Never dump a list of 10 questions; none when the mandate settled the design
+3. **Propose alternatives** - Minimum 2 approaches with trade-offs; under a mandate, one line stating the chosen approach
 4. **Save the design doc** - Creates audit trail and shared reference
-5. **Get explicit approval** - "Looks good" or similar before proceeding
+5. **Get explicit approval** - Only for a material unresolved choice; never re-ask what the mandate settled

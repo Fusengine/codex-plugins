@@ -25,7 +25,7 @@ how to change that logic. There is no porting step from these snippets into this
 set -e
 
 FILE_PATH="${1:-}"
-MAX_LINES=100
+MAX_LINES="${FUSE_SOLID_MAX_LINES:-200}"  # the only file-size ceiling
 
 if [ -z "$FILE_PATH" ]; then
     exit 0

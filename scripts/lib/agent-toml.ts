@@ -14,14 +14,15 @@ const SOL_MEDIUM: ModelProfile = { model: "gpt-6.1-sol", effort: "medium" };
 const SOL_HIGH: ModelProfile = { model: "gpt-6.1-sol", effort: "high" };
 
 /**
- * Canonical shipped-agent policy (37 agents, GPT-6.1 fleet, applied
- * 2026-09-30): 36 `gpt-6.1-sol` `medium` + 1 `gpt-6.1-sol` `high`, zero Luna.
+ * Canonical shipped-agent policy (38 agents, GPT-6.1 fleet, applied
+ * 2026-09-30): 37 `gpt-6.1-sol` `medium` + 1 `gpt-6.1-sol` `high`, zero Luna.
+ * 2026-10-12: `skill-creator` added at the new-agent default (`medium`).
  *
  * Owner decision (verbatim, 2026-09-30): "okay passe les tous en v 6.1".
  * Every agent moves from `gpt-6-sol` to `gpt-6.1-sol`; efforts are unchanged.
  *
  * Resulting matrix: `high` is `design-expert` only (1 agent) —
- * one-shot-correctness gate, unchanged. `medium` (36) is every other
+ * one-shot-correctness gate, unchanged. `medium` (37) is every other
  * agent, including `security-expert`, `challenger`, `commit`, and `sniper`.
  *
  * Superseded policies (GPT-5.6 tiers; the 2026-09-23 GPT-6 Sol/Luna split and
@@ -65,6 +66,7 @@ export const AGENT_MODEL_PROFILES: Record<string, ModelProfile> = {
 	"prompt-engineer": SOL_MEDIUM,
 	challenger: SOL_MEDIUM,
 	"security-expert": SOL_MEDIUM,
+	"skill-creator": SOL_MEDIUM,
 	"design-expert": SOL_HIGH,
 };
 

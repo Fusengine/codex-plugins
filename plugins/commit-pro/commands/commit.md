@@ -238,3 +238,12 @@ git tag vX.Y.Z
 ```
 
 Never push that local tag automatically. Print the manual push command for use only after the change reaches its permanent branch.
+
+### Step 9: Release Workflow — watch it to the end (FULL mode only)
+
+The release ends at the registry, not at the tag. Full procedure: `skills/git-flow/references/release-workflow.md`.
+
+1. No `on: push: tags` workflow in `.github/workflows/` (verified, not assumed) → `publish: none`; stop here.
+2. Otherwise find the tag's runs (`gh run list --commit "$(git rev-list -n1 vX.Y.Z)" --event push`, polled ~90s) and `gh run watch <id> --exit-status` each one, never piped.
+3. Failure → `gh run view <id> --log-failed` at once. Flaky (threshold just over, network/registry timeout, runner crash) → `gh run rerun <id> --failed`, max 2 reruns, then escalate. Real defect → stop, never rerun; report run URL, job, step and log lines.
+4. Announce "published" only when the final attempt is fully green (post-publish verify jobs included) **and** the registry serves X.Y.Z (`npm view <pkg> version` or the matching query). Until then: `tagged, publish pending` or `publish failed:<job>`.

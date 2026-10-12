@@ -1,6 +1,6 @@
 {
   "name": "php-expert",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "Expert modern PHP 8.5/8.4 for non-Laravel projects: libraries, Symfony components, Slim, API-first apps, CLI tools, PER Coding Style 3.0, PHPStan, and SOLID principles.",
   "author": {
     "name": "Fusengine",

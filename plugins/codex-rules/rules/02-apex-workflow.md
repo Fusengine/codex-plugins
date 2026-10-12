@@ -1,10 +1,10 @@
 ## APEX Auto-Trigger
 
 **USE APEX:** create, implement, add, build, refactor, migrate, new component, multi-file, architecture changes
-**SKIP APEX:** none — every task runs the full APEX workflow, no exceptions (AGENTS.md l.17)
-**Debug/Investigation:** "why", "not working", "bug", "crash", "doesn't load" → ALWAYS use Analyze (explore-codebase + research-expert + domain-expert)
+**SKIP APEX:** none — every task runs the full APEX workflow, no exceptions (AGENTS.md "Always-on orchestration"); the edit is always made by one delegated agent, never by the lead (sole exception: the 2-failed-delegations rule in `$ai-pilot:lead-orchestration` Follow).
+**Debug/Investigation:** "why", "not working", "bug", "crash", "doesn't load" → ALWAYS use Analyze (explore-codebase + research-expert + domain-expert), never straight to a fix
 
-**Shortcuts:** `/apex-quick` command (fast path — Brainstorm may be skipped; Analyze and sniper eXamine are NEVER skipped) | `--skip-elicit` is IGNORED: no option may skip eLicit, Verify or sniper (AGENTS.md l.50, l.53) — eXamine/sniper itself is NEVER skippable (00-critical-rules)
+**Shortcuts:** `/apex-quick` command (fast path — Brainstorm may be skipped; Analyze and sniper eXamine are NEVER skipped) | `--skip-elicit` is IGNORED: no option may skip eLicit, Verify or sniper (AGENTS.md "Mandatory skill routes": eLicit and sniper routes) — eXamine/sniper itself is NEVER skippable (00-critical-rules)
 
 ## Full APEX Flow
 
@@ -16,7 +16,7 @@ Brainstorm → Analyze → Plan → Execute (TDD) → eLicit → Verify → eXam
 |-------|-------|------|
 | **Brainstorm** | `brainstorming` | New features, major changes. Skip for trivial fixes, bug fixes with clear repro |
 | **Analyze** | explore-codebase + research-expert + domain-expert | Always (parallel trio) |
-| **Plan** | update_plan | Always (files within `FUSE_SOLID_MAX_LINES` (default 200) lines) |
+| **Plan** | update_plan + a written mandate per task (one agent per task: files it owns, expected output, criteria) | Always. Two tasks that must edit the same file are merged or sequenced; files stay within `FUSE_SOLID_MAX_LINES` (default 200) lines |
 | **Execute** | Domain expert + `tdd` | Write test FIRST (RED), then code (GREEN), then refactor |
 | **eLicit** | Elicitation techniques | Expert self-review |
 | **Verify** | `verification` | Run the actual build/tests — a Verify without execution is a guess |

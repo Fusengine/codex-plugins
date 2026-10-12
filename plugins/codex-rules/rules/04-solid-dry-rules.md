@@ -13,10 +13,4 @@
 
 ## DRY (ZERO TOLERANCE)
 
-Before ANY new code: Grep codebase -> check shared locations -> extend/reuse if exists
-
-| Stack | Shared Locations |
-|-------|-----------------|
-| Next.js/React | `modules/cores/lib/`, `modules/cores/components/`, `modules/cores/hooks/` |
-| Laravel | `app/Services/`, `app/Actions/`, `app/Traits/`, `app/Contracts/` |
-| Swift | `Core/Extensions/`, `Core/Utilities/`, `Core/Protocols/` |
+Before ANY new code: grep the codebase, then load the stack's SOLID skill — `$solid:solid-detection` routes to the right `solid-<stack>` (solid-nextjs, solid-react, solid-tanstack-start, solid-astro, solid-swift, solid-php, solid-go, solid-rust, solid-python, solid-java, solid-csharp, solid-ruby, solid-generic), which defines that stack's shared locations; extend/reuse what exists.

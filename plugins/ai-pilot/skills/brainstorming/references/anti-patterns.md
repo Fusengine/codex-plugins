@@ -14,6 +14,8 @@ related: workflow.md
 The most dangerous moment is when you feel confident you already know the answer.
 These anti-rationalizations catch the excuses agents use to skip design.
 
+**Scope:** they apply only while the design is unresolved. When the owner's mandate already settled it ("vas-y", "just do X", an approved design), proceed with assumptions stated in one line — see SKILL.md "Authorized mandate".
+
 ---
 
 ## Core Anti-Rationalizations
@@ -73,7 +75,7 @@ These anti-rationalizations catch the excuses agents use to skip design.
 | "Build a dashboard" | Must work on mobile too |
 | "Add notifications" | Must respect user preferences |
 
-**Rule**: Always verify assumptions. Ask at least 2 clarifying questions.
+**Rule**: With no settled mandate, verify assumptions with at least 2 clarifying questions.
 
 ---
 
@@ -86,7 +88,7 @@ These anti-rationalizations catch the excuses agents use to skip design.
 | Skip design | Ship wrong thing fast, then fix for days |
 | Quick design (10 min) | Ship right thing, move on |
 
-**Rule**: Even under time pressure, ask ONE clarifying question minimum.
+**Rule**: Even under time pressure, with no settled mandate, ask ONE clarifying question minimum.
 
 ---
 
@@ -110,19 +112,19 @@ Watch for these signals that brainstorming is being skipped:
 
 | Red Flag | What It Means | Action |
 |----------|--------------|--------|
-| Jumping to `Edit`/`Write` without questions | Skipping requirements gathering | STOP. Ask questions first |
-| Single approach presented | No alternatives considered | Propose at least 2 options |
+| Jumping to `Edit`/`Write` without questions or mandate | Skipping requirements gathering | STOP. Ask questions first |
+| Single approach presented, no mandate | No alternatives considered | Propose at least 2 options |
 | No design doc saved | No audit trail | Save to `docs/plans/` |
 | "This is straightforward" in reasoning | Rationalization detected | Challenge the assumption |
-| User says "just do X" | May still need clarification | Ask 1-2 questions to confirm |
-| Large feature, zero questions asked | Requirements assumed, not gathered | Full brainstorming needed |
-| Code written before approval | Design step skipped | Revert and brainstorm |
+| User says "just do X" | Mandate given | Proceed; state assumptions in one line |
+| Large feature, zero questions asked, no mandate | Requirements assumed, not gathered | Full brainstorming needed |
+| Code written before approval or mandate | Design step skipped | Revert and brainstorm |
 
 ---
 
 ## Self-Check Checklist
 
-Before transitioning to APEX, verify:
+Before transitioning to APEX, verify (a settled mandate satisfies the questions, alternatives and approval items):
 
 - [ ] At least 2 clarifying questions were asked and answered
 - [ ] At least 2 alternative approaches were presented
@@ -138,4 +140,4 @@ Before transitioning to APEX, verify:
 > **The cost of asking one more question is near zero.
 > The cost of building the wrong thing is enormous.**
 
-When in doubt, ask. When confident, still ask.
+When the design is unresolved, ask. When the mandate settled it, proceed.

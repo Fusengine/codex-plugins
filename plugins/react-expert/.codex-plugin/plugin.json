@@ -1,6 +1,6 @@
 {
   "name": "react-expert",
-  "version": "1.0.36",
+  "version": "1.0.37",
   "description": "Expert React latest stable with hooks, TanStack Router, Zustand, React Hook Form, Testing Library, shadcn/ui, and SOLID principles",
   "author": {
     "name": "Fusengine",

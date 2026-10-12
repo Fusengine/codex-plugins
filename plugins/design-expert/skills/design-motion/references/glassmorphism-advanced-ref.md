@@ -7,7 +7,7 @@ description: Use when creating frosted glass effects, transparent overlays, or m
 
 ## Agent Workflow (MANDATORY)
 
-Before implementation, use `TeamCreate` to spawn 3 agents:
+Before implementation, spawn 2 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Check existing glass patterns
 2. **research-expert** - Latest backdrop-filter support

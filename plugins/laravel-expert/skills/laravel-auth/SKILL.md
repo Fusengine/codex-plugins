@@ -17,7 +17,7 @@ authorization via policies).
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Check existing auth setup, guards, policies
 2. **research-expert** - Verify latest Laravel 13 auth docs via Context7

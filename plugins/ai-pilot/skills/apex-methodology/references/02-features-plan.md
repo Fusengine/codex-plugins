@@ -57,18 +57,17 @@ Use update_plan to track status (in_progress/completed).
 
 ### Size Estimation Rules
 
-| Estimated Lines | Action |
+| Estimated Size | Action |
 | --- | --- |
-| < 50 | Single file OK |
-| 50-80 | Monitor during implementation |
-| 80-100 | Plan split points NOW |
-| above `FUSE_SOLID_MAX_LINES` (default 200) | MUST split before starting |
+| Well within `FUSE_SOLID_MAX_LINES` | Single file OK |
+| Approaching `FUSE_SOLID_MAX_LINES` | Plan split points NOW |
+| Over `FUSE_SOLID_MAX_LINES` (default 200) | MUST split before starting |
 
 ### Split Strategy
 
 ```text
 Large feature → Split into:
-├── main.[ext] (orchestration, <80 lines)
+├── main.[ext] (orchestration only)
 ├── types.[ext] (interfaces, types)
 ├── validators.[ext] (validation logic)
 ├── utils.[ext] (helper functions)

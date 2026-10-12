@@ -1,7 +1,7 @@
 # .cartographer (v1.1.9)
 
 ├── agents/
-│   └── [laravel-expert](./agents/laravel-expert.md) — Expert Laravel 12 PHP backend. Use when: composer.
+│   └── [laravel-expert](./agents/index.md) — Expert Laravel 12 PHP backend. Use when: composer.
 ├── skills/
 │   ├── [fusecore](./skills/fusecore/index.md) — FuseCore Modular Architecture - Laravel 12 modular monolith with auto-discovery,
 │   ├── [laravel-api](./skills/laravel-api/index.md) — Build RESTful APIs with Laravel using API Resources, Sanctum authentication, rat
@@ -18,5 +18,5 @@
 │   ├── [laravel-stripe-connect](./skills/laravel-stripe-connect/index.md) — Build marketplaces and platforms with Stripe Connect. Use when implementing mult
 │   ├── [laravel-testing](./skills/laravel-testing/index.md) — Write tests with Pest 3/PHPUnit, feature tests, unit tests, mocking, fakes, and 
 │   ├── [laravel-vite](./skills/laravel-vite/index.md) — Complete Vite bundling for Laravel - assets, HMR, SSR, frameworks, optimization.
-│   └── [solid-php](./skills/solid-php/index.md) — SOLID principles for Laravel 12 and PHP 8.5. Files < 100 lines, interfaces separ
+│   └── [solid-php](./skills/solid-php/index.md) — SOLID principles for Laravel 12 and PHP 8.5. Files within FUSE_SOLID_MAX_LINES, interfaces separ
 └── hooks: PostToolUse, PreToolUse

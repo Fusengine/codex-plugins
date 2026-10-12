@@ -61,7 +61,7 @@ Component plan:
 ### Split Strategy
 
 ```text
-If component > 90 lines:
+If the component approaches `FUSE_SOLID_MAX_LINES`:
 1. Extract sub-components
 2. Extract animation variants
 3. Extract utility functions

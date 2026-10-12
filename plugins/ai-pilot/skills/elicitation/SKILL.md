@@ -111,7 +111,7 @@ Analyze → Plan → Execute → [eLicit] → challenger → Verify → challeng
 | 70-89% | 🟡 | Document and escalate gaps, then proceed to challenger |
 | < 70% | 🔴 | Iterate and refresh evidence before challenger |
 
-**Self-correction failure**: If a self-correction breaks the code, safely restore only that correction, retain the finding, and escalate it. Never use destructive Git or disturb unrelated work.
+**Self-correction failure**: If a self-correction breaks the code, safely revert only that correction, keep the finding as an unresolved report item, and escalate it. Never use destructive Git or disturb unrelated work.
 
 ---
 

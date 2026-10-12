@@ -15,7 +15,7 @@ Partial hydration architecture: zero JS by default, selective interactivity via 
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Analyze existing components and hydration patterns
 2. **research-expert** - Verify latest Islands docs via Context7/Exa

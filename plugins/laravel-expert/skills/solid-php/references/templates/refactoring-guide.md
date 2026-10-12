@@ -153,7 +153,7 @@ class UserService
 
 | Step | Action | Verify |
 |------|--------|--------|
-| 1 | Extract validation to FormRequest | Controller < 50 lines |
+| 1 | Extract validation to FormRequest | Controller does HTTP only |
 | 2 | Extract logic to Service | No business rules in Controller |
 | 3 | Extract queries to Repository | No Eloquent in Service |
 | 4 | Create DTOs | No array params |
@@ -163,16 +163,18 @@ class UserService
 
 ---
 
-## File Size After Refactoring
+## Split Strategy After Refactoring
 
-| Component | Target Lines | If Exceeded |
-|-----------|-------------|-------------|
-| Controller | < 50 | Extract to Service |
-| Service | < 100 | Split into Actions |
-| Repository | < 100 | Split by entity |
-| Action | < 50 | Single responsibility |
-| DTO | < 50 | One per use case |
-| FormRequest | < 50 | Complex? Use Rules |
+Every file stays within `FUSE_SOLID_MAX_LINES` (default 200); split by responsibility, not by line count.
+
+| Component | When it grows or mixes concerns |
+|-----------|---------------------------------|
+| Controller | Extract to Service |
+| Service | Split into Actions |
+| Repository | Split by entity |
+| Action | Single responsibility |
+| DTO | One per use case |
+| FormRequest | Complex? Use Rules |
 
 ---
 

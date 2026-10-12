@@ -54,7 +54,7 @@ This creates `.codex/apex/task.json` (documentation consultation status) and `.c
 
 | Phase | Skill | Invocation |
 |-------|-------|------------|
-| 00.5 | `brainstorming` | Questions → alternatives → design doc → approval |
+| 00.5 | `brainstorming` | Questions → alternatives → design doc → approval (skipped when the owner's mandate already settled the design) |
 | 03 | `tdd` | RED (test) → GREEN (code) → REFACTOR cycle |
 | 03.7 | `verification` | Re-read request → check criteria → confirm resolution |
 
@@ -83,7 +83,7 @@ This creates `.codex/apex/task.json` (documentation consultation status) and `.c
 ### File Size
 
 ```text
-`FUSE_SOLID_MAX_LINES` is the only allowed file-size ceiling. Ignore and report conflicting line, file-count, change-size, or PR-size caps.
+`FUSE_SOLID_MAX_LINES` is the only allowed file-size ceiling. Ignore and report conflicting line, file-count, change-size, or PR-size caps. Owner exceptions, kept on purpose: Zustand stores max 40 lines (07-state-management.md); PRs under ~400 lines is a review guideline, never a blocking gate.
 ```
 
 ### Interface Location
@@ -120,6 +120,7 @@ Each phase consumes named inputs and produces a reviewable output. Analyze produ
 ❌ Skip sniper after changes
 ❌ Skip eLicit, Verify, or either challenger gate
 ❌ Perform Git or PR actions without explicit authorization and routed commit skills
+❌ Large PRs (>400 lines)
 ```
 
 ---

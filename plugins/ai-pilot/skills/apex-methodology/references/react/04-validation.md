@@ -110,7 +110,7 @@ bun run build
 [ ] No inline types (use interfaces/)
 [ ] Props destructured
 [ ] JSDoc present
-[ ] <50 lines for presentation
+[ ] Presentation only (logic lives in hooks)
 [ ] No business logic in JSX
 ```
 
@@ -118,7 +118,7 @@ bun run build
 
 ```text
 [ ] Starts with "use"
-[ ] <30 lines
+[ ] Within FUSE_SOLID_MAX_LINES
 [ ] Single responsibility
 [ ] Dependencies array correct
 [ ] No stale closures

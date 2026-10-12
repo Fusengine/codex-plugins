@@ -7,20 +7,20 @@ applies-to: "**/*.astro"
 
 ## The Rule
 
-**Split files at 90 lines. Never exceed 100 lines.**
+**Source files stay within `FUSE_SOLID_MAX_LINES` (default 200). Split by responsibility when cohesion drops.**
 
-This is not a stylistic preference — it enforces Single Responsibility and prevents "god components."
+This is not a stylistic preference — it enforces Single Responsibility and prevents "god components." The hook's ceiling is the only size authority.
 
-## Limits by File Type
+## Split Strategy by File Type
 
-| File Type | Warning | Hard Limit | Action at Limit |
-|-----------|---------|------------|-----------------|
-| Page (`.astro` in `pages/`) | 40 lines | 50 | Extract components |
-| Layout component | 70 lines | 80 | Extract sections |
-| UI component | 50 lines | 60 | Split into sub-components |
-| Service / utility | 70 lines | 80 | Extract helper functions |
-| Content schema | 40 lines | 50 | Split into sub-schemas |
-| Interface file | 40 lines | 50 | Split by domain |
+| File Type | Action when cohesion drops |
+|-----------|----------------------------|
+| Page (`.astro` in `pages/`) | Extract components |
+| Layout component | Extract sections |
+| UI component | Split into sub-components |
+| Service / utility | Extract helper functions |
+| Content schema | Split into sub-schemas |
+| Interface file | Split by domain |
 
 ## How to Split a Page
 
@@ -30,7 +30,7 @@ This is not a stylistic preference — it enforces Single Responsibility and pre
 
 <!-- GOOD: Page as composition of focused components -->
 ---
-// src/pages/index.astro — 30 lines max
+// src/pages/index.astro — composition only
 import HeroSection from '../components/home/HeroSection.astro';
 import FeaturesGrid from '../components/home/FeaturesGrid.astro';
 import TestimonialsSlider from '../components/home/TestimonialsSlider.astro';
@@ -55,15 +55,15 @@ const { features, testimonials } = await getHomeData();
 // BAD: src/lib/blog.ts — 120 lines
 
 // GOOD: Split by responsibility
-// src/lib/blog/queries.ts    — database/API queries (< 80 lines)
-// src/lib/blog/transforms.ts — data transformation (< 80 lines)
-// src/lib/blog/index.ts      — public API re-exports (< 30 lines)
+// src/lib/blog/queries.ts    — database/API queries
+// src/lib/blog/transforms.ts — data transformation
+// src/lib/blog/index.ts      — public API re-exports
 ```
 
 ## Automated Check
 
 ```bash
-# Check files exceeding 90 lines
+# Check files exceeding the hook ceiling (FUSE_SOLID_MAX_LINES, default 200)
 find src -name "*.astro" -o -name "*.ts" -o -name "*.tsx" \
-  | xargs wc -l | awk '$1 > 90 {print $0}' | grep -v total
+  | xargs wc -l | awk -v max="${FUSE_SOLID_MAX_LINES:-200}" '$1 > max {print $0}' | grep -v total
 ```

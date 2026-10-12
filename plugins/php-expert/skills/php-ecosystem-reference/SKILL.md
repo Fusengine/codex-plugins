@@ -26,7 +26,7 @@ For actual implementation:
 
 ## Agent Workflow (MANDATORY)
 
-Before relying on any detail here, use `TeamCreate` to spawn 2 agents:
+Before relying on any detail here, spawn 2 agents in parallel, one `spawn_agent` call each:
 
 1. **research-expert** - Verify current versions/APIs on symfony.com, api-platform.com, slimframework.com
 2. **explore-codebase** - Detect which of these are already in composer.json

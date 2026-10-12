@@ -1,10 +1,10 @@
 ---
 name: solid-java
-description: "Use when writing or refactoring Java code, structuring modules/[feature]/ layers, or defining interfaces/ contracts (SOLID, files < 100 lines)."
+description: "Use when writing or refactoring Java code, structuring modules/[feature]/ layers, or defining interfaces/ contracts (SOLID, files within FUSE_SOLID_MAX_LINES)."
 ---
 
 <objective>
-SOLID Java enforces a modular architecture for Java 25+ (current LTS): every feature lives under `modules/[feature]/` (controllers, services, repositories, interfaces, models/DTOs) with shared code in `modules/core/`, interfaces live only in `modules/[feature]/interfaces/`, controllers stay under 50 lines and delegate to services, records are used for DTOs and sealed types for restricted hierarchies, and every public method carries Javadoc.
+SOLID Java enforces a modular architecture for Java 25+ (current LTS): every feature lives under `modules/[feature]/` (controllers, services, repositories, interfaces, models/DTOs) with shared code in `modules/core/`, interfaces live only in `modules/[feature]/interfaces/`, controllers stay thin and delegate to services, with files within `FUSE_SOLID_MAX_LINES` (default 200), records are used for DTOs and sealed types for restricted hierarchies, and every public method carries Javadoc.
 
 Before writing any new code it requires a DRY check against `modules/core/services` and `modules/core/interfaces`. See `solid-principles.md` for the overview, the per-principle references for SRP/OCP/LSP/ISP/DIP detail, and the templates for module/service/interface/repository/error/test scaffolding.
 </objective>
@@ -13,7 +13,7 @@ Before writing any new code it requires a DRY check against `modules/core/servic
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Analyze existing architecture
 2. **research-expert** - Verify Java docs via Context7
@@ -33,14 +33,14 @@ Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 ## Architecture (Modules MANDATORY)
 
-| Layer | Location | Max Lines |
-|-------|----------|-----------|
-| Controllers | `modules/[feature]/controllers/` | 50 |
-| Services | `modules/[feature]/services/` | 100 |
-| Repositories | `modules/[feature]/repositories/` | 100 |
-| Interfaces | `modules/[feature]/interfaces/` | 30 |
-| Models/DTOs | `modules/[feature]/models/` | 50 |
-| Shared | `modules/core/{services,interfaces,models}/` | - |
+| Layer | Location |
+|-------|----------|
+| Controllers | `modules/[feature]/controllers/` |
+| Services | `modules/[feature]/services/` |
+| Repositories | `modules/[feature]/repositories/` |
+| Interfaces | `modules/[feature]/interfaces/` |
+| Models/DTOs | `modules/[feature]/models/` |
+| Shared | `modules/core/{services,interfaces,models}/` |
 
 **NEVER use flat `src/` structure - always `modules/[feature]/`**
 
@@ -50,8 +50,8 @@ Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 | Rule | Value |
 |------|-------|
-| File limit | 100 lines (split at 90) |
-| Controllers | < 50 lines, delegate to services |
+| File limit | `FUSE_SOLID_MAX_LINES` (default 200) |
+| Controllers | Thin, delegate to services |
 | Interfaces | `modules/[feature]/interfaces/` ONLY |
 | Javadoc | Every public method documented |
 | Records | Use for DTOs (Java 16+) |
@@ -90,7 +90,7 @@ Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 | Anti-Pattern | Fix |
 |--------------|-----|
-| Files > 100 lines | Split at 90 |
+| Files over `FUSE_SOLID_MAX_LINES` (default 200) | Split by responsibility |
 | Interfaces in impl files | Move to `interfaces/` directory |
 | `new ConcreteClass()` in services | Use dependency injection |
 | Flat `src/` structure | Use `modules/[feature]/` |

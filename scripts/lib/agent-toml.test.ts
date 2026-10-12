@@ -11,7 +11,7 @@ const SOL_MEDIUM = [
 	"sniper-faster", "websearch", "cartographer", "commit-detector", "seo-images", "seo-sitemap",
 	"brainstorming", "solid-orchestrator", "commit", "explore-codebase", "research-expert", "changelog-watcher",
 	"lessons-compactor", "seo-expert", "seo-content", "seo-geo", "seo-local", "seo-cluster", "seo-technical",
-	"seo-schema", "sniper", "prompt-engineer", "challenger", "security-expert",
+	"seo-schema", "sniper", "prompt-engineer", "challenger", "security-expert", "skill-creator",
 ];
 const SOL_HIGH = ["design-expert"];
 
@@ -59,18 +59,18 @@ function shippedAgentConfigs(): Map<string, Record<string, unknown>> {
 	return configs;
 }
 
-test("ships the exact 37-agent model and reasoning-effort matrix", () => {
+test("ships the exact 38-agent model and reasoning-effort matrix", () => {
 	const configs = shippedAgentConfigs();
 
-	expect(configs.size).toBe(37);
+	expect(configs.size).toBe(38);
 	expect([...configs.keys()].sort()).toEqual(Object.keys(EXPECTED_PROFILES).sort());
 	for (const [name, [model, effort]] of Object.entries(EXPECTED_PROFILES)) {
 		expect(configs.get(name)?.model).toBe(model);
 		expect(configs.get(name)?.model_reasoning_effort).toBe(effort);
 	}
 
-	expect(SOL_MEDIUM).toHaveLength(36);
-	expect(new Set(SOL_MEDIUM).size).toBe(36);
+	expect(SOL_MEDIUM).toHaveLength(37);
+	expect(new Set(SOL_MEDIUM).size).toBe(37);
 	expect([...configs.values()].filter((config) => String(config.model) !== "gpt-6.1-sol")).toEqual([]);
 	expect(SOL_HIGH).toHaveLength(1);
 });

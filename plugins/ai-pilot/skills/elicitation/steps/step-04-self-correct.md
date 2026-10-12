@@ -78,9 +78,9 @@ function login(email: string, password: string) {
 
 #### For SOLID Issues (ARCH-01)
 ```typescript
-// Finding: File >100 LoC
+// Finding: File over FUSE_SOLID_MAX_LINES, mixing responsibilities
 // Action: Split into focused files
-// utils.ts (120 lines) →
+// utils.ts (240 lines) →
 //   utils/validation.ts (40 lines)
 //   utils/formatting.ts (35 lines)
 //   utils/index.ts (10 lines - barrel)

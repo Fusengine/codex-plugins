@@ -17,6 +17,7 @@ description: ASCII flow diagram of the full APEX workflow, start to finish
               ┌───────────────┐
               │ 00.5-brain-   │ ← brainstorming skill (NEW)
               │ storm         │   questions → design → approval
+              │               │   (skipped when the owner's mandate already settled the design)
               └───────┬───────┘
                       │
                       ▼

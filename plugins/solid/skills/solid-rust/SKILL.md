@@ -1,6 +1,6 @@
 ---
 name: solid-rust
-description: "Use when writing or refactoring Rust code, structuring src/modules/[feature]/ layers, or defining traits.rs interfaces (SOLID, files < 100 lines)."
+description: "Use when writing or refactoring Rust code, structuring src/modules/[feature]/ layers, or defining traits.rs interfaces (SOLID, files within FUSE_SOLID_MAX_LINES)."
 ---
 
 <objective>
@@ -13,7 +13,7 @@ Before writing any new code it requires a DRY check against `src/core/services` 
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Analyze existing architecture
 2. **research-expert** - Verify Rust docs via Context7
@@ -33,14 +33,14 @@ Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 ## Architecture (Modules MANDATORY)
 
-| Layer | Location | Max Lines |
-|-------|----------|-----------|
-| Handlers | `src/modules/[feature]/handlers.rs` | 50 |
-| Services | `src/modules/[feature]/services.rs` | 100 |
-| Repositories | `src/modules/[feature]/repository.rs` | 100 |
-| Traits | `src/modules/[feature]/traits.rs` | 30 |
-| Models | `src/modules/[feature]/models.rs` | 50 |
-| Shared | `src/core/{services,traits,models}/` | - |
+| Layer | Location |
+|-------|----------|
+| Handlers | `src/modules/[feature]/handlers.rs` |
+| Services | `src/modules/[feature]/services.rs` |
+| Repositories | `src/modules/[feature]/repository.rs` |
+| Traits | `src/modules/[feature]/traits.rs` |
+| Models | `src/modules/[feature]/models.rs` |
+| Shared | `src/core/{services,traits,models}/` |
 
 **NEVER use flat `src/` structure - always `src/modules/[feature]/`**
 
@@ -50,8 +50,8 @@ Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 | Rule | Value |
 |------|-------|
-| File limit | 100 lines (split at 90) |
-| Handlers | < 50 lines, delegate to services |
+| File limit | `FUSE_SOLID_MAX_LINES` (default 200) |
+| Handlers | Thin, delegate to services |
 | Traits | `traits.rs` or `src/core/traits/` ONLY |
 | Rustdoc | `///` on every public item |
 | Error handling | Use `thiserror` for custom errors |
@@ -90,7 +90,7 @@ Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 | Anti-Pattern | Fix |
 |--------------|-----|
-| Files > 100 lines | Split at 90 |
+| Files over `FUSE_SOLID_MAX_LINES` (default 200) | Split by responsibility |
 | Traits in impl files | Move to `traits.rs` |
 | `Box<dyn Any>` | Use proper trait bounds |
 | Flat `src/` structure | Use `src/modules/[feature]/` |

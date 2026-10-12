@@ -4,7 +4,7 @@ description: Use when organizing TanStack Start code, splitting oversized routes
 ---
 
 <objective>
-Applies SOLID principles and clean architecture to TanStack Start v1.168.58 projects: files under 100 lines (with per-type budgets — route components < 50, server functions < 40, hooks < 30), types declared only in src/interfaces/ (never inline in a route or component file), JSDoc on every export, and a modular directory structure built around the Start route tree.
+Applies SOLID principles and clean architecture to TanStack Start v1.168.58 projects: source files within `FUSE_SOLID_MAX_LINES` (default 200) and split by responsibility when cohesion drops, types declared only in src/interfaces/ (never inline in a route or component file), JSDoc on every export, and a modular directory structure built around the Start route tree.
 
 Establishes the isomorphic/server-only boundary as an architectural concern: DB access, secrets, and filesystem work must sit behind createServerFn or createServerOnlyFn, never inside a bare loader.
 
@@ -40,10 +40,10 @@ the server/client boundary explicit.
 
 ## Absolute Rules (MANDATORY)
 
-### 1. Files < 100 lines
+### 1. Source-file size ceiling
 
-Split at 90. Per-type limits in `references/single-responsibility.md`
-(route components < 50, server functions < 40, hooks < 30).
+Source files must not exceed `FUSE_SOLID_MAX_LINES` (default 200) - the hook's ceiling is the only authority.
+Split by responsibility when cohesion drops; see `references/single-responsibility.md`.
 
 ### 2. NEVER edit `src/routeTree.gen.ts`
 
@@ -87,7 +87,7 @@ See `start-execution-model` for the full boundary model.
 ## SOLID Principles (Detailed Guides)
 
 1. **`references/single-responsibility.md`** — Load when a route/server function
-   grows past its limit; line budgets + split strategy for Start files.
+   mixes responsibilities; size ceiling + split strategy for Start files.
 2. **`references/interface-segregation.md`** — Load when designing route loader
    data, server-function payloads, or router context; keep them focused.
 3. **`references/dependency-inversion.md`** — Load when a server function calls a
@@ -102,12 +102,14 @@ See `references/solid-principles.md` for the overview and
 
 Ready-to-copy code in `references/templates/`:
 
-| Template | Usage | Max Lines |
-|----------|-------|-----------|
-| `route.md` | `createFileRoute` component + loader | 50 |
-| `server-fn.md` | `createServerFn` with Zod validator | 40 |
-| `interface.md` | TypeScript interfaces in `src/interfaces/` | - |
-| `hook.md` | Client hook wrapping a server function | 30 |
+| Template | Usage |
+|----------|-------|
+| `route.md` | `createFileRoute` component + loader |
+| `server-fn.md` | `createServerFn` with Zod validator |
+| `interface.md` | TypeScript interfaces in `src/interfaces/` |
+| `hook.md` | Client hook wrapping a server function |
+
+Every template stays within `FUSE_SOLID_MAX_LINES` (default 200).
 
 ---
 
@@ -117,6 +119,6 @@ Ready-to-copy code in `references/templates/`:
 - Types declared inside route/component files.
 - DB / secrets / filesystem in a bare loader (→ `createServerFn`).
 - Module importing another feature module (except `cores/`).
-- Files > 100 lines, missing JSDoc on exports, `any` type.
+- Source files exceeding `FUSE_SOLID_MAX_LINES` (default 200), missing JSDoc on exports, `any` type.
 - Barrel exports (`index.ts` re-exports).
 - Coding without checking current docs (Context7 + Exa) first.

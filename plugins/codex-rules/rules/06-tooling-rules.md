@@ -29,7 +29,7 @@ ALL docs in `docs/` folder - NEVER outside except root `README.md`
 
 ## Git & GitHub Flow (ZERO TOLERANCE)
 
-**Commit tool**: the lead follows AGENTS.md L.54's route (`$commit-pro:commit` + `git-flow`); execution is delegated to agent `commit` (`plugins/ai-pilot/agents/commit.toml`), which loads those skills and runs Steps 0-8 end to end. NEVER `git commit` directly, never hand-roll the flow yourself.
+**Commit tool**: the lead follows the AGENTS.md commit route (`$commit-pro:commit` + `git-flow`); execution is delegated to agent `commit` (`plugins/ai-pilot/agents/commit.toml`), which loads those skills and runs Steps 0-8 end to end. NEVER `git commit` directly, never hand-roll the flow yourself. External executors (Kimi/Claude/Cursor) never push/PR/merge/tag/publish — release goes through agent `commit` only.
 
 **Branch enforcement**:
 - `main`, `master`, `develop`, `production` → **protected**, no direct commits

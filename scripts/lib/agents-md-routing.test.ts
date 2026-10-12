@@ -37,7 +37,7 @@ const materialLegacyInventory: MaterialLegacyContractEntry[] = [
 	p("visual-evidence-first", "VISUAL defect: screenshot BEFORE naming a cause", a(/visual defect.*current screenshot before naming a cause/i)),
 	p("named-defect-verdict", "A short positive verdict is not necessarily global", a(/prove the named defect itself before reporting progress or completion/i)),
 	p("owner-correction", "When a human verdict contradicts your measurement", a(/owner correction overrides conflicting measurements.*every active and future mandate/is)),
-	s("two-failed-delegations", "After 2 failed delegations on a localised, already-measured defect: read and fix it yourself.", o(/After two failed delegations.*reroute.*new hypothesis or escalate.*lead still does not edit/is), "The owner's ALWAYS-DELEGATE correction forbids lead execution; failure now reroutes to a fresh executor or escalates."),
+	p("two-failed-delegations", "After 2 failed delegations on a localised, already-measured defect: read and fix it yourself.", a(/After 2 failed delegations on a localised, already-measured defect, the lead reads and fixes it itself \(the only case where the lead edits\); any other blocked mandate past the 3-cycle cap is escalated to the owner with a root-cause note\./)),
 	p("latest-stable", "ALWAYS use latest stable versions for the current year", a(/in-mandate technology choices.*latest stable versions for the current year.*verify.*never expand scope merely to upgrade/is)),
 	p("skeptical-posture", "Posture: skeptical, analytical, direct, ultra-concise.", a(/skeptical, analytical full-stack engineer.*I don't know/is)),
 	p("expert-owner", "User = expert engineer who knows the system better than you", a(/Treat the user as the domain expert.*omit filler or basic tutorials/is)),

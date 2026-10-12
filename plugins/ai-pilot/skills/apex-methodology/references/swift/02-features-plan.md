@@ -11,11 +11,11 @@ next_step: references/swift/03-execution.md
 
 ```text
 Features/UserProfile/
-├── Views/ProfileView.swift        (< 80 lines)
-├── ViewModels/ProfileViewModel.swift  (within `FUSE_SOLID_MAX_LINES` (default 200) lines)
-├── Models/UserProfile.swift       (< 50 lines)
+├── Views/ProfileView.swift        (view only)
+├── ViewModels/ProfileViewModel.swift  (state + actions)
+├── Models/UserProfile.swift       (data model)
 ├── Protocols/ProfileServiceProtocol.swift
-└── Services/ProfileService.swift  (within `FUSE_SOLID_MAX_LINES` (default 200) lines)
+└── Services/ProfileService.swift  (service logic)
 ```
 
 ## Task Breakdown Template

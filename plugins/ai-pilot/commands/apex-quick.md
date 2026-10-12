@@ -11,7 +11,7 @@ Fast-track workflow for simple bug fixes, typos, and minor changes. Same phases,
 
 ## When to Use
 
-The shortcut removes only Brainstorm and the multi-task Plan breakdown — Analyze (explore-codebase + research-expert + domain expert), delegated Execute (domain experts, disjoint file lots), eLicit, Verify, challenger, and full sniper eXamine always run in full, exactly as in full APEX.
+The shortcut removes only Brainstorm and the multi-task Plan breakdown — Analyze (explore-codebase + research-expert + domain expert), delegated Execute (domain experts, disjoint file lots), eLicit, Verify, challenger, and full sniper eXamine always run in full, exactly as in full APEX. The lead spawns ONE domain-expert agent that makes the edit; the main session never edits inline, even a one-line fix (sole exception: the 2-failed-delegations rule in `$ai-pilot:lead-orchestration` Follow).
 
 ✅ **Use APEX Quick:** bounded fixes, typos, minor UI or config changes, documentation updates, and simple refactors.
 
@@ -57,10 +57,14 @@ PLAN — the lead records ONE `update_plan` entry (files, owner expert, acceptan
 ### Step 2: EXECUTE
 
 ```
+The lead spawns ONE domain-expert agent that makes the edit; the main
+session never edits inline, even a one-line fix (sole exception: the
+2-failed-delegations rule in `$ai-pilot:lead-orchestration` Follow).
 Delegated to domain experts on disjoint file lots, per
 `$ai-pilot:lead-orchestration`. That canonical skill governs dependency-based
 writer allocation, exclusive ownership, mandate and report fields, research
-freshness, lifecycle, convergence, and escalation. The lead does not edit.
+freshness, lifecycle, convergence, and escalation. The lead does not edit (sole exception:
+the 2-failed-delegations rule in `$ai-pilot:lead-orchestration` Follow).
 Executors preserve existing style and avoid refactoring scope creep.
 ```
 

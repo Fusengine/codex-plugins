@@ -47,19 +47,19 @@ next_step: references/react/03-execution.md
 
 ### React Component Limits
 
-| Estimated Lines | Action |
+| Estimated Size | Action |
 | --- | --- |
-| < 50 | Single component OK |
-| 50-80 | Consider extracting logic to hook |
-| 80-100 | MUST split (hook + component) |
-| above `FUSE_SOLID_MAX_LINES` (default 200) | Split into multiple components |
+| Well within `FUSE_SOLID_MAX_LINES` | Single component OK |
+| Logic mixed into JSX | Extract logic to a hook |
+| Approaching `FUSE_SOLID_MAX_LINES` | MUST split (hook + component) |
+| Over `FUSE_SOLID_MAX_LINES` (default 200) | Split into multiple components |
 
 ### Split Strategy
 
 ```text
 Large feature -> Split into:
-├── [Name].tsx           (presentation, <50 lines)
-├── use[Name].ts         (logic hook, <30 lines)
+├── [Name].tsx           (presentation)
+├── use[Name].ts         (logic hook)
 ├── [Name].interface.ts  (types)
 ├── [Name]Item.tsx       (child component if needed)
 └── [Name].test.tsx      (tests)

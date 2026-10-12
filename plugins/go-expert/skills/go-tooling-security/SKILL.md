@@ -16,7 +16,7 @@ audits in other ecosystems.
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY tooling/security change, use `TeamCreate` to spawn 3 agents:
+Before ANY tooling/security change, spawn 3 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Find existing go.mod/go.work, `.golangci.yml`, CI files
 2. **research-expert** - Verify latest golangci-lint v2 + govulncheck docs via Context7/Exa

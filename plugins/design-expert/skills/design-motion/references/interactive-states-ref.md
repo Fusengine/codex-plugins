@@ -7,7 +7,7 @@ description: Use when implementing button states, form field states, or interact
 
 ## Agent Workflow (MANDATORY)
 
-Before implementation, use `TeamCreate` to spawn 3 agents:
+Before implementation, spawn 2 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Check existing state patterns
 2. **research-expert** - Framer Motion state animations

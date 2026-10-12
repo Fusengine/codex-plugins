@@ -4,7 +4,7 @@ description: Use when creating new skills, restructuring existing skills, or imp
 ---
 
 <objective>
-Skill Creator scaffolds a complete `SKILL.md` + `references/` structure following the project's skill conventions: conceptual references (WHY + WHEN, max 150 lines each) separated from copy-paste-ready templates. It covers four flows -- creating a brand-new skill, restructuring one that doesn't follow the pattern, improving a skill missing references or with outdated content, and adapting an existing skill to a different framework -- each ending with registration in the owning agent's frontmatter and marketplace.json, then a `sniper` validation pass.
+Skill Creator scaffolds a complete `SKILL.md` + `references/` structure following the project's skill conventions: conceptual references (WHY + WHEN, each within `FUSE_SOLID_MAX_LINES`) separated from copy-paste-ready templates. It covers four flows -- creating a brand-new skill, restructuring one that doesn't follow the pattern, improving a skill missing references or with outdated content, and adapting an existing skill to a different framework -- each ending with registration (the plugin manifest loads `"skills": "./skills/"`; the owning agent `.toml` gets a `[[skills.config]]` entry), then a `sniper` validation pass.
 
 It generates the skill's structural and documentation content only, not the skill's substantive technical guidance -- that must come from `research-expert` + `explore-codebase` findings gathered before writing.
 </objective>
@@ -13,7 +13,7 @@ It generates the skill's structural and documentation content only, not the skil
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY skill creation, use `TeamCreate` to spawn 3 agents:
+Before ANY skill creation, spawn 3 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Check existing skills, analyze structure
 2. **research-expert** - Fetch latest official documentation online
@@ -38,9 +38,9 @@ After creation, run **sniper** for validation.
 
 1. **ALL content in English** - Never French or other languages
 2. **SKILL.md is descriptive** - Guides agent to references/templates
-3. **References are conceptual** - WHY + WHEN, max 150 lines
+3. **References are conceptual** - WHY + WHEN; keep every file within `FUSE_SOLID_MAX_LINES`
 4. **Templates are complete** - Copy-paste ready code
-5. **Register in agent + marketplace.json** - Or skill won't load
+5. **Register** - Folder under `skills/` (manifest loads `"skills": "./skills/"`) + `[[skills.config]]` entry in the owning agent `.toml`, or the agent won't load it
 6. **Run sniper after creation** - Validate all files
 
 ---
@@ -89,7 +89,7 @@ skills/<skill-name>/
 
 ### Create New Skill
 
-```bash
+```text
 # 1. Research documentation
 → research-expert + context7/exa
 
@@ -102,7 +102,7 @@ mkdir -p plugins/<agent>/skills/<name>/references/templates
 → references/templates/*.md (code)
 
 # 4. Register
-→ agent frontmatter + marketplace.json
+→ [[skills.config]] entry in the owning agent .toml (manifest already loads ./skills/)
 
 # 5. Validate
 → sniper
@@ -110,7 +110,7 @@ mkdir -p plugins/<agent>/skills/<name>/references/templates
 
 ### Improve Existing Skill
 
-```bash
+```text
 # 1. Analyze
 → explore-codebase
 
@@ -133,9 +133,9 @@ mkdir -p plugins/<agent>/skills/<name>/references/templates
 - [ ] All references listed in frontmatter
 - [ ] Agent Workflow section present
 - [ ] Reference Guide has Concepts + Templates tables
-- [ ] References < 150 lines each
+- [ ] Every file within `FUSE_SOLID_MAX_LINES`
 - [ ] Templates have complete, working code
-- [ ] Registered in agent + marketplace.json
+- [ ] `[[skills.config]]` entry in the owning agent `.toml`; manifest has `"skills": "./skills/"`
 
 ---
 
@@ -151,6 +151,6 @@ mkdir -p plugins/<agent>/skills/<name>/references/templates
 ### DON'T
 - Write in French (English only)
 - Copy-paste raw documentation
-- Exceed 150 lines in references
+- Exceed `FUSE_SOLID_MAX_LINES` in any generated file
 - Forget registration step
 - Skip sniper validation

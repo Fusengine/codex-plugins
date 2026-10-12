@@ -1,5 +1,5 @@
 ---
-description: "APEX workflow shadcn/ui expert - 8 phases mandatory: load skills, detect primitive (Base UI vs Radix vs React Aria), analyze components, plan tasks (<100 lines), consult MCP (shadcn + Context7), implement with correct API, self-review via elicitation, sniper validation. NEVER skip detection. NEVER mix bases."
+description: "APEX workflow shadcn/ui expert - 8 phases mandatory: load skills, detect primitive (Base UI vs Radix vs React Aria), analyze components, plan tasks (files within FUSE_SOLID_MAX_LINES), consult MCP (shadcn + Context7), implement with correct API, self-review via elicitation, sniper validation. NEVER skip detection. NEVER mix bases."
 next_step: "shadcn-rules"
 ---
 
@@ -12,7 +12,7 @@ next_step: "shadcn-rules"
 | **A** | 00-load-skills | Read required shadcn skills FIRST |
 | **A** | 01-detect-primitive | Run detection (Base UI vs Radix vs React Aria) |
 | **A** | 02-analyze-components | `explore-codebase` → component inventory |
-| **P** | 03-plan-changes | `update_plan` (whole-plan REPLACE, one `in_progress` at a time) + file planning (<100 lines) |
+| **P** | 03-plan-changes | `update_plan` (whole-plan REPLACE, one `in_progress` at a time) + file planning (files within `FUSE_SOLID_MAX_LINES`) |
 | **E** | 04-consult-mcp | ALWAYS query shadcn MCP + Context7 |
 | **E** | 05-implement | Apply changes based on detected primitive |
 | **E** | 06-validate-patterns | Verify correct API for detected primitive |

@@ -4,7 +4,7 @@ description: Use when committing, branching, opening PRs, or deciding merge/bran
 ---
 
 <objective>
-Covers Git workflow strategy end to end: the GitHub Flow (default) vs trunk-based vs Git Flow tradeoff table, the branch naming convention (`<type>/<scope-or-summary>`, kebab-case, <50 chars, no personal prefix), protected-branch enforcement (main/master/develop/production never committed to directly, auto-named feature branch proposed instead), the full branch lifecycle (create → work → push → PR → review → merge → delete), merge strategy (real merge commit is commit-pro's default; rebase vs squash tradeoffs — squash is unused here because it would orphan the release tag's target commit), the CI-gate-before-merge decision tree (three cases by whether required checks are configured, including the `gh pr checks` registration-race workaround), post-merge tag timing, the PR description template, anti-patterns, and solo-dev mode.
+Covers Git workflow strategy end to end: the GitHub Flow (default) vs trunk-based vs Git Flow tradeoff table, the branch naming convention (`<type>/<scope-or-summary>`, kebab-case, <50 chars, no personal prefix), protected-branch enforcement (main/master/develop/production never committed to directly, auto-named feature branch proposed instead), the full branch lifecycle (create → work → push → PR → review → merge → delete), merge strategy (real merge commit is commit-pro's default; rebase vs squash tradeoffs — squash is unused here because it would orphan the release tag's target commit), the CI-gate-before-merge decision tree (three cases by whether required checks are configured, including the `gh pr checks` registration-race workaround), post-merge tag timing, the post-tag release-workflow watch (published only when the registry serves the version), the PR description template, anti-patterns, and solo-dev mode.
 </objective>
 
 # Git Flow Best Practices (2026)
@@ -80,14 +80,14 @@ Format: `<type>/<scope-or-summary>` (kebab-case).
 
 **Known race condition** ([cli/cli#7401](https://github.com/cli/cli/issues/7401), confirmed by GitHub CLI maintainers): checks take a few seconds to register on a freshly-created PR. Calling `gh pr checks --watch` immediately after `gh pr create` can error out — exit code 1, `no checks reported on the '<branch>' branch` — even though checks are about to appear. The GitHub API gives no way to tell "genuinely zero checks" apart from "not registered yet," so the client must either sidestep the race (native auto-merge) or poll for registration before watching.
 
-Determine which of the three cases applies from what actually exists on the PR — never from assumption. The key branch point is **whether the repo enforces *required* status checks in branch protection**, not merely whether auto-merge is available: `gh pr merge --auto` only ever waits for *required* checks. On a repo where checks run but aren't marked required (e.g. this repo — CodeQL + Analyze execute but aren't required), `--auto` merges **immediately without waiting**, silently reproducing the exact race this section exists to close. Check first with `gh pr checks <pr> --required` (empty output / `no required checks reported on the '<branch>' branch` → no required checks configured) before picking a branch:
+Determine which of the three cases applies from what actually exists on the PR — never from assumption. The key branch point is **whether the repo enforces *required* status checks in branch protection**, not merely whether auto-merge is available: `gh pr merge --auto` only ever waits for *required* checks. On a repo where checks run but aren't marked required (e.g. CodeQL/Analyze execute but aren't required), `--auto` merges **immediately without waiting**, silently reproducing the exact race this section exists to close. Check first with `gh pr checks <pr> --required` (empty output / `no required checks reported on the '<branch>' branch` → no required checks configured) before picking a branch:
 
 1. **Repo has required status checks in branch protection** → the only case where `--auto` actually gates. GitHub waits server-side for the *required* checks to appear and pass — no race, regardless of their state at call time:
    ```bash
    gh pr merge <pr> --auto --merge --delete-branch
    ```
    Also requires "Allow auto-merge" enabled in repo Settings → General (otherwise `GraphQL: Auto merge is not allowed for this repository`).
-2. **Repo has checks but none are required** (this repo's current state — CodeQL/Analyze run but aren't required) — `--auto` would merge immediately without waiting, so don't use it here. Poll client-side until checks register, then watch: don't `--watch` right after `gh pr create`/a push. Poll `gh pr checks` until it stops reporting "no checks reported" (bounded retries), THEN watch. The poll's pipe to `grep` only detects check registration — it never gates the merge, which still runs un-piped via `&&`:
+2. **Repo has checks but none are required** (e.g. CodeQL/Analyze run but aren't required) — `--auto` would merge immediately without waiting, so don't use it here. Poll client-side until checks register, then watch: don't `--watch` right after `gh pr create`/a push. Poll `gh pr checks` until it stops reporting "no checks reported" (bounded retries), THEN watch. The poll's pipe to `grep` only detects check registration — it never gates the merge, which still runs un-piped via `&&`:
    ```bash
    pr=<pr>
    max_attempts=18   # 18 × 5s ≈ 90s — raise if this repo's CI is known to queue slower
@@ -103,7 +103,7 @@ Determine which of the three cases applies from what actually exists on the PR �
    gh pr checks "$pr" --watch && gh pr merge "$pr" --merge --delete-branch
    ```
    **Never pipe** the final `gh pr checks <pr> --watch` call itself (e.g. `| tail`): a pipe swallows the exit code and lets a merge proceed after failing CI. Chain with `&&` so the merge only runs if checks passed.
-3. **Repo has zero CI checks (verified, not assumed — e.g. no `.github/workflows/*` and the poll above timed out)** → immediate merge is allowed:
+3. **Repo has zero CI checks (verified, not assumed — e.g. no `.github/workflows/*` and the poll above timed out; the codex-plugins repo itself has no `.github/`, so this case applies there)** → immediate merge is allowed:
    ```bash
    gh pr merge <pr> --merge --delete-branch
    ```
@@ -115,6 +115,16 @@ Determine which of the three cases applies from what actually exists on the PR �
 Merge is always `--merge` (real merge commit) — **never `--squash`**, it would orphan the release tag's target (see Tagging timing below).
 
 **Tagging timing**: never push the tag before the merge is validated — CI could still fail or branch protection could still block the merge, and a tag pushed early would point at a commit that never lands on `main`. Tag `vX.Y.Z` on `main` AFTER the merge completes, then push the tag (`commit` does this automatically in Step 8 — see also `commands/commit.md` Step 8 and `post-commit/references/tag-timing.md`).
+
+## After the Tag — Release Workflow
+
+Pushing the tag is not the end of a release: a tag-triggered workflow (e.g. `Publish` to npm) must be watched to the end, reruns included. Full procedure: `commands/commit.md` **Step 9** and `references/release-workflow.md`. In short:
+
+- No `on: push: tags` workflow in `.github/workflows/` (verified) → `publish: none`, nothing to watch.
+- Find the runs: `gh run list --commit "$(git rev-list -n1 vX.Y.Z)" --event push` (poll ~90s, they register late), then `gh run watch <id> --exit-status` each — never piped.
+- Failure → read `gh run view <id> --log-failed` at once and classify. **Flaky** (timing/perf threshold just over, network/registry timeout, runner crash) → `gh run rerun <id> --failed`, max 2 reruns then escalate. **Real defect** (compile/type/lint, deterministic test, auth, same failure twice) → stop and report the cause.
+- Say **"published" only** when the final attempt is fully green (post-publish verification jobs included) **and** the registry serves the version (`npm view <pkg> version` == X.Y.Z, or the matching registry query).
+- The release runs only through the `commit` agent launched by the lead — never through a code delegate or an external executor: they write code, not releases.
 
 ## After Merge
 
