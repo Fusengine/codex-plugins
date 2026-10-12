@@ -13,7 +13,7 @@ Also covers the adapters' `staticHeaders` option (formerly `experimentalStaticHe
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Analyze existing security config, adapters, headers
 2. **research-expert** - Verify latest Astro 7 CSP docs via Context7/Exa

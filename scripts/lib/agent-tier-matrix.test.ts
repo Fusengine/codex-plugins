@@ -7,7 +7,7 @@
  * the wrong revert until the owner did.
  *
  * Three checks: (a) every `plugins/*\/agents/*.toml` on disk sums to the
- * exact 1/36 tier counts with no agent outside those two buckets (GPT-6
+ * exact 1/37 tier counts with no agent outside those two buckets (GPT-6
  * fleet, Sol only since 2026-09-27 — the 18 Luna/medium agents of the
  * 2026-09-23 matrix moved to Sol/medium, see `agent-toml.ts`'s JSDoc for
  * the owner decision; the overridden benchmark is in docs/workflow/agents.md
@@ -56,7 +56,7 @@ function shippedProfiles(): Map<string, ShippedProfile> {
  * Frozen v1.0.50 baseline: Sol/high was `design-expert` + `security-expert`.
  * Every other agent's baseline is asserted "as today" because this lock only
  * needs to catch a divergence from that specific floor, not reproduce full
- * historical group membership for every one of the 37 agents.
+ * historical group membership for every one of the 38 agents.
  */
 function baselineV1_0_50(): Record<string, ShippedProfile> {
 	return Object.fromEntries(
@@ -67,7 +67,7 @@ function baselineV1_0_50(): Record<string, ShippedProfile> {
 	);
 }
 
-test("shipped agent TOMLs match the exact 1/36 tier matrix", () => {
+test("shipped agent TOMLs match the exact 1/37 tier matrix", () => {
 	const profiles = shippedProfiles();
 	const byTier: Record<string, string[]> = { "gpt-6.1-sol|high": [], "gpt-6.1-sol|medium": [] };
 	const outsideMatrix: string[] = [];
@@ -78,7 +78,7 @@ test("shipped agent TOMLs match the exact 1/36 tier matrix", () => {
 	}
 
 	expect(byTier["gpt-6.1-sol|high"]!.sort()).toEqual([...SOL_HIGH_NAMES].sort());
-	expect(byTier["gpt-6.1-sol|medium"]).toHaveLength(36);
+	expect(byTier["gpt-6.1-sol|medium"]).toHaveLength(37);
 	expect(outsideMatrix).toEqual([]);
 });
 

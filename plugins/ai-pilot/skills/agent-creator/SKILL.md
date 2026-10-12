@@ -95,7 +95,7 @@ Choose the tier explicitly — never a bare `gpt-6`/`gpt-6.1` alias. Full ration
 
 | Profile | Use for | Reasoning effort |
 |---------|---------|-------------------|
-| `gpt-6.1-sol` | Every agent except `design-expert` (36) — the default for any new agent | `medium` |
+| `gpt-6.1-sol` | Every agent except `design-expert` (37) — the default for any new agent | `medium` |
 | `gpt-6.1-sol` | Highest-judgment gate (`design-expert` only) | `high` |
 
 Valid efforts: the Codex catalog lists `low` through `ultra` for `gpt-6.1-sol` — this fleet uses only Sol medium (plus `design-expert` at Sol high); any other model or effort needs a new owner decision. Prices per 1M tokens (input/cached/output, standard ≤272K input, developers.openai.com/api/docs/pricing): `gpt-6.1-sol` $2.00/$0.10/$10.00.

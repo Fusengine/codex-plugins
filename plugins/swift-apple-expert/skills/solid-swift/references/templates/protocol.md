@@ -10,7 +10,7 @@ keywords: protocol, contract, interface, template, Swift, Sendable
 
 ## Rules
 
-- Protocols < 30 lines
+- One contract per protocol; under the hook ceiling (`FUSE_SOLID_MAX_LINES`)
 - Location: `Features/[Feature]/Protocols/`
 - Shared protocols: `Core/Protocols/`
 - Always mark `: Sendable` for async protocols

@@ -13,7 +13,7 @@ Documents the `components.json` schema (style, Tailwind config paths, aliases) a
 
 ## Agent Workflow (MANDATORY)
 
-Before registry configuration, use `TeamCreate`:
+Before registry configuration, spawn agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Find existing components.json
 2. **research-expert** - Verify latest CLI options via Context7

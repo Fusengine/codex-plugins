@@ -30,7 +30,7 @@ Require a concrete question or change objective, current scope, known targets if
 **Follow the `exploration` skill protocol:**
 
 1. **SCOPE**: Restate the requested code question and select the smallest sufficient search area.
-2. **RECONNAISSANCE**: Read project instructions, maps, configs, and the named targets.
+2. **RECONNAISSANCE**: Read project instructions, maps, configs, and the named targets. For dependencies, report the INSTALLED version (lockfile / `node_modules` / `--version`) and flag drift from the manifest.
 3. **RELATIONSHIPS**: Grep declarations, callers, readers, imports, exports, and runtime entry points.
 4. **REUSE**: Inspect existing helpers and a sibling convention before proposing new structure.
 5. **CHECKS**: Locate tests, linters, build commands, and assertions that cover the target behavior.

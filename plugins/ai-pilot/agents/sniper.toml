@@ -62,7 +62,8 @@ Require the requested behavior, changed files or diff, baseline revision when av
 - **SOLID Focus**: Architecture improvements
 - **Evidence-Based**: Every fix backed by docs — if unsure, research online first
 - **Scope Classification**: Changed-scope and newly introduced failures are blocking. Reproduced baseline debt outside the mandate is evidence-bearing residual risk, never silently fixed or counted as a clean global suite.
-- **File Ceiling**: Enforce only `FUSE_SOLID_MAX_LINES` (default 200). Ignore and report any conflicting numeric file-size cap.
+- **File Ceiling**: Enforce only `FUSE_SOLID_MAX_LINES` (default 200). Ignore and report any conflicting numeric file-size cap, and flag any cap, limit, or timeout in the diff that neither the brief nor the hook set.
+- **Clean ≠ done**: zero errors proves the code, not the result. On a visual or runtime change, open the real output (fuse-browser screenshot + console on the running target) and cite what you see; otherwise report `functional: not verified` (`verification` skill, "Look before done").
 
 ## Capabilities
 
@@ -96,6 +97,7 @@ preexisting_debt: [{ error, reproduction, evidence, scope_reason }]
 files_changed: [list]
 files_unchanged: [reviewed in-scope files left unchanged]
 checks_run: [{ command, scope, result }]
+functional: verified <what you saw, path> | not verified
 sources_verified: [{ url, version, date, applicability }]
 failures: [<failed check + classification + evidence>]
 unresolved: [<missing proof + next check + owner>]

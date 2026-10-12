@@ -108,25 +108,31 @@ normalized plugin name.
 
 | Folder | Manifest name | Version | Description |
 |---|---|---|---|
-| `ai-pilot` | `ai-pilot` | 1.2.24 | APEX workflow, sniper, research-expert, explore-codebase, websearch |
-| `astro-expert` | `astro-expert` | 1.0.6 | Astro 6: Islands, Content Layer, Actions, Server Islands |
-| `cartographer` | `cartographer` | 1.0.6 | Auto-generated plugin and project maps |
-| `changelog-watcher` | `changelog-watcher` | 1.0.7 | Codex CLI changelog watcher and breaking-change detection |
-| `codex-rules` | `codex-rules` | 1.0.7 | Global APEX / SOLID / DRY rules injection |
-| `commit-pro` | `commit-pro` | 1.2.16 | Conventional commits, security check, version bump, tag, push |
-| `core-guards` | `core-guards` | 1.1.26 | Pre-tool-use safety, SOLID enforcement hooks, statusline |
-| `design-expert` | `design-expert` | 2.1.23 | UI designer 7-phase pipeline, OKLCH tokens, Gemini Design MCP |
-| `laravel-expert` | `laravel-expert` | 1.2.0 | Laravel 12, Eloquent, Livewire, Reverb, Stripe |
-| `memory-neural` | `memory-neural` | 1.0.0 | Persistent neural memory with Graphiti and Qdrant |
-| `nextjs-expert` | `nextjs-expert` | 1.1.16 | Next.js 16, RSC, Server Actions, Prisma 7, Better Auth |
-| `prompt-engineer` | `prompt-engineer` | 1.1.6 | Prompt and agent design, A/B testing, guardrails |
-| `react-expert` | `react-expert` | 1.0.13 | React 19, TanStack Router, Zustand, Testing Library |
-| `security-expert` | `security-expert` | 1.0.11 | OWASP Top 10, CVE research, dependency audit, security headers |
-| `seo` | `seo` | 1.0.2 | SEO / SEA / GEO 2026, AI Overviews, structured data |
-| `shadcn-expert` | `shadcn-expert` | 1.0.10 | shadcn/ui, Radix, Base UI, theming, registries |
-| `solid` | `solid` | 1.0.10 | Multi-language SOLID orchestrator |
-| `swift-apple-expert` | `swift-apple-expert` | 1.1.12 | Swift 6.2 and SwiftUI for all Apple platforms |
-| `tailwindcss` | `tailwindcss` | 1.1.3 | Tailwind v4.1, Oxide engine, OKLCH, container queries |
+| `ai-pilot` | `ai-pilot` | 1.2.58 | APEX workflow, sniper, research-expert, explore-codebase, websearch |
+| `astro-expert` | `astro-expert` | 1.0.22 | Astro 7: Islands, Content Layer, Actions, Server Islands |
+| `cartographer` | `cartographer` | 1.0.24 | Auto-generated plugin and project maps |
+| `changelog-watcher` | `changelog-watcher` | 1.0.26 | Codex CLI changelog watcher and breaking-change detection |
+| `codex-rules` | `codex-rules` | 1.0.35 | Global APEX / SOLID / DRY rules injection |
+| `commit-pro` | `commit-pro` | 1.2.35 | Conventional commits, security check, version bump, tag, push |
+| `core-guards` | `core-guards` | 1.1.55 | Pre-tool-use safety, SOLID enforcement hooks, statusline |
+| `design-expert` | `design-expert` | 2.1.49 | Design director for web, web apps, iOS and Android; OKLCH tokens, Gemini Design MCP |
+| `go-expert` | `go-expert` | 1.0.19 | Go 1.27: idioms, concurrency, backend services, golangci-lint v2, govulncheck |
+| `laravel-expert` | `laravel-expert` | 1.2.23 | Laravel 13, PHP 8.5, Eloquent, Livewire, Reverb, AI SDK, Stripe |
+| `lessons` | `lessons` | 1.0.9 | Project memory hooks for never-reproduce lessons in MEMORY/LESSON.md |
+| `memory-neural` | `memory-neural` | 1.0.10 | Persistent neural memory with Graphiti and Qdrant |
+| `nextjs-expert` | `nextjs-expert` | 1.1.39 | Next.js 16, React 19.3, RSC, Server Actions, Prisma 7, Better Auth |
+| `php-expert` | `php-expert` | 1.0.19 | PHP 8.5 for non-Laravel projects: Symfony components, PER-CS 3.1, PHPStan, Pest |
+| `prompt-engineer` | `prompt-engineer` | 1.1.21 | Prompt and agent design, A/B testing, guardrails |
+| `react-expert` | `react-expert` | 1.0.35 | React 19.3, TanStack Router, Zustand, Testing Library, shadcn/ui |
+| `rust-expert` | `rust-expert` | 1.0.19 | Rust 1.98, 2024 edition, async/tokio, axum, cargo tooling |
+| `security-expert` | `security-expert` | 1.0.29 | OWASP Top 10, CVE research, dependency audit, security headers |
+| `seo` | `seo` | 1.0.23 | SEO / SEA / GEO 2026, AI Overviews, structured data |
+| `shadcn-expert` | `shadcn-expert` | 1.0.32 | shadcn/ui with Base UI (default), Radix and React Aria; theming, registries |
+| `solid` | `solid` | 1.0.29 | Multi-language SOLID orchestrator |
+| `swift-apple-expert` | `swift-apple-expert` | 1.1.35 | Swift 6.4 and SwiftUI for iOS 27 and all Apple platforms |
+| `tailwindcss` | `tailwindcss` | 1.1.25 | Tailwind v4.3, Oxide engine, OKLCH, container queries |
+| `tanstack-start-expert` | `tanstack-start-expert` | 1.0.19 | TanStack Start: file-based routing, server functions, selective SSR, Nitro |
+| `typescript-expert` | `typescript-expert` | 1.0.19 | TypeScript 7 for CLIs, libraries and backends on Node or Bun |
 
 ## Codex CLI Conventions
 

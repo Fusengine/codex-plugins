@@ -1,7 +1,7 @@
 ---
 name: single-responsibility
 applies-to: "**/*.php"
-description: SRP Guide - When and how to split files, line limits for Laravel 13
+description: SRP Guide - When and how to split files, size ceiling for Laravel 13
 when-to-use: file too long, controller doing too much, fat models, refactoring
 keywords: single responsibility, SRP, splitting, lines, controller, service
 priority: high
@@ -18,29 +18,20 @@ related: decision-guide.md, templates/code-templates.md, templates/controller-te
 
 ### Symptoms of Violation
 
-1. **Class exceeds 90 lines** -> Trigger a split
+1. **Class approaches `FUSE_SOLID_MAX_LINES` (default 200)** -> Split by responsibility
 2. **Controller has business logic** -> Extract to Service
 3. **Model has queries AND business logic** -> Split
 4. **Service handles validation + logic + notifications** -> Extract each
 
-### Line Limits by Type
+### Size Ceiling
 
-| File Type | Max Lines | Split Threshold |
-|-----------|-----------|-----------------|
-| Controller | 50 | 40 |
-| FormRequest | 50 | 40 |
-| Action | 50 | 40 |
-| Service | 100 | 90 |
-| Repository | 100 | 90 |
-| Model | 80 (excl. relations) | 70 |
-| DTO | 50 | 40 |
-| Policy | 50 | 40 |
+All file types (Controller, FormRequest, Action, Service, Repository, Model, DTO, Policy) use `FUSE_SOLID_MAX_LINES` (default 200) as the only size ceiling. Split by responsibility when cohesion drops.
 
 ---
 
 ## How to Split? - MODULAR PATHS (FuseCore MANDATORY)
 
-When file approaches limit, split using FuseCore modular structure:
+When a file mixes responsibilities, split using FuseCore modular structure:
 
 ```
 FuseCore/[Module]/App/
@@ -74,11 +65,11 @@ UserController -> Validation, CRUD, Email, Report
 
 After (in `FuseCore/User/App/`):
 ```
-Http/Controllers/UserController.php    -> HTTP only (< 50 lines)
-Http/Requests/StoreUserRequest.php     -> Validation (< 50 lines)
-Services/UserService.php               -> Business logic (< 100 lines)
-Repositories/EloquentUserRepository.php -> Data access (< 100 lines)
-DTOs/CreateUserDTO.php                 -> Data structure (< 50 lines)
+Http/Controllers/UserController.php    -> HTTP only
+Http/Requests/StoreUserRequest.php     -> Validation
+Services/UserService.php               -> Business logic
+Repositories/EloquentUserRepository.php -> Data access
+DTOs/CreateUserDTO.php                 -> Data structure
 Events/UserCreated.php                 -> Domain event
 ```
 
@@ -115,10 +106,11 @@ Events/UserCreated.php                 -> Domain event
 
 ## SRP Checklist
 
-- [ ] Controllers < 50 lines (HTTP only)
-- [ ] Services < 100 lines (logic only)
-- [ ] Repositories < 100 lines (queries only)
-- [ ] Models < 80 lines (relations + casts only)
+- [ ] Every file within `FUSE_SOLID_MAX_LINES` (default 200)
+- [ ] Controllers: HTTP only
+- [ ] Services: logic only
+- [ ] Repositories: queries only
+- [ ] Models: relations + casts only
 - [ ] Interfaces in `FuseCore/[Module]/App/Contracts/` only
 - [ ] Validation in FormRequests only
 - [ ] No business logic in Controllers

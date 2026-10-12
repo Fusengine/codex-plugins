@@ -11,7 +11,7 @@ A step-by-step migration guide between Radix UI and Base UI primitives for shadc
 
 ## Agent Workflow (MANDATORY)
 
-Before migration, use `TeamCreate` to spawn agents:
+Before migration, spawn agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Inventory all affected components
 2. **research-expert** - Verify migration patterns via Context7

@@ -58,7 +58,7 @@ return new class extends Migration
 
 ---
 
-### Model Template (< 80 lines)
+### Model Template
 
 ```php
 <?php
@@ -184,7 +184,7 @@ final readonly class PostService
 
 ---
 
-### Controller Template (< 50 lines)
+### Controller Template (thin)
 
 ```php
 <?php

@@ -7,7 +7,7 @@ description: Use when creating hero sections, landing pages, or premium visual e
 
 ## Agent Workflow (MANDATORY)
 
-Before implementation, use `TeamCreate` to spawn 3 agents:
+Before implementation, spawn 2 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Check existing background patterns
 2. **research-expert** - CSS filter and blend modes

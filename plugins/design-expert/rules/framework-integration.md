@@ -22,7 +22,7 @@ After generating UI with Gemini Design, ALWAYS delegate to framework expert.
 2. Check project framework (next.config.*, package.json, etc.)
    ↓
 3. Launch framework expert Task for:
-   - SOLID validation (file size < 100 lines, interfaces location)
+   - SOLID validation (file size within `FUSE_SOLID_MAX_LINES`; interfaces location)
    - Framework patterns (App Router, Server Components, hooks)
    - Integration (Better Auth, Prisma, TanStack Form)
    ↓

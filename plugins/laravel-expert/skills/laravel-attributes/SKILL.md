@@ -18,7 +18,7 @@ Factories/Test seeding (#[UseModel], #[Seed], #[Seeder]).
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Scan existing models/jobs/controllers for legacy `protected $fillable / $hidden / $connection` properties to convert
 2. **research-expert** - Verify Laravel 13 release notes for attribute coverage and edge cases

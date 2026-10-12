@@ -79,7 +79,7 @@ function Dashboard() {
 
 ### Rule 4: Component Sectioning
 ```typescript
-// ❌ VIOLATION: Monolithic component (150+ lines)
+// ❌ VIOLATION: Monolithic component (over FUSE_SOLID_MAX_LINES)
 function Dashboard() {
   // 50 lines of state/effects
   // 100 lines of JSX with header, sidebar, content, footer

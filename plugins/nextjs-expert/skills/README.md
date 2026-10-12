@@ -8,15 +8,15 @@ Documentation and conventions for nextjs-expert plugin skills.
 
 | Pattern | Size | Structure |
 |---------|------|-----------|
-| **Standalone** | < 150 lines | Everything in SKILL.md |
-| **Light Hub** | 150-500 lines | SKILL.md + references/ |
-| **Full Hub** | > 500 lines | SKILL.md index + tree |
+| **Standalone** | Small topic | Everything in SKILL.md |
+| **Light Hub** | Several sub-topics | SKILL.md + references/ |
+| **Full Hub** | Large documentation set | SKILL.md index + tree |
 
 ### Standard Structure (Light Hub)
 
 ```
 skill-name/
-├── SKILL.md                    # Index + Quick Start (< 150 lines)
+├── SKILL.md                    # Index + Quick Start
 └── references/
     ├── patterns.md             # Code patterns
     ├── examples.md             # Advanced examples
@@ -38,17 +38,17 @@ skill-name/
 
 ## Available Skills
 
-### Standalone Skills (< 150 lines)
+### Standalone Skills
 - `nextjs-stack` - Stack orchestrator
 
-### Light Hub Skills (150-500 lines)
+### Light Hub Skills
 - `nextjs-shadcn` - shadcn/ui components
 - `nextjs-zustand` - State management
 - `nextjs-tanstack-form` - Forms with Server Actions
 - `nextjs-i18n` - Internationalization
 - `solid-nextjs` - SOLID architecture
 
-### Full Hub Skills (> 500 lines)
+### Full Hub Skills
 - `better-auth` - Authentication (145 files)
 - `nextjs-16` - Next.js documentation (376 files)
 - `prisma-7` - Prisma ORM (415 files)
@@ -100,7 +100,7 @@ references:
 ## Best Practices
 
 ### SKILL.md
-1. **< 150 lines** - Keep it concise
+1. **Concise index** - Keep it focused; details go to references/
 2. **Quick Start first** - Installation, basic config
 3. **Essential examples** - One complete example
 4. **Links to references/** - For details
@@ -112,7 +112,7 @@ references:
 
 ### Large documentation
 1. **Split by theme** - One file per concept
-2. **Max 500 lines/file** - Respect SOLID
+2. **Keep each file within `FUSE_SOLID_MAX_LINES`** (default 200) - Respect SOLID
 3. **Clear index** - Easy navigation in SKILL.md
 
 ---
@@ -122,5 +122,5 @@ references:
 1. Identify skill type (standalone/light hub/full hub)
 2. Create appropriate folder structure
 3. Write SKILL.md with complete frontmatter
-4. Extract patterns to references/ if > 150 lines
+4. Extract patterns to references/ when SKILL.md grows beyond an index
 5. Add references in frontmatter

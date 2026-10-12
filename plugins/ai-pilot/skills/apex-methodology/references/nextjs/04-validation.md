@@ -211,7 +211,7 @@ find src -name "*.tsx" -o -name "*.ts" | xargs wc -l | sort -n
 ### Split Strategy
 
 ```text
-If file > 90 lines:
+If a file approaches `FUSE_SOLID_MAX_LINES`:
 main.tsx           # Core logic
 utils.ts           # Helper functions
 types.ts           # Interfaces (move to src/interfaces/)

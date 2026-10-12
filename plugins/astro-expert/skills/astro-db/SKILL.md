@@ -17,7 +17,7 @@ Type-safe SQL database built into Astro, powered by libSQL/Turso. Use for struct
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Check existing db/config.ts, tables, and Actions
 2. **research-expert** - Verify Astro DB API via Context7/Exa

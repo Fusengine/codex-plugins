@@ -28,7 +28,7 @@ here.
 set -e
 
 # Configuration - adjust per stack
-MAX_LINES=100
+MAX_LINES="${FUSE_SOLID_MAX_LINES:-200}"  # the only file-size ceiling
 INTERFACE_DIR="src/interfaces"  # Or app/Contracts for Laravel
 
 # Get file being written/edited
@@ -80,7 +80,7 @@ exit 0
 set -e
 
 FILE_PATH="${1:-}"
-MAX_LINES=100
+MAX_LINES="${FUSE_SOLID_MAX_LINES:-200}"  # the only file-size ceiling
 INTERFACE_PATTERN="modules/*/src/interfaces/"
 
 if [ -z "$FILE_PATH" ]; then
@@ -129,7 +129,7 @@ exit 0
 set -e
 
 FILE_PATH="${1:-}"
-MAX_LINES=100
+MAX_LINES="${FUSE_SOLID_MAX_LINES:-200}"  # the only file-size ceiling
 
 if [ -z "$FILE_PATH" ]; then
     exit 0

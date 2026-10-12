@@ -545,7 +545,7 @@ into next, per platform, once `design-system/SKILL.md` has already been read (st
 |---|---|
 | Web (marketing/landing) | `design-web` → `design-motion` → `design-review` |
 | Web app (dashboard/SaaS) | `design-webapp` → `design-motion` → `design-review` |
-| iOS | `design-ios` → `design-review` |
+| Apple — iOS, iPadOS, iPhone Duo, macOS, watchOS, tvOS, visionOS | `design-ios` (platform file in its `references/`) → `design-review` |
 | Android | `design-android` → `design-review` |
 | Copy only | `ux-copy` (any point in the pipeline) |
 

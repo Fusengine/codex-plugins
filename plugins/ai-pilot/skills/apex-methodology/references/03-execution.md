@@ -45,15 +45,15 @@ next_step: references/03.5-elicit.md
 ### File Size (ABSOLUTE)
 
 ```text
-🚨 STOP at 90 lines → Split immediately
-❌ NEVER exceed `FUSE_SOLID_MAX_LINES` (default 200) lines
-📊 Target: 50-80 lines per file
+🚨 Approaching `FUSE_SOLID_MAX_LINES` → Split by responsibility immediately
+❌ NEVER exceed `FUSE_SOLID_MAX_LINES` (default 200; the hook blocks it)
+📊 One responsibility per file; set no cap of your own
 ```
 
 ### Split Triggers
 
 ```text
-If approaching the ceiling lines:
+If approaching `FUSE_SOLID_MAX_LINES`:
 1. STOP writing
 2. Identify logical boundaries
 3. Extract to new file
@@ -132,7 +132,7 @@ Description: imperative mood, <50 chars
 
 ### Examples
 
-```bash
+```text
 feat(auth): add login validation
 refactor(api): extract fetch utilities
 test(auth): add login component tests

@@ -14,13 +14,13 @@ related: single-responsibility.md, dependency-inversion.md
 
 ```
 app/modules/[feature]/
-├── controllers/      # < 50 lines
-├── services/        # < 100 lines
-├── queries/         # < 100 lines
-├── repositories/    # < 100 lines
-├── models/          # < 50 lines
-├── contracts/       # < 30 lines
-└── concerns/        # < 100 lines
+├── controllers/      # HTTP I/O, delegate to services
+├── services/        # Business logic
+├── queries/         # Data retrieval
+├── repositories/    # SQL abstraction
+├── models/          # Associations, validations, scopes
+├── contracts/       # Duck typing modules
+└── concerns/        # Shared behavior
 
 app/modules/core/
 ├── contracts/       # Shared interfaces
@@ -35,25 +35,25 @@ app/modules/core/
 
 ## Layer Responsibilities
 
-| Layer | Responsibility | Max |
-|-------|---|---|
-| Controller | HTTP, authorize, delegate | 50 |
-| Service | Business logic | 100 |
-| Query | Data retrieval | 100 |
-| Repository | Persistence | 100 |
-| Model | Associations, validations, scopes | 50 |
-| Contract | Duck type interface | 30 |
+| Layer | Responsibility |
+|-------|---|
+| Controller | HTTP, authorize, delegate |
+| Service | Business logic |
+| Query | Data retrieval |
+| Repository | Persistence |
+| Model | Associations, validations, scopes |
+| Contract | Duck type interface |
 
 ---
 
 ## Layer Flow
 
 ```
-Controller (50)
+Controller
     ↓ delegates to
-Service (100)
+Service
     ↓ uses
-Repository/Query (100) ← only layer touching DB
+Repository/Query ← only layer touching DB
     ↓
 Database
 ```
@@ -104,9 +104,7 @@ require_relative '../../core/contracts/repository_contract'
 
 ## File Size Limits
 
-- Max 100 lines per file (split at 90)
-- Controllers max 50 (split at 40)
-- Models max 50 (split at 40)
-- Contracts max 30 (split at 25)
+- Every file within the hook ceiling `FUSE_SOLID_MAX_LINES` (default 200)
+- Split mixed responsibilities (fat controllers, fat models, multi-purpose contracts)
 
-Enforce: `find app/modules -name "*.rb" -exec wc -l {} \; | awk '$1 > 100'`
+Enforce: `find app/modules -name "*.rb" -exec wc -l {} \; | awk -v max="${FUSE_SOLID_MAX_LINES:-200}" '$1 > max'`

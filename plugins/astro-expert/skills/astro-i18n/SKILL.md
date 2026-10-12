@@ -13,7 +13,7 @@ Also covers translating Content Collections per locale and adding `hreflang` alt
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Analyze existing routing, content collections, and locale files
 2. **research-expert** - Verify latest Astro i18n docs via Context7/Exa

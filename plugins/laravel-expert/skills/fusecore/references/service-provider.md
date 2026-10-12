@@ -97,7 +97,7 @@ For complex modules, split into sub-providers:
 
 | Guideline | Limit |
 |-----------|-------|
-| Lines of code | < 100 |
+| Lines of code | Within `FUSE_SOLID_MAX_LINES` (default 200) |
 | Methods | < 10 |
 | Responsibilities | 1-2 |
 

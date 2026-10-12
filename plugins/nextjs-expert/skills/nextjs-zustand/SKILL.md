@@ -15,7 +15,7 @@ Minimal, scalable state management with React 18+ useSyncExternalStore.
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Analyze existing stores and state patterns
 2. **research-expert** - Verify latest Zustand v5 docs via Context7/Exa
@@ -72,12 +72,14 @@ Stores organized by feature module:
 
 ### File Organization
 
-| File | Purpose | Max Lines |
-|------|---------|-----------|
-| `store.ts` | Store creation with create() | 50 |
-| `store.interface.ts` | TypeScript interfaces | 30 |
-| `store-provider.tsx` | Context provider (App Router) | 40 |
-| `use-store.ts` | Custom hook with selector | 20 |
+| File | Purpose |
+|------|---------|
+| `store.ts` | Store creation with create() (max 40 lines, owner rule) |
+| `store.interface.ts` | TypeScript interfaces |
+| `store-provider.tsx` | Context provider (App Router) |
+| `use-store.ts` | Custom hook with selector |
+
+Each file stays within `FUSE_SOLID_MAX_LINES` (default 200); split by responsibility, not by line count.
 
 ---
 

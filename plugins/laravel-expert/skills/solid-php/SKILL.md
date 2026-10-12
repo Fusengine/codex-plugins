@@ -4,8 +4,8 @@ description: Use when applying SOLID principles to Laravel 13 / PHP 8.3+ code â€
 ---
 
 <objective>
-Enforces SOLID principles and DRY on Laravel 13 + PHP 8.3+ code: files under
-100 lines (split at 90), interfaces separated into
+Enforces SOLID principles and DRY on Laravel 13 + PHP 8.3+ code: source files
+within `FUSE_SOLID_MAX_LINES` (default 200) and split by responsibility, interfaces separated into
 FuseCore/[Module]/App/Contracts/ (or FuseCore/Core/App/Contracts/ for shared
 ones), and mandatory PHPDoc on all public methods. Auto-detects Laravel vs
 FuseCore modular architecture and routes code placement accordingly
@@ -19,7 +19,7 @@ guidance per SOLID principle (SRP/OCP/LSP/ISP/DIP).
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Analyze existing architecture
 2. **research-expert** - Verify Laravel/PHP docs via Context7
@@ -71,25 +71,25 @@ New code needed?
 
 ## Decision Tree: Which Pattern?
 
-| Need | Pattern | Location | Max Lines |
-|------|---------|----------|-----------|
-| HTTP handling | Controller | Controllers/ | 50 |
-| Validation | FormRequest | Requests/ | 50 |
-| Single operation | Action | Actions/ | 50 |
-| Complex logic | Service | Services/ | 100 |
-| Data access | Repository | Repositories/ | 100 |
-| Data structure | DTO | DTOs/ | 50 |
-| Abstraction | Interface | Contracts/ | 30 |
+| Need | Pattern | Location |
+|------|---------|----------|
+| HTTP handling | Controller | Controllers/ |
+| Validation | FormRequest | Requests/ |
+| Single operation | Action | Actions/ |
+| Complex logic | Service | Services/ |
+| Data access | Repository | Repositories/ |
+| Data structure | DTO | DTOs/ |
+| Abstraction | Interface | Contracts/ |
 
 ---
 
 ## Critical Rules (MANDATORY)
 
-### 1. Files < 100 lines
-- **Split at 90 lines** - Never exceed 100
-- Controllers < 50 lines
-- Models < 80 lines (excluding relations)
-- Services < 100 lines
+### 1. Files within `FUSE_SOLID_MAX_LINES` (default 200)
+- **Split well before the hook ceiling** - never work around it
+- Controllers: HTTP concerns only
+- Models: relations + casts only
+- Services: business logic only
 
 ### 2. Interfaces Separated (FuseCore Modular MANDATORY)
 ```
@@ -145,8 +145,8 @@ public function create(CreateUserDTO $dto): User
 
 | Anti-Pattern | Detection | Fix |
 |--------------|-----------|-----|
-| Files > 100 lines | Line count | Split into smaller files |
-| Controllers > 50 lines | Line count | Extract to Service |
+| Files above `FUSE_SOLID_MAX_LINES` | Line count | Split into smaller files |
+| Controllers with business logic | Code review | Extract to Service |
 | Interfaces in impl files | Location | Move to `FuseCore/[Module]/App/Contracts/` |
 | Business logic in Models | Code in model | Extract to Service |
 | Concrete dependencies | `new Class()` | Inject via ModuleServiceProvider |
@@ -166,7 +166,7 @@ public function create(CreateUserDTO $dto): User
 | Depend on interfaces | Depend on concrete classes |
 | Use `final readonly class` | Use mutable classes |
 | Use `declare(strict_types=1)` | Skip type declarations |
-| Split at 90 lines | Wait until 100 lines |
+| Split well before `FUSE_SOLID_MAX_LINES` | Wait until the hook blocks |
 | Use DTOs for data transfer | Use arrays |
 
 ---

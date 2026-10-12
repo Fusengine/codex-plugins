@@ -21,13 +21,15 @@ next_step: references/nextjs/03-execution.md
 
 ### File Size Rules
 
-| Component Type | Max Lines | Split At |
-| --- | --- | --- |
-| Page (app/) | 50 | 40 |
-| Server Component | 80 | 70 |
-| Client Component | 60 | 50 |
-| Server Action | 30 | 25 |
-| API Route | 50 | 40 |
+Only the hook ceiling `FUSE_SOLID_MAX_LINES` applies; split by responsibility, not by line count.
+
+| Component Type | Responsibility |
+| --- | --- |
+| Page (app/) | Orchestrates data + layout only |
+| Server Component | One data concern, renders one section |
+| Client Component | One interaction concern |
+| Server Action | One mutation |
+| API Route | One resource operation |
 
 ---
 

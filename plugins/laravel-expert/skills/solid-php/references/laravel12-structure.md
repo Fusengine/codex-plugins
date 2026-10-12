@@ -15,14 +15,14 @@ related: fusecore-structure.md, solid-principles.md
 ```
 app/
 ├── Http/
-│   ├── Controllers/      # < 50 lines each
+│   ├── Controllers/      # HTTP concerns only
 │   ├── Requests/         # Form validation
 │   └── Resources/        # API transformations
-├── Models/               # < 80 lines (relations only)
-├── Services/             # < 100 lines (business logic)
+├── Models/               # Relations + casts only
+├── Services/             # Business logic
 ├── Contracts/            # Interfaces ONLY
 ├── Repositories/         # Data access
-├── Actions/              # Single-purpose (< 50 lines)
+├── Actions/              # Single-purpose
 ├── DTOs/                 # Data transfer objects
 ├── Enums/                # PHP 8.1+ enums
 ├── Events/               # Domain events
@@ -34,17 +34,17 @@ app/
 
 ## Responsibility Matrix
 
-| Directory | Responsibility | Max Lines | Depends On |
-|-----------|---------------|-----------|------------|
-| Controllers | HTTP handling | 50 | Services |
-| Requests | Validation | 50 | - |
-| Resources | API transform | 50 | Models |
-| Services | Business logic | 100 | Repositories |
-| Repositories | Data access | 100 | Models |
-| Actions | Single operation | 50 | Services/Repos |
-| Models | Relations/Casts | 80 | - |
-| DTOs | Data structure | 50 | - |
-| Contracts | Interfaces | 30 | - |
+| Directory | Responsibility | Depends On |
+|-----------|---------------|------------|
+| Controllers | HTTP handling | Services |
+| Requests | Validation | - |
+| Resources | API transform | Models |
+| Services | Business logic | Repositories |
+| Repositories | Data access | Models |
+| Actions | Single operation | Services/Repos |
+| Models | Relations/Casts | - |
+| DTOs | Data structure | - |
+| Contracts | Interfaces | - |
 
 ---
 
@@ -93,16 +93,18 @@ Controller → Service → Repository → Model
 
 ---
 
-## File Size Limits
+## Split Strategy
 
-| Type | Max Lines | Split Strategy |
-|------|-----------|----------------|
-| Controller | 50 | Extract to Service |
-| Service | 100 | Split into Actions |
-| Repository | 100 | Split by entity |
-| Model | 80 | Extract scopes |
-| Action | 50 | Single purpose |
-| DTO | 50 | One per use case |
+Every file stays within `FUSE_SOLID_MAX_LINES` (default 200); split by responsibility, not by line count.
+
+| Type | Split Strategy |
+|------|----------------|
+| Controller | Extract to Service |
+| Service | Split into Actions |
+| Repository | Split by entity |
+| Model | Extract scopes |
+| Action | Single purpose |
+| DTO | One per use case |
 
 ---
 

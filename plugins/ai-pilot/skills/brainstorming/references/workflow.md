@@ -22,6 +22,8 @@ Ask questions ONE AT A TIME from these categories as needed.
 
 ### Problem-Framing (do this first)
 
+This whole section applies only when no owner mandate settled the design (see SKILL.md "Authorized mandate"); under a mandate, state the reformulation in one line and proceed.
+
 Before any category below, reformulate the problem in your own words and get it confirmed. The named feature is a proposed solution, not the problem — do not take it at face value.
 
 | Technique | How | Output |
@@ -187,7 +189,8 @@ Save to: `docs/plans/YYYY-MM-DD-<topic>-design.md`
 | Trivial fix (1-3 lines) | Go directly to APEX |
 | Typo or rename | Go directly to APEX |
 | User provides complete spec | Validate, then APEX |
-| Repeated/known pattern | Brief confirmation, then APEX |
+| Repeated/known pattern | State it in one line, then APEX |
 | Bug fix with clear repro | Go directly to APEX |
+| Owner gave a go-ahead (mandate) | State assumptions in one line, then APEX |
 
-**When in doubt, brainstorm.** The cost of asking is low; the cost of building the wrong thing is high.
+**With no mandate, when in doubt, brainstorm.** The cost of asking is low; the cost of building the wrong thing is high.

@@ -1,6 +1,6 @@
 ---
 name: solid-python
-description: "Use when writing or refactoring Python code, structuring modules/[feature]/ layers, or defining Protocol-based interfaces (SOLID, files < 100 lines)."
+description: "Use when writing or refactoring Python code, structuring modules/[feature]/ layers, or defining Protocol-based interfaces (SOLID, files within FUSE_SOLID_MAX_LINES)."
 ---
 
 <objective>
@@ -13,7 +13,7 @@ Before writing any new code it requires a DRY check against `core/services` and 
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `spawn_agent` call each:
 
 1. **explore-codebase** - Analyze existing architecture
 2. **research-expert** - Verify Python docs via Context7
@@ -33,14 +33,14 @@ Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 ## Architecture (Modules MANDATORY)
 
-| Layer | Location | Max Lines |
-|-------|----------|-----------|
-| Routes | `modules/[feature]/routes/` | 50 |
-| Services | `modules/[feature]/services/` | 100 |
-| Repositories | `modules/[feature]/repositories/` | 100 |
-| Interfaces | `modules/[feature]/interfaces/` | 30 |
-| Models | `modules/[feature]/models/` | 50 |
-| Shared | `core/{services,interfaces,models}/` | - |
+| Layer | Location |
+|-------|----------|
+| Routes | `modules/[feature]/routes/` |
+| Services | `modules/[feature]/services/` |
+| Repositories | `modules/[feature]/repositories/` |
+| Interfaces | `modules/[feature]/interfaces/` |
+| Models | `modules/[feature]/models/` |
+| Shared | `core/{services,interfaces,models}/` |
 
 **NEVER use flat `src/` structure - always `modules/[feature]/`**
 
@@ -50,8 +50,8 @@ Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 | Rule | Value |
 |------|-------|
-| File limit | 100 lines (split at 90) |
-| Routes | < 50 lines, delegate to services |
+| File limit | `FUSE_SOLID_MAX_LINES` (default 200) |
+| Routes | Thin, delegate to services |
 | Interfaces | `interfaces/` directory ONLY |
 | Docstrings | Every public function documented |
 | Type hints | MANDATORY on all signatures |
@@ -73,7 +73,7 @@ Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 | Anti-Pattern | Fix |
 |--------------|-----|
-| Files > 100 lines | Split at 90 |
+| Files over `FUSE_SOLID_MAX_LINES` (default 200) | Split by responsibility |
 | Interfaces in impl files | Move to `interfaces/` directory |
 | Fat interfaces (4+ methods) | Split into small Protocols |
 | Flat `src/` structure | Use `modules/[feature]/` |
