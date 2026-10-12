@@ -1,6 +1,6 @@
 {
   "name": "laravel-expert",
-  "version": "1.2.24",
+  "version": "1.2.25",
   "description": "Expert Laravel latest stable + PHP latest stable with SOLID principles, first-class PHP Attributes, Laravel AI SDK, JSON:API Resources, native vector search (pgvector), Eloquent, Livewire, queues with routing, and comprehensive documentation",
   "author": {
     "name": "Fusengine",

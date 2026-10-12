@@ -1,6 +1,6 @@
 {
   "name": "go-expert",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "Expert Go 1.26+ for idioms, concurrency, backend services, golangci-lint v2, govulncheck, and SOLID principles.",
   "author": {
     "name": "Fusengine",

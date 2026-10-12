@@ -1,6 +1,6 @@
 {
   "name": "lessons",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Project memory hooks for compact never-reproduce lessons in MEMORY/LESSON.md.",
   "author": {
     "name": "Fusengine",

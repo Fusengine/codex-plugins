@@ -1,6 +1,6 @@
 {
   "name": "rust-expert",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "Expert Rust 1.96+ with 2024 edition, ownership, error handling, async/tokio, axum backends, cargo tooling, and SOLID principles.",
   "author": {
     "name": "Fusengine",
