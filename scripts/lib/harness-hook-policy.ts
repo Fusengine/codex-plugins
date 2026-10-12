@@ -1,7 +1,7 @@
 import routesJson from "./harness-hook-routes.json";
 import type { HarnessHookRoute, HarnessScope } from "./harness-hook.types";
 
-export const HARNESS_VERSION = "0.1.97";
+export const HARNESS_VERSION = "0.1.108";
 export const HARNESS_SCOPES: readonly HarnessScope[] = [
 	"core", "solid", "rules", "carto", "security", "changelog",
 	"aipilot", "lessons", "seo", "memory", "tailwindcss",
