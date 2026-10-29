@@ -1,6 +1,6 @@
 {
   "name": "fusengine-codex",
-  "version": "1.0.59",
+  "version": "1.0.60",
   "description": "Fusengine plugin ecosystem for Codex CLI: expert agents, APEX workflow, SOLID/DRY enforcement, cartography, security",
   "author": {
     "name": "Fusengine",

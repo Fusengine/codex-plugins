@@ -9,10 +9,15 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import * as p from "@clack/prompts";
 import { discoverTrustableHooks } from "./hooks-trust-discovery";
-import { stripMarkerBlock } from "./toml-helpers";
+import { upsertManagedBlock } from "./toml-helpers";
 
 const START = "# >>> fusengine-codex hooks trust >>>";
 const END = "# <<< fusengine-codex hooks trust <<<";
+
+/** Matches any `hooks.state."<plugin>@<marketplace>:..."` header, so stale managed keys are dropped too. */
+function staleManagedKey(marketplaceName: string): RegExp {
+	return new RegExp(`^hooks\\.state\\."[^"]*@${marketplaceName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}:`);
+}
 
 function toToml(key: string, hash: string): string {
 	return `[hooks.state."${key}"]\ntrusted_hash = "${hash}"`;
@@ -43,7 +48,7 @@ export async function promptHooksTrust(codexHome: string, marketplaceName: strin
 	const path = join(codexHome, "config.toml");
 	const current = existsSync(path) ? readFileSync(path, "utf8") : "";
 	const blocks = entries.map((e) => toToml(e.key, e.hash)).join("\n\n");
-	const next = `${stripMarkerBlock(current, START, END).trimEnd()}\n\n${START}\n${blocks}\n${END}\n`;
+	const next = upsertManagedBlock(current, START, END, blocks, [...entries.map((e) => `hooks.state."${e.key}"`), staleManagedKey(marketplaceName)]);
 	writeFileSync(path, next);
 	p.log.success(`Trusted ${entries.length} plugin hooks → ${path}`);
 }
