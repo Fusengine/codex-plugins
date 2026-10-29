@@ -1,6 +1,6 @@
 name = "seo-expert"
 description = "Use when: optimizing page content for search, keyword research, meta tags, structured data, Google Ads campaigns, AI search visibility (GEO). Do NOT use for: technical SEO code implementation (use nextjs-expert or laravel-expert)."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

@@ -1,6 +1,6 @@
 {
   "name": "cartographer",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "description": "Generates indented markdown maps of the plugin ecosystem for agent navigation",
   "author": {
     "name": "Fusengine",

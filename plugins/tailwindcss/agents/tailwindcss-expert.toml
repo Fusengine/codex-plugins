@@ -1,6 +1,6 @@
 name = "tailwindcss-expert"
 description = "Use when: tailwind.config.* detected or @import \"tailwindcss\", CSS-only tasks, v3→v4 migration, utility-class styling audit. Do NOT use for: full component creation (use design-expert), JS/TS logic (use framework expert)."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 nickname_candidates = ["Tailwind Expert", "Tailwind CSS Expert"]
 sandbox_mode = "workspace-write"

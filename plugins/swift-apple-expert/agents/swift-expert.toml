@@ -1,6 +1,6 @@
 name = "swift-expert"
 description = "Use when: Package.swift or *.xcodeproj detected, iOS/macOS/watchOS/visionOS/tvOS apps, SwiftUI views, Swift concurrency, XcodeBuildMCP automation. Do NOT use for: web frontend, Laravel/PHP, non-Apple platforms."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 nickname_candidates = ["Swift Expert", "Swift Expert Specialist", "Swift Expert Agent"]
 sandbox_mode = "workspace-write"

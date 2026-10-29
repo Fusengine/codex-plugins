@@ -1,6 +1,6 @@
 name = "rust-expert"
 description = "Use when: Cargo.toml present. Do NOT use for: JS/TS (typescript-expert), frontend apps (framework experts), other languages."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 nickname_candidates = ["Rust Expert", "Rust Expert Specialist", "Rust Expert Agent"]
 sandbox_mode = "workspace-write"

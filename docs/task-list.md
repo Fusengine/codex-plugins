@@ -6,7 +6,7 @@ Status: in progress.
 
 - Use `claude-plugins/plugins` as the read-only content reference.
 - Improve Codex `AGENTS.md`, its template, rules, agent TOML instructions, skills, and Markdown references.
-- Preserve the verified Codex V2 contract, all-`gpt-6.1-sol` model matrix (reasoning `medium`, `high` for design-expert only; Luna not used), nicknames, and intentional critical redundancy.
+- Preserve the verified Codex V2 contract, all-`gpt-6.1-terra` model matrix (2026-10-29: `medium` ×30, `high` ×5, `max` ×3, never `ultra`; see `docs/workflow/agents.md` § Model Policy), nicknames, and intentional critical redundancy.
 - When unsupported skill frontmatter keys are removed, preserve every original `references:` and `related-skills:` line textually in the skill body.
 - Required proof: `LOST_EXACT=0`, 234/234 skills valid, all TOML parsable, links valid, full tests, validation, and final isolated Sniper.
 - No commit until every writer is stopped and the final checks pass.

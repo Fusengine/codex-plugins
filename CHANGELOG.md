@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.59] - 2026-10-29
+
+- feat(agents): move all 38 Codex agents to `gpt-6.1-terra` (owner benchmark decision 2026-10-29) — reasoning matrix: medium (30) for all other agents, high (5) for sniper, brainstorming, prompt-engineer, skill-creator, solid-orchestrator, max (3) for design-expert, challenger, security-expert; no agent uses Sol or `ultra`. Rationale: Terra medium matches Sol on code at 1.5x speed and 3x lower cost, Terra max won every visual test, Sol won none. `scripts/lib/agent-toml.ts` enforces the matrix; agent-toml, agent-tier-matrix and security-agent-pilot tests aligned; agent-creator skill, `docs/workflow/agents.md`, `docs/reference/creating-skills-agents.md` and `docs/task-list.md` document the new policy
+- chore(release): bump 22 touched plugins + suite to 1.0.59 — ai-pilot 1.2.60 -> 1.2.61, astro-expert 1.0.24 -> 1.0.25, cartographer 1.0.25 -> 1.0.26, changelog-watcher 1.0.27 -> 1.0.28, commit-pro 1.2.37 -> 1.2.38, design-expert 2.1.51 -> 2.1.52, go-expert 1.0.21 -> 1.0.22, laravel-expert 1.2.25 -> 1.2.26, lessons 1.0.11 -> 1.0.12, nextjs-expert 1.1.41 -> 1.1.42, php-expert 1.0.21 -> 1.0.22, prompt-engineer 1.1.23 -> 1.1.24, react-expert 1.0.37 -> 1.0.38, rust-expert 1.0.21 -> 1.0.22, security-expert 1.0.30 -> 1.0.31, seo 1.0.24 -> 1.0.25, shadcn-expert 1.0.34 -> 1.0.35, solid 1.0.31 -> 1.0.32, swift-apple-expert 1.1.37 -> 1.1.38, tailwindcss 1.1.27 -> 1.1.28, tanstack-start-expert 1.0.21 -> 1.0.22, typescript-expert 1.0.21 -> 1.0.22; mirrored in `.agents/plugins/marketplace.json`
+
 ## [1.0.58] - 2026-10-12
 
 - build(deps): bump `@fusengine/harness` ^0.1.97 -> ^0.1.108 (`HARNESS_VERSION` tripwire advanced after the 11/11 scope audit of `bun run update-harness`); root deps refreshed (@types/bun 1.4.3, smol-toml 1.9.1, chrome-launcher 1.2.2, fast-xml-parser 5.11.2, lighthouse 13.5.0); core-guards statusline deps refreshed (zod 4.6.6, @biomejs/biome 2.5.15, @types/bun 1.4.3)

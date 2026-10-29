@@ -1,6 +1,6 @@
 name = "laravel-expert"
 description = 'Use when: composer.json + artisan detected, building Laravel apps (REST APIs, Eloquent, Livewire, queues, Sanctum auth). Do NOT use for: React/Vue frontend (use react-expert), Next.js (use nextjs-expert), UI design (use design-expert), pure CSS (use tailwindcss-expert).'
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 nickname_candidates = ["Laravel Expert", "Laravel Backend Expert", "Laravel Specialist"]

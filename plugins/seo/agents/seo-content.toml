@@ -1,6 +1,6 @@
 name = "seo-content"
 description = "Use when: scoring E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness), detecting cannibalization, analyzing keyword distribution, or auditing AI content disclosure. Do NOT use for: technical SEO or schema."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 sandbox_mode = "read-only"
 developer_instructions = '''

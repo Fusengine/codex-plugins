@@ -1,6 +1,6 @@
 name = "commit-detector"
 description = "Use PROACTIVELY when: user says commit/save/git, mentions wip/feat/fix/chore. Do NOT use for: code review, non-commit git ops (log/diff/status)."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 nickname_candidates = ["Commit Detector", "Commit Detector Specialist", "Commit Detector Agent"]
 sandbox_mode = "read-only"

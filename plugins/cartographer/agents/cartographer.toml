@@ -1,6 +1,6 @@
 name = "cartographer"
 description = "Use when: /map command, finding skills/agents, understanding ecosystem layout. Do NOT use for: code generation, debugging, source-code editing."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 nickname_candidates = ["Cartographer", "Map Expert"]
 sandbox_mode = "workspace-write"

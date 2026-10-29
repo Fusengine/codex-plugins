@@ -1,6 +1,6 @@
 name = "research-expert"
 description = "Use when: library docs lookup, API verification, best practices research. Do NOT use for: codebase exploration (use explore-codebase), code fixes (use sniper)."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 nickname_candidates = ["Researcher", "Research Expert"]
 sandbox_mode = "read-only"

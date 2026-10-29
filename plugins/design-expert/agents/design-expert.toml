@@ -1,7 +1,7 @@
 name = "design-expert"
 description = "Use when: designing or auditing a design system, a marketing site, a web app screen, or an Apple-platform (iOS, iPadOS, iPhone Duo, macOS, watchOS, tvOS, visionOS) or Android mockup. Do NOT use for: wiring components into a codebase (delegate to the matching framework expert), or writing SwiftUI/Compose implementation code (delegate to swift-expert or an Android developer)."
-model = "gpt-6.1-sol"
-model_reasoning_effort = "high"
+model = "gpt-6.1-terra"
+model_reasoning_effort = "max"
 nickname_candidates = ["Design Expert", "Design Director"]
 sandbox_mode = "workspace-write"
 developer_instructions = '''

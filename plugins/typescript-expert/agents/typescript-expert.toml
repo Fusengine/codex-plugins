@@ -2,7 +2,7 @@ name = "typescript-expert"
 
 description = 'Use when: tsconfig.json present but NO framework config (no next.config.*, astro.config.*, vite.config with react, artisan, Cargo.toml). Do NOT use for: React/Next.js/Astro apps (framework experts), TanStack Start (tanstack-start-expert), UI design (design-expert).'
 
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 
 model_reasoning_effort = "medium"
 

@@ -7,11 +7,10 @@
  * the wrong revert until the owner did.
  *
  * Three checks: (a) every `plugins/*\/agents/*.toml` on disk sums to the
- * exact 1/37 tier counts with no agent outside those two buckets (GPT-6
- * fleet, Sol only since 2026-09-27 — the 18 Luna/medium agents of the
- * 2026-09-23 matrix moved to Sol/medium, see `agent-toml.ts`'s JSDoc for
- * the owner decision; the overridden benchmark is in docs/workflow/agents.md
- * § History); (b) `agent-toml.ts`'s `AGENT_MODEL_PROFILES`
+ * exact 30 medium / 5 high / 3 max tier counts with no agent outside those
+ * three buckets, zero Sol and zero `ultra` (GPT-6.1 Terra fleet since
+ * 2026-10-29, see `agent-toml.ts`'s JSDoc for the owner decision; earlier
+ * policies are in docs/workflow/agents.md § History); (b) `agent-toml.ts`'s `AGENT_MODEL_PROFILES`
  * map matches what is actually shipped on disk, 0 mismatches; (c) any agent
  * whose tier has drifted from its frozen v1.0.50 baseline carries a dated
  * citation in `agent-toml.ts`'s JSDoc.
@@ -24,12 +23,13 @@ import { AGENT_MODEL_PROFILES } from "./agent-toml";
 
 type ShippedProfile = { model: string; effort: string };
 
-const SOL_HIGH_NAMES = ["design-expert"];
+const TERRA_MAX_NAMES = ["design-expert", "challenger", "security-expert"];
+const TERRA_HIGH_NAMES = ["sniper", "brainstorming", "prompt-engineer", "skill-creator", "solid-orchestrator"];
 const AGENT_TOML_SOURCE = "scripts/lib/agent-toml.ts";
 /** Frozen v1.0.50 Sol/high set (pre-GPT-6, gpt-5.6-sol/high) — kept distinct
- *  from {@link SOL_HIGH_NAMES} (today's actual tier) so `security-expert`'s
- *  2026-09-07 move to `medium`, and the fleet-wide GPT-6 moves (2026-09-23,
- *  then Sol-only 2026-09-27, see `agent-toml.ts`'s JSDoc), still
+ *  from {@link TERRA_MAX_NAMES} (today's actual tier) so `security-expert`'s
+ *  2026-09-07 move to `medium`, and the fleet-wide moves (GPT-6 2026-09-23,
+ *  Sol-only 2026-09-27, Terra 2026-10-29, see `agent-toml.ts`'s JSDoc), still
  *  count as divergences the JSDoc-citation test below must catch. */
 const V1_0_50_SOL_HIGH_NAMES = ["design-expert", "security-expert"];
 
@@ -67,9 +67,9 @@ function baselineV1_0_50(): Record<string, ShippedProfile> {
 	);
 }
 
-test("shipped agent TOMLs match the exact 1/37 tier matrix", () => {
+test("shipped agent TOMLs match the exact 30/5/3 Terra tier matrix", () => {
 	const profiles = shippedProfiles();
-	const byTier: Record<string, string[]> = { "gpt-6.1-sol|high": [], "gpt-6.1-sol|medium": [] };
+	const byTier: Record<string, string[]> = { "gpt-6.1-terra|max": [], "gpt-6.1-terra|high": [], "gpt-6.1-terra|medium": [] };
 	const outsideMatrix: string[] = [];
 	for (const [name, profile] of profiles) {
 		const key = `${profile.model}|${profile.effort}`;
@@ -77,9 +77,11 @@ test("shipped agent TOMLs match the exact 1/37 tier matrix", () => {
 		else outsideMatrix.push(`${name}: ${key}`);
 	}
 
-	expect(byTier["gpt-6.1-sol|high"]!.sort()).toEqual([...SOL_HIGH_NAMES].sort());
-	expect(byTier["gpt-6.1-sol|medium"]).toHaveLength(37);
+	expect(byTier["gpt-6.1-terra|max"]!.sort()).toEqual([...TERRA_MAX_NAMES].sort());
+	expect(byTier["gpt-6.1-terra|high"]!.sort()).toEqual([...TERRA_HIGH_NAMES].sort());
+	expect(byTier["gpt-6.1-terra|medium"]).toHaveLength(30);
 	expect(outsideMatrix).toEqual([]);
+	expect([...profiles.values()].filter((profile) => profile.model === "gpt-6.1-sol" || profile.effort === "ultra")).toEqual([]);
 });
 
 test("every agent-toml.ts profile matches its shipped TOML on disk (0 mismatches)", () => {

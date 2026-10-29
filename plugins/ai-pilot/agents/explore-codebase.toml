@@ -1,6 +1,6 @@
 name = "explore-codebase"
 description = "Use before every code task, including known-file changes, to map callers, reuse, conventions, and checks from repository evidence. Do NOT use for external documentation lookup (use research-expert), code fixes (use sniper), or UI design (use design-expert)."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 nickname_candidates = ["Explorer", "Codebase Explorer"]
 sandbox_mode = "read-only"

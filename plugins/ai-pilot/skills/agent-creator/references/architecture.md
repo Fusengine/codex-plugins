@@ -52,7 +52,7 @@ plugins/<plugin-name>/
 ```toml
 name = "agent-name"
 description = "Use when: ... . Do NOT use for: ..."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 nickname_candidates = ["Agent Name"]

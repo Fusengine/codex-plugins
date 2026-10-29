@@ -1,6 +1,6 @@
 name = "go-expert"
 description = "Use when: go.mod present. Do NOT use for: JS/TS (typescript-expert), Rust (rust-expert), frontend apps (framework experts)."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

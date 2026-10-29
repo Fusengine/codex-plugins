@@ -1,6 +1,6 @@
 name = "astro-expert"
 description = "Use when: astro.config.* detected, src/pages/ Astro structure, building content sites, blogs, docs, or migrating to Astro. Do NOT use for: pure React/Next.js (no astro.config), Laravel/PHP, Swift, UI-only tasks (use design-expert)."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 nickname_candidates = ["Astro Expert", "Astro Specialist", "Astro Expert Agent"]
 sandbox_mode = "workspace-write"

@@ -1,6 +1,6 @@
 name = "sniper-faster"
 description = "Use when: applying small, already-identified fixes from linter output, a sniper report, or the user. Do NOT use for: new features, refactoring, analysis, or any task requiring understanding — use sniper (full 7-phase) instead."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 nickname_candidates = ["Sniper Faster", "Micro-Fix"]
 sandbox_mode = "workspace-write"

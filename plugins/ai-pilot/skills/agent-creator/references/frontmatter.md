@@ -28,8 +28,8 @@ Hooks live in the plugin's `hooks/hooks.json`, never in the agent TOML — see
 ```toml
 name = "sniper"
 description = "Elite code error detection and correction. Use after ANY code modification. Do NOT use for: new features, read-only analysis."
-model = "gpt-6.1-sol"
-model_reasoning_effort = "medium"
+model = "gpt-6.1-terra"
+model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 nickname_candidates = ["Sniper", "Code Sniper", "Sniper Agent"]
 developer_instructions = '''
@@ -54,8 +54,8 @@ Real reference: `plugins/typescript-expert/agents/typescript-expert.toml`.
 | `name` | Yes | kebab-case, unique across the ecosystem, referenced by `spawn_agent`. Blank/missing drops the whole file at Codex startup (one-line warning only — the agent silently never becomes spawnable). |
 | `description` | Yes | Keep the "Use when… / Do NOT use for…" routing pattern — it drives agent selection. |
 | `developer_instructions` | Yes | Triple-quoted (`'''…'''`) string holding the full agent brief. No truncation of source substance. |
-| `model` | Recommended | Explicit tier id only: `gpt-6.1-sol` for every shipped agent, per Model Selection below. Never a bare `gpt-6`/`gpt-6.1` alias. `gpt-6-luna` is a valid id but not used in this fleet; GPT-6 has no `terra` tier and `gpt-6-astra` is excluded fleet-wide on cost. |
-| `model_reasoning_effort` | Recommended | `medium` by default; `high` only for `design-expert` (see Model Selection below). |
+| `model` | Recommended | Explicit tier id only: `gpt-6.1-terra` for every shipped agent, per Model Selection below. Never a bare `gpt-6`/`gpt-6.1` alias. `gpt-6.1-luna` is not available on this account. |
+| `model_reasoning_effort` | Recommended | `medium` by default; `high` or `max` only for the agents named in Model Selection below; never `ultra`. |
 | `sandbox_mode` | Recommended | One of `read-only`, `workspace-write`, `danger-full-access`. See `sandbox_mode` Guidance below. |
 | `nickname_candidates` | Optional | Array of display names, identity evidence when spawning. See rules below. |
 | `mcp_servers` | Optional | MCP servers this agent may reach; declare only servers configured for Codex. |
@@ -69,27 +69,26 @@ that — never add `color`, a `tools` list, or a `hooks` table here.
 
 ## Model Selection
 
-**Current, since 2026-09-30** (owner decision, verbatim: "okay passe les
-tous en v 6.1"). Every shipped agent runs on `gpt-6.1-sol`; `gpt-6-luna`
-is not used in this fleet, and no GPT-6.1 Luna or Astra id is published.
+**Current, since 2026-10-29** (owner decision). Every shipped agent runs
+on `gpt-6.1-terra` (30 + 5 + 3 = 38); no agent stays on Sol, and
+`gpt-6.1-luna` is not available on this account.
 
 | `model` / effort | When to use |
 |-------------------|-------------|
-| `gpt-6.1-sol` / `medium` | Every agent except `design-expert` (37) — the default for any new agent |
-| `gpt-6.1-sol` / `high` | Highest-judgment gate: `design-expert` only |
+| `gpt-6.1-terra` / `medium` | Every other agent (30), incl. code executors and `commit` — the default for any new agent |
+| `gpt-6.1-terra` / `high` | Heavy judgment: `sniper`, `brainstorming`, `prompt-engineer`, `skill-creator`, `solid-orchestrator` |
+| `gpt-6.1-terra` / `max` | Visual and security/adversarial gates: `design-expert`, `challenger`, `security-expert` |
 
-Valid efforts: the Codex catalog lists `low` through `ultra` for
-`gpt-6.1-sol` — this fleet uses only Sol medium (plus `design-expert` at
-Sol high); any other model or effort needs a new owner decision. Prices
-per 1M tokens (input/cached/output, standard ≤272K input,
-developers.openai.com/api/docs/pricing): `gpt-6.1-sol` $2.00/$0.10/$10.00.
-The authoritative policy lives in
+`ultra` is never used (it adds automatic sub-agent delegation and was not
+part of the decision); any other model or effort needs a new owner
+decision. No verified Terra price is recorded. The authoritative policy lives in
 `docs/reference/creating-skills-agents.md` (model policy section) — this
 table mirrors it, don't let the two drift.
 
 ### History
 
-Superseded policies (the 2026-09-27 all-GPT-6-Sol fleet, the 2026-09-23
+Superseded policies (the 2026-09-30 all-`gpt-6.1-sol` fleet, the
+2026-09-27 all-GPT-6-Sol fleet, the 2026-09-23
 GPT-6 Sol/Luna split and its measurements, and the GPT-5.6 Sol/Terra/Luna
 tiers) live only in
 [`docs/workflow/agents.md` § Model
