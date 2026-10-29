@@ -1,5 +1,6 @@
 /**
- * toml-helpers.test.ts — regex-based TOML upsert helpers.
+ * toml-helpers.test.ts — regex-based TOML root-key / table-key helpers. The marker-block upsert
+ * (upsertManagedBlock / dropTables) is covered in toml-upsert.test.ts.
  */
 import { test, expect } from "bun:test";
 import { parse } from "smol-toml";

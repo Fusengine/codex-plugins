@@ -9,7 +9,7 @@ import { readdir } from "node:fs/promises";
 import { join } from "node:path";
 import * as p from "@clack/prompts";
 import { loadEnvFile } from "./env-file";
-import { stripMarkerBlock } from "./toml-helpers";
+import { upsertManagedBlock } from "./toml-helpers";
 
 const START = "# >>> fusengine-codex mcp servers >>>";
 const END = "# <<< fusengine-codex mcp servers <<<";
@@ -84,7 +84,7 @@ export async function configureMcpServers(codexHome: string, pluginsRoot: string
 	const path = join(codexHome, "config.toml");
 	const current = existsSync(path) ? readFileSync(path, "utf8") : "";
 	const blocks = [...servers.entries()].map(([n, c]) => toToml(n, c)).join("\n\n");
-	const next = `${stripMarkerBlock(current, START, END).trimEnd()}\n\n${START}\n${blocks}\n${END}\n`;
+	const next = upsertManagedBlock(current, START, END, blocks, [...servers.keys()].map((n) => `mcp_servers.${n}`));
 	writeFileSync(path, next);
 	p.log.success(`Wrote ${servers.size} [mcp_servers.*] blocks → ${path}`);
 }
