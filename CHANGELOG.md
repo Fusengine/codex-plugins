@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.60] - 2026-10-29
+
+- fix(install): never duplicate managed tables in Codex `config.toml` — `stripMarkerBlock` returned the source unchanged when one marker of a START/END pair was missing, so the hooks-trust and mcp installers re-appended their blocks and duplicated `[hooks.state.*]` / `[mcp_servers.*]` (Codex refused to start: `duplicate key`). New `upsertManagedBlock` removes only its own marker lines and managed table headers, so user tables such as `[projects.*]` survive; new `scripts/lib/install/toml-scan.ts` skips multi-line strings and arrays; a parse + table-preservation guard aborts without writing on an invalid result. Tests: `toml-helpers.test.ts`, new `toml-upsert.test.ts`
+- chore(release): bump suite to 1.0.60 (no plugin touched)
+
 ## [1.0.59] - 2026-10-29
 
 - feat(agents): move all 38 Codex agents to `gpt-6.1-terra` (owner benchmark decision 2026-10-29) — reasoning matrix: medium (30) for all other agents, high (5) for sniper, brainstorming, prompt-engineer, skill-creator, solid-orchestrator, max (3) for design-expert, challenger, security-expert; no agent uses Sol or `ultra`. Rationale: Terra medium matches Sol on code at 1.5x speed and 3x lower cost, Terra max won every visual test, Sol won none. `scripts/lib/agent-toml.ts` enforces the matrix; agent-toml, agent-tier-matrix and security-agent-pilot tests aligned; agent-creator skill, `docs/workflow/agents.md`, `docs/reference/creating-skills-agents.md` and `docs/task-list.md` document the new policy
