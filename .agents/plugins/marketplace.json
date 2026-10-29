@@ -1,6 +1,6 @@
 {
   "name": "fusengine-codex",
-  "version": "1.0.58",
+  "version": "1.0.59",
   "description": "Fusengine plugin ecosystem for Codex CLI: expert agents, APEX workflow, SOLID/DRY enforcement, cartography, security",
   "author": {
     "name": "Fusengine",
@@ -15,7 +15,7 @@
         "source": "local",
         "path": "./plugins/ai-pilot"
       },
-      "version": "1.2.60",
+      "version": "1.2.61",
       "category": "Productivity",
       "policy": {
         "installation": "AVAILABLE",
@@ -28,7 +28,7 @@
         "source": "local",
         "path": "./plugins/astro-expert"
       },
-      "version": "1.0.24",
+      "version": "1.0.25",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
@@ -41,7 +41,7 @@
         "source": "local",
         "path": "./plugins/cartographer"
       },
-      "version": "1.0.25",
+      "version": "1.0.26",
       "category": "Productivity",
       "policy": {
         "installation": "AVAILABLE",
@@ -54,7 +54,7 @@
         "source": "local",
         "path": "./plugins/changelog-watcher"
       },
-      "version": "1.0.27",
+      "version": "1.0.28",
       "category": "Productivity",
       "policy": {
         "installation": "AVAILABLE",
@@ -80,7 +80,7 @@
         "source": "local",
         "path": "./plugins/commit-pro"
       },
-      "version": "1.2.37",
+      "version": "1.2.38",
       "category": "Productivity",
       "policy": {
         "installation": "AVAILABLE",
@@ -106,7 +106,7 @@
         "source": "local",
         "path": "./plugins/design-expert"
       },
-      "version": "2.1.51",
+      "version": "2.1.52",
       "category": "Design",
       "policy": {
         "installation": "AVAILABLE",
@@ -119,7 +119,7 @@
         "source": "local",
         "path": "./plugins/laravel-expert"
       },
-      "version": "1.2.25",
+      "version": "1.2.26",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
@@ -132,7 +132,7 @@
         "source": "local",
         "path": "./plugins/go-expert"
       },
-      "version": "1.0.21",
+      "version": "1.0.22",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
@@ -158,7 +158,7 @@
         "source": "local",
         "path": "./plugins/nextjs-expert"
       },
-      "version": "1.1.41",
+      "version": "1.1.42",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
@@ -171,7 +171,7 @@
         "source": "local",
         "path": "./plugins/prompt-engineer"
       },
-      "version": "1.1.23",
+      "version": "1.1.24",
       "category": "Productivity",
       "policy": {
         "installation": "AVAILABLE",
@@ -184,7 +184,7 @@
         "source": "local",
         "path": "./plugins/php-expert"
       },
-      "version": "1.0.21",
+      "version": "1.0.22",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
@@ -197,7 +197,7 @@
         "source": "local",
         "path": "./plugins/react-expert"
       },
-      "version": "1.0.37",
+      "version": "1.0.38",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
@@ -210,7 +210,7 @@
         "source": "local",
         "path": "./plugins/rust-expert"
       },
-      "version": "1.0.21",
+      "version": "1.0.22",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
@@ -223,7 +223,7 @@
         "source": "local",
         "path": "./plugins/security-expert"
       },
-      "version": "1.0.30",
+      "version": "1.0.31",
       "category": "Security",
       "policy": {
         "installation": "AVAILABLE",
@@ -236,7 +236,7 @@
         "source": "local",
         "path": "./plugins/seo"
       },
-      "version": "1.0.24",
+      "version": "1.0.25",
       "category": "Marketing",
       "policy": {
         "installation": "AVAILABLE",
@@ -249,7 +249,7 @@
         "source": "local",
         "path": "./plugins/shadcn-expert"
       },
-      "version": "1.0.34",
+      "version": "1.0.35",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
@@ -262,7 +262,7 @@
         "source": "local",
         "path": "./plugins/solid"
       },
-      "version": "1.0.31",
+      "version": "1.0.32",
       "category": "Productivity",
       "policy": {
         "installation": "AVAILABLE",
@@ -275,7 +275,7 @@
         "source": "local",
         "path": "./plugins/swift-apple-expert"
       },
-      "version": "1.1.37",
+      "version": "1.1.38",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
@@ -288,7 +288,7 @@
         "source": "local",
         "path": "./plugins/tailwindcss"
       },
-      "version": "1.1.27",
+      "version": "1.1.28",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
@@ -301,7 +301,7 @@
         "source": "local",
         "path": "./plugins/tanstack-start-expert"
       },
-      "version": "1.0.21",
+      "version": "1.0.22",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
@@ -314,7 +314,7 @@
         "source": "local",
         "path": "./plugins/typescript-expert"
       },
-      "version": "1.0.21",
+      "version": "1.0.22",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
@@ -327,7 +327,7 @@
         "source": "local",
         "path": "./plugins/lessons"
       },
-      "version": "1.0.11",
+      "version": "1.0.12",
       "category": "Productivity",
       "policy": {
         "installation": "AVAILABLE",

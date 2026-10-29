@@ -1,6 +1,6 @@
 {
   "name": "tanstack-start-expert",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "Expert TanStack Start full-stack React framework with file-based routing, createServerFn server functions, selective SSR, and Nitro deployment.",
   "author": {
     "name": "Fusengine",

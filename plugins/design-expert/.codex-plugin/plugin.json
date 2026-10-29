@@ -1,6 +1,6 @@
 {
   "name": "design-expert",
-  "version": "2.1.51",
+  "version": "2.1.52",
   "description": "Design Director for websites, web apps, iOS, and Android. Generates HTML/CSS design deliverables with Gemini Design MCP, Magic/21st.dev, and shadcn as optional tools. Mobile targets produce tokens, device-framed mockups, and handoff specs, never SwiftUI/Compose implementation code. Anti-AI-Slop, WCAG 2.2.",
   "author": {
     "name": "Fusengine",

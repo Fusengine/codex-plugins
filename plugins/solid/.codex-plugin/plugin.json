@@ -1,6 +1,6 @@
 {
   "name": "solid",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "description": "SOLID principles enforcement with automatic project detection and validation for all languages",
   "author": {
     "name": "Fusengine",
