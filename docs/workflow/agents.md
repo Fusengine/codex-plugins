@@ -4,25 +4,31 @@
 
 ## Model Policy
 
-**Current, since 2026-09-30 (owner decision, verbatim): "okay passe les tous
-en v 6.1".** Every shipped agent runs on `gpt-6.1-sol`: 37 at `medium`, plus
-`design-expert` alone at `high` (the sole highest-judgment gate) — the
-2026-09-27 efforts, unchanged. No shipped agent uses `gpt-6-luna`; no GPT-6.1
-Luna or Astra id is published (Codex catalog, 2026-09-30). `gpt-6-astra`
-stays excluded fleet-wide on cost; GPT-6 has no `terra` tier. The
-coordinator (the owner's own Codex session) is not a shipped agent TOML and
-stays outside this policy.
+**Current, since 2026-10-29 (owner decision).** Every shipped agent runs on
+`gpt-6.1-terra` — no agent stays on Sol. `gpt-6.1-luna` is not available on
+this account; `ultra` is never used (it adds automatic sub-agent delegation
+and was not part of the decision). The coordinator (the owner's own Codex
+session) is not a shipped agent TOML and stays outside this policy.
 
-The exact groups (38 total): `gpt-6.1-sol` / `high` (1) — `design-expert`;
-`gpt-6.1-sol` / `medium` (37) — every other agent in the Inventory below
-(`skill-creator` joined on 2026-10-12 at the new-agent default).
-New agents default to `gpt-6.1-sol` / `medium`; `high` is reserved for
-`design-expert`, and any other effort needs a new owner decision. Valid
-efforts: the Codex catalog lists `low` through `ultra` (catalog default
-`low`); the API model page lists `low`, `medium` (API default), `high`,
-`xhigh`, `max`. Prices per 1M tokens, standard, ≤272K input (input / cached
-input / output; developers.openai.com/api/docs/models/gpt-6.1-sol and
-/api/docs/pricing): `gpt-6.1-sol` $2.00 / $0.10 / $10.00.
+Groups (30 + 5 + 3 = 38): `max` (3) — `design-expert`, `challenger`,
+`security-expert` (visual and security/adversarial gates); `high` (5) —
+`sniper`, `brainstorming`, `prompt-engineer`, `skill-creator`,
+`solid-orchestrator` (heavy judgment); `medium` (30) — every other agent in
+the Inventory below, including the code executors and `commit`. New agents
+default to `gpt-6.1-terra` / `medium`; any other model or effort needs a new
+owner decision. No verified Terra price is recorded. Rationale (owner's
+blind benchmark, 2026-10-29): Terra medium equals Sol medium on code
+executors (27/27 hidden tests, same blind Laravel review 31/40, 1.5x faster,
+3x cheaper); Terra max won every visual test; Sol won no test (it ignored
+"no tools" instructions, cost 3-10x more, twice failed "model at capacity").
+
+### History (all gpt-6.1-sol, superseded 2026-10-29)
+
+The 2026-09-30 owner decision ("okay passe les tous en v 6.1") put every
+shipped agent on `gpt-6.1-sol`: `design-expert` alone at `high`, every other
+agent at `medium` (`skill-creator` joined 2026-10-12 at that default).
+`gpt-6.1-sol` price: $2.00 / $0.10 / $10.00 per 1M tokens (standard, ≤272K
+input). Superseded by the 2026-10-29 Terra matrix above.
 
 ### History (all gpt-6-sol, superseded 2026-09-30)
 

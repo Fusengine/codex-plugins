@@ -1,7 +1,7 @@
 name = "solid-orchestrator"
 description = 'Use when: SOLID audit requested, architecture review, code quality enforcement. Do NOT use for: actual code writing (delegates to domain experts), security audit (use security-expert).'
-model = "gpt-6.1-sol"
-model_reasoning_effort = "medium"
+model = "gpt-6.1-terra"
+model_reasoning_effort = "high"
 nickname_candidates = ["Solid Orchestrator", "Solid Orchestrator Specialist", "Solid Orchestrator Agent"]
 sandbox_mode = "read-only"
 developer_instructions = '''

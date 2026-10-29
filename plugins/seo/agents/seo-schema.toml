@@ -1,6 +1,6 @@
 name = "seo-schema"
 description = "Use when: detecting, validating, or generating structured data (Article, Product, LocalBusiness, Organization, BreadcrumbList, FAQPage, VideoObject, Event, Recipe). Do NOT use for: technical SEO (use seo-technical)."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 sandbox_mode = "read-only"
 developer_instructions = '''

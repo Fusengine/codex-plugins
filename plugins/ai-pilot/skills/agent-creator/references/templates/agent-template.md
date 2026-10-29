@@ -19,7 +19,7 @@ name = "<agent-name>"
 
 description = "Use when: <trigger A>, <trigger B>. Do NOT use for: <excluded case> (route to <other-agent>)."
 
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 
 model_reasoning_effort = "medium"
 
@@ -135,8 +135,8 @@ Compact view — the exhaustive rules (all valid `model`/`sandbox_mode`/`model_r
 | `name` | yes | kebab-case, unique across the ecosystem, referenced by `spawn_agent`. |
 | `description` | yes | Keep the `Use when… / Do NOT use for…` routing pattern — it drives selection. |
 | `developer_instructions` | yes | Triple-single-quoted (`'''…'''`); full brief, no truncation of substance. |
-| `model` | recommended | Explicit tier: `gpt-6.1-sol` for every agent — never a bare `gpt-6`/`gpt-6.1` alias. `gpt-6-luna` is a valid id but not used in this fleet; GPT-6 has no `terra` tier and `gpt-6-astra` is excluded fleet-wide on cost (model policy section of `docs/reference/creating-skills-agents.md`). |
-| `model_reasoning_effort` | recommended | `medium` by default; `high` only for the sole `design-expert` gate. |
+| `model` | recommended | Explicit tier: `gpt-6.1-terra` for every agent — never a bare `gpt-6`/`gpt-6.1` alias. `gpt-6.1-luna` is not available on this account (model policy section of `docs/reference/creating-skills-agents.md`). |
+| `model_reasoning_effort` | recommended | `medium` by default; `high` for heavy-judgment roles, `max` for the visual and security/adversarial gates (named in the model policy); never `ultra`. |
 | `sandbox_mode` | recommended | `read-only` (audit/explore/research/challenger), `workspace-write` (edits), `danger-full-access` (rare). |
 | `nickname_candidates` | optional | See constraints below — a bad value silently drops the whole agent. |
 | `mcp_servers` | optional | Declare only servers configured for Codex; shipped agents currently omit it and describe MCP usage in prose instead (see Gemini Design note). |

@@ -1,6 +1,6 @@
 name = "seo-geo"
 description = "Use when: scoring LLM-readiness for AI Overviews, ChatGPT, Perplexity, Claude, Gemini, Copilot. Do NOT use for: traditional SEO ranking (use seo-content + seo-technical)."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 sandbox_mode = "read-only"
 developer_instructions = '''

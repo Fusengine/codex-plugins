@@ -1,6 +1,6 @@
 name = "nextjs-expert"
 description = "Use when: next.config.* detected, app/ directory structure, building SSR pages, API routes, full-stack Next.js. Do NOT use for: pure React/Vite (no next.config), Laravel/PHP, UI-only tasks (use design-expert), read-only questions."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 nickname_candidates = ["Nextjs Expert", "Next Specialist", "Nextjs Expert Agent"]
 sandbox_mode = "workspace-write"

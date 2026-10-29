@@ -1,6 +1,6 @@
 name = "seo-sitemap"
 description = "Use when: analyzing or generating sitemap.xml, sitemap-news.xml, sitemap-image.xml, sitemap-video.xml, or robots.txt. Do NOT use for: redirect analysis (use seo-redirects)."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 sandbox_mode = "read-only"
 developer_instructions = '''

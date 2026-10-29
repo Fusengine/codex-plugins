@@ -1,7 +1,7 @@
 name = "brainstorming"
 description = "Use when: new features, component creation, major changes, adding functionality — triggers BEFORE Analyze phase. Do NOT use for: bug fixes, trivial changes, refactoring, read-only tasks."
-model = "gpt-6.1-sol"
-model_reasoning_effort = "medium"
+model = "gpt-6.1-terra"
+model_reasoning_effort = "high"
 nickname_candidates = ["Brainstormer", "Design Agent"]
 sandbox_mode = "read-only"
 developer_instructions = '''

@@ -4,74 +4,80 @@ import { identityNicknames, normalizeSkillNames } from "./agent-names.ts";
 import { skillConfigLines, tomlArray, tomlMultiline, tomlString } from "./agent-toml-format.ts";
 import type { AgentTomlOptions } from "./agent.types.ts";
 
-/** A supported Codex model and reasoning-effort pair (Sol 6.1 only since 2026-09-30). */
+/** A supported Codex model and reasoning-effort pair (Terra 6.1 only since 2026-10-29). */
 type ModelProfile = {
-	model: "gpt-6.1-sol";
-	effort: "medium" | "high";
+	model: "gpt-6.1-terra";
+	effort: "medium" | "high" | "max";
 };
 
-const SOL_MEDIUM: ModelProfile = { model: "gpt-6.1-sol", effort: "medium" };
-const SOL_HIGH: ModelProfile = { model: "gpt-6.1-sol", effort: "high" };
+const TERRA_MEDIUM: ModelProfile = { model: "gpt-6.1-terra", effort: "medium" };
+const TERRA_HIGH: ModelProfile = { model: "gpt-6.1-terra", effort: "high" };
+const TERRA_MAX: ModelProfile = { model: "gpt-6.1-terra", effort: "max" };
 
 /**
- * Canonical shipped-agent policy (38 agents, GPT-6.1 fleet, applied
- * 2026-09-30): 37 `gpt-6.1-sol` `medium` + 1 `gpt-6.1-sol` `high`, zero Luna.
- * 2026-10-12: `skill-creator` added at the new-agent default (`medium`).
+ * Canonical shipped-agent policy (38 agents, GPT-6.1 Terra fleet, applied
+ * 2026-10-29): 30 `gpt-6.1-terra` `medium` + 5 `high` + 3 `max`, zero Sol,
+ * no `ultra`.
  *
- * Owner decision (verbatim, 2026-09-30): "okay passe les tous en v 6.1".
- * Every agent moves from `gpt-6-sol` to `gpt-6.1-sol`; efforts are unchanged.
+ * Owner decision (verbatim, 2026-10-29): "That is 30 + 5 + 3 = 38 agents. No
+ * agent stays on Sol. Do not use `ultra`, which adds automatic sub-agent
+ * delegation and was not part of the decision."
+ * Rationale (blind benchmark, 2026-10-29): Terra medium equals Sol medium on
+ * code executors (27/27 hidden tests, same blind Laravel review 31/40, 1.5x
+ * faster, 3x cheaper); Terra max won every visual test; Sol won no test.
  *
- * Resulting matrix: `high` is `design-expert` only (1 agent) —
- * one-shot-correctness gate, unchanged. `medium` (37) is every other
- * agent, including `security-expert`, `challenger`, `commit`, and `sniper`.
+ * Resulting matrix: `max` (3) is `design-expert`, `challenger`,
+ * `security-expert`. `high` (5) is `sniper`, `brainstorming`,
+ * `prompt-engineer`, `skill-creator`, `solid-orchestrator`. `medium` (30) is
+ * every other agent, including the code executors and `commit`.
  *
  * Superseded policies (GPT-5.6 tiers; the 2026-09-23 GPT-6 Sol/Luna split and
- * its benchmark; the 2026-09-27 all-`gpt-6-sol` state) live only in
- * docs/workflow/agents.md § History.
+ * its benchmark; the 2026-09-27 all-`gpt-6-sol` state; the 2026-09-30
+ * all-`gpt-6.1-sol` state) live only in docs/workflow/agents.md § History.
  */
 export const AGENT_MODEL_PROFILES: Record<string, ModelProfile> = {
-	"astro-expert": SOL_MEDIUM,
-	"go-expert": SOL_MEDIUM,
-	"laravel-expert": SOL_MEDIUM,
-	"nextjs-expert": SOL_MEDIUM,
-	"php-expert": SOL_MEDIUM,
-	"react-expert": SOL_MEDIUM,
-	"rust-expert": SOL_MEDIUM,
-	"shadcn-ui-expert": SOL_MEDIUM,
-	"swift-expert": SOL_MEDIUM,
-	"tailwindcss-expert": SOL_MEDIUM,
-	"tanstack-start-expert": SOL_MEDIUM,
-	"typescript-expert": SOL_MEDIUM,
-	"sniper-faster": SOL_MEDIUM,
-	websearch: SOL_MEDIUM,
-	cartographer: SOL_MEDIUM,
-	"commit-detector": SOL_MEDIUM,
-	"seo-images": SOL_MEDIUM,
-	"seo-sitemap": SOL_MEDIUM,
-	brainstorming: SOL_MEDIUM,
-	"solid-orchestrator": SOL_MEDIUM,
-	commit: SOL_MEDIUM,
-	"explore-codebase": SOL_MEDIUM,
-	"research-expert": SOL_MEDIUM,
-	"changelog-watcher": SOL_MEDIUM,
-	"lessons-compactor": SOL_MEDIUM,
-	"seo-expert": SOL_MEDIUM,
-	"seo-content": SOL_MEDIUM,
-	"seo-geo": SOL_MEDIUM,
-	"seo-local": SOL_MEDIUM,
-	"seo-cluster": SOL_MEDIUM,
-	"seo-technical": SOL_MEDIUM,
-	"seo-schema": SOL_MEDIUM,
-	sniper: SOL_MEDIUM,
-	"prompt-engineer": SOL_MEDIUM,
-	challenger: SOL_MEDIUM,
-	"security-expert": SOL_MEDIUM,
-	"skill-creator": SOL_MEDIUM,
-	"design-expert": SOL_HIGH,
+	"astro-expert": TERRA_MEDIUM,
+	"go-expert": TERRA_MEDIUM,
+	"laravel-expert": TERRA_MEDIUM,
+	"nextjs-expert": TERRA_MEDIUM,
+	"php-expert": TERRA_MEDIUM,
+	"react-expert": TERRA_MEDIUM,
+	"rust-expert": TERRA_MEDIUM,
+	"shadcn-ui-expert": TERRA_MEDIUM,
+	"swift-expert": TERRA_MEDIUM,
+	"tailwindcss-expert": TERRA_MEDIUM,
+	"tanstack-start-expert": TERRA_MEDIUM,
+	"typescript-expert": TERRA_MEDIUM,
+	"sniper-faster": TERRA_MEDIUM,
+	websearch: TERRA_MEDIUM,
+	cartographer: TERRA_MEDIUM,
+	"commit-detector": TERRA_MEDIUM,
+	"seo-images": TERRA_MEDIUM,
+	"seo-sitemap": TERRA_MEDIUM,
+	brainstorming: TERRA_HIGH,
+	"solid-orchestrator": TERRA_HIGH,
+	commit: TERRA_MEDIUM,
+	"explore-codebase": TERRA_MEDIUM,
+	"research-expert": TERRA_MEDIUM,
+	"changelog-watcher": TERRA_MEDIUM,
+	"lessons-compactor": TERRA_MEDIUM,
+	"seo-expert": TERRA_MEDIUM,
+	"seo-content": TERRA_MEDIUM,
+	"seo-geo": TERRA_MEDIUM,
+	"seo-local": TERRA_MEDIUM,
+	"seo-cluster": TERRA_MEDIUM,
+	"seo-technical": TERRA_MEDIUM,
+	"seo-schema": TERRA_MEDIUM,
+	sniper: TERRA_HIGH,
+	"prompt-engineer": TERRA_HIGH,
+	challenger: TERRA_MAX,
+	"security-expert": TERRA_MAX,
+	"skill-creator": TERRA_HIGH,
+	"design-expert": TERRA_MAX,
 };
 
 /** New agents default to the standard execution profile until explicitly classified. */
-const FALLBACK_PROFILE = SOL_MEDIUM;
+const FALLBACK_PROFILE = TERRA_MEDIUM;
 
 const WRITE_TOOLS = new Set(["Edit", "Write", "MultiEdit", "NotebookEdit"]);
 

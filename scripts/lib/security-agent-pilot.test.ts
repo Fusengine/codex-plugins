@@ -3,6 +3,7 @@ import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 import { parse } from "smol-toml";
+import { AGENT_MODEL_PROFILES } from "./agent-toml";
 import { materializeAgentFiles } from "./install/agent-materializer";
 import { agentProfile, command } from "./security-agent-pilot-run";
 
@@ -43,9 +44,12 @@ test("materialized security agent preserves the captured metadata and six skills
 	const baseline = parsedConfig(BASELINE_PATH);
 	const { config, cleanup } = await materializedConfig();
 	try {
-		for (const field of ["name", "description", "model", "sandbox_mode", "nickname_candidates"]) {
+		for (const field of ["name", "description", "sandbox_mode", "nickname_candidates"]) {
 			expect(config[field]).toEqual(baseline[field]);
 		}
+		expect(config.model).toEqual(AGENT_MODEL_PROFILES["security-expert"]?.model);
+		expect(config.model).toEqual(parsedConfig(AGENT_PATH).model);
+		expect(config.model_reasoning_effort).toEqual(AGENT_MODEL_PROFILES["security-expert"]?.effort);
 		expect(config.model_reasoning_effort).toEqual(parsedConfig(AGENT_PATH).model_reasoning_effort);
 		expect(normalizedSkills(config)).toEqual(skillConfigs(baseline));
 		expect(skillConfigs(config)).toHaveLength(6);

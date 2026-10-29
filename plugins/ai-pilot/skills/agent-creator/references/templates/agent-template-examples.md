@@ -17,7 +17,7 @@ name = "nextjs-expert"
 
 description = "Use when: next.config.* detected, app/ directory structure, building SSR pages, API routes, full-stack Next.js. Do NOT use for: pure React/Vite (no next.config), Laravel/PHP, UI-only tasks (use design-expert), read-only questions."
 
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 
 model_reasoning_effort = "medium"
 
@@ -71,7 +71,7 @@ name = "laravel-expert"
 
 description = "Use when: composer.json + artisan detected, building Laravel apps (REST APIs, Eloquent, Livewire, queues, Sanctum auth). Do NOT use for: React/Vue frontend (use react-expert), Next.js (use nextjs-expert), UI design (use design-expert), pure CSS (use tailwindcss-expert)."
 
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 
 model_reasoning_effort = "medium"
 
@@ -118,4 +118,4 @@ The real file adds 21 more `[[skills.config]]` entries (fusecore, architecture, 
 
 ## Model/effort note
 
-Both examples use `gpt-6.1-sol` / `medium` — the fleet default for every agent except `design-expert` (Sol/high), per the model policy section of `docs/reference/creating-skills-agents.md`, current since the 2026-09-30 owner decision. Superseded tiers for these two agents are recorded only in the Model Policy history of `docs/workflow/agents.md`.
+Both examples use `gpt-6.1-terra` / `medium` — the fleet default for code executors and every agent outside the `high`/`max` groups, per the model policy section of `docs/reference/creating-skills-agents.md`, current since the 2026-10-29 owner decision. Superseded tiers for these two agents are recorded only in the Model Policy history of `docs/workflow/agents.md`.

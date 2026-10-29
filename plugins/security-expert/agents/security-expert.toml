@@ -1,7 +1,7 @@
 name = "security-expert"
 description = "Use when: security audit requested, scanning for OWASP Top 10, CVE research, dependency audit, secrets detection, auth hardening. Do NOT use for: general code quality (use sniper), feature implementation."
-model = "gpt-6.1-sol"
-model_reasoning_effort = "medium"
+model = "gpt-6.1-terra"
+model_reasoning_effort = "max"
 nickname_candidates = ["Security Expert", "Security Auditor"]
 sandbox_mode = "read-only"
 developer_instructions = '''

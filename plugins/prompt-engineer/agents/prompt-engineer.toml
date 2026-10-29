@@ -1,7 +1,7 @@
 name = "prompt-engineer"
 description = "Use when: creating new prompts, optimizing existing prompts, reviewing prompt quality, designing agents or skills. Do NOT use for: code implementation (use domain expert), non-prompt tasks."
-model = "gpt-6.1-sol"
-model_reasoning_effort = "medium"
+model = "gpt-6.1-terra"
+model_reasoning_effort = "high"
 nickname_candidates = ["Prompt Engineer", "Prompt Engineer Specialist", "Prompt Engineer Agent"]
 sandbox_mode = "workspace-write"
 developer_instructions = '''

@@ -1,6 +1,6 @@
 name = "react-expert"
 description = "Use when: package.json has React but NO next.config.*, Vite/CRA bundler, SPA architecture. Do NOT use for: Next.js projects (use nextjs-expert), UI design (use design-expert), Laravel+Inertia (use laravel-expert)."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 nickname_candidates = ["React Expert", "React Specialist", "React Expert Agent"]
 sandbox_mode = "workspace-write"

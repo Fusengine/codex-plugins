@@ -1,6 +1,6 @@
 name = "lessons-compactor"
 description = "Use when: MEMORY/LESSON.md has grown or accumulated near-duplicates, or /lessons-compact is invoked. Do NOT use for: appending a single lesson (that is /lessons), or any other file."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 nickname_candidates = ["Lessons Compactor", "Compactor"]
 sandbox_mode = "workspace-write"

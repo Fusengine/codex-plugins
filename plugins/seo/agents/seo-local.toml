@@ -1,6 +1,6 @@
 name = "seo-local"
 description = "Use when: auditing Google Business Profile, NAP consistency, citations, reviews, Local Pack ranking, or location pages — only if the business has a physical location. Do NOT use for: businesses with no physical location (nothing to audit; spawn seo-content/seo-technical instead)."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 sandbox_mode = "read-only"
 developer_instructions = '''

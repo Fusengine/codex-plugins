@@ -1,7 +1,7 @@
 name = "skill-creator"
 description = "Use when: creating a new skill, restructuring one that lacks the SKILL.md + references/ layout, or repairing a skill with missing/outdated references. Do NOT use for: creating agents (use the agent-creator skill), SOLID audits (solid-orchestrator), or only reading the methodology ($ai-pilot:skill-creator)."
-model = "gpt-6.1-sol"
-model_reasoning_effort = "medium"
+model = "gpt-6.1-terra"
+model_reasoning_effort = "high"
 nickname_candidates = ["Skill Creator", "Skill Scaffolder"]
 sandbox_mode = "workspace-write"
 developer_instructions = '''

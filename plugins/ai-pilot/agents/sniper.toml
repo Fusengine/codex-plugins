@@ -1,7 +1,7 @@
 name = "sniper"
 description = "Use when: after ANY code modification (mandatory post-edit validation). Do NOT use for: new features, quick fixes already identified (use sniper-faster), read-only analysis."
-model = "gpt-6.1-sol"
-model_reasoning_effort = "medium"
+model = "gpt-6.1-terra"
+model_reasoning_effort = "high"
 nickname_candidates = ["Sniper", "Sniper Specialist", "Sniper Agent"]
 sandbox_mode = "workspace-write"
 developer_instructions = '''

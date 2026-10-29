@@ -1,6 +1,6 @@
 name = "tanstack-start-expert"
 description = "Use when: @tanstack/react-start in package.json, tanstackStart() in vite.config, src/routes/ + routeTree.gen.ts. Do NOT use for: Next.js (use nextjs-expert), plain React SPA without Start (use react-expert), pure routing/Query/Form questions (react-expert's react-tanstack-router/react-forms skills cover those)."
-model = "gpt-6.1-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "medium"
 nickname_candidates = ["Tanstack Start Expert", "Tanstack Start Expert Specialist", "Tanstack Start Expert Agent"]
 sandbox_mode = "workspace-write"
