@@ -7,7 +7,7 @@
           {
             "type": "command",
             "command": "bun \"${CODEX_HOME:-$HOME/.codex}/node_modules/@fusengine/harness/dist/cli/bin.mjs\" hook codex rules",
-            "additionalContextLimit": 6000
+            "additionalContextLimit": 0
           }
         ]
       }
@@ -19,7 +19,7 @@
           {
             "type": "command",
             "command": "bun \"${CODEX_HOME:-$HOME/.codex}/node_modules/@fusengine/harness/dist/cli/bin.mjs\" hook codex rules",
-            "additionalContextLimit": 6000
+            "additionalContextLimit": 0
           }
         ]
       }
@@ -31,7 +31,7 @@
           {
             "type": "command",
             "command": "bun \"${CODEX_HOME:-$HOME/.codex}/node_modules/@fusengine/harness/dist/cli/bin.mjs\" hook codex rules",
-            "additionalContextLimit": 6000
+            "additionalContextLimit": 0
           }
         ]
       }

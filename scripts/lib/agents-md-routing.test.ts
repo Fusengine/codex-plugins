@@ -1,13 +1,23 @@
 import { expect, test } from "bun:test";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const root = join(import.meta.dir, "..", "..");
 const agentsPath = "AGENTS.md";
 const orchestrationPath = "plugins/ai-pilot/skills/lead-orchestration/SKILL.md";
 const lessonsPath = "plugins/lessons/agents/lessons-compactor.toml";
+const rulesDir = "plugins/codex-rules/rules";
+/** Rule files that received AGENTS.md content in the 2026-11-09 v3 restructure (docs/archive/2026-11-09-agents-v2/README.md). */
+const rule = {
+	critical: `${rulesDir}/00-critical-rules.md`,
+	apex: `${rulesDir}/02-apex-workflow.md`,
+	solid: `${rulesDir}/04-solid-dry-rules.md`,
+	tooling: `${rulesDir}/06-tooling-rules.md`,
+	subagent: `${rulesDir}/08-subagent-conduct.md`,
+} as const;
 const read = (path: string): string => readFileSync(join(root, path), "utf8");
 const agents = read(agentsPath);
+const rulesCorpus = readdirSync(join(root, rulesDir)).filter((f) => f.endsWith(".md")).map((f) => read(`${rulesDir}/${f}`)).join("\n");
 const legacyBaselineProvenance = {
 	headCommit: "1de3384f6161ea6aa237f7dec67e87d70f1d4fd3",
 	contentSha256: "781deb3c586095f4ab3bffb904063f50d5fa292d45abb528af4004a9a76637e3",
@@ -23,6 +33,7 @@ type MaterialLegacyContractEntry = { id: string; legacyEvidence: string; disposi
 type Route = Pick<MaterialLegacyContractEntry, "destination" | "required">;
 const a = (...required: RegExp[]): Route => ({ destination: agentsPath, required });
 const o = (...required: RegExp[]): Route => ({ destination: orchestrationPath, required });
+const r = (destination: string, ...required: RegExp[]): Route => ({ destination, required });
 const p = (id: string, legacyEvidence: string, route: Route, rationale = "The compact destination preserves the normative behavior."): MaterialLegacyContractEntry => ({ id, legacyEvidence, disposition: "preserved", ...route, rationale });
 const s = (id: string, legacyEvidence: string, route: Route, rationale: string): MaterialLegacyContractEntry => ({ id, legacyEvidence, disposition: "superseded", ...route, rationale });
 
@@ -40,30 +51,30 @@ const materialLegacyInventory: MaterialLegacyContractEntry[] = [
 	p("named-defect-verdict", "A short positive verdict is not necessarily global", a(/prove the named defect itself before reporting progress or completion/i)),
 	p("owner-correction", "When a human verdict contradicts your measurement", a(/owner correction overrides conflicting measurements.*every active and future mandate/is)),
 	p("two-failed-delegations", "After 2 failed delegations on a localised, already-measured defect: read and fix it yourself.", a(/After 2 failed delegations on a localised, already-measured defect, the lead reads and fixes it itself \(the only case where the lead edits\); any other blocked mandate past the 3-cycle cap is escalated to the owner with a root-cause note\./)),
-	p("latest-stable", "ALWAYS use latest stable versions for the current year", a(/in-mandate technology choices.*latest stable versions for the current year.*verify.*never expand scope merely to upgrade/is)),
-	p("skeptical-posture", "Posture: skeptical, analytical, direct, ultra-concise.", a(/skeptical, analytical full-stack engineer.*I don't know/is)),
-	p("expert-owner", "User = expert engineer who knows the system better than you", a(/Treat the user as the domain expert.*omit filler or basic tutorials/is)),
-	p("concise-communication", "Writing style (ALWAYS): clear, concise, precise.", a(/Lead with the answer, stay direct and concise.*one answer is expected.*do not use exhaustive lists.*recap theory before the point.*restate what the user already knows/is)),
+	p("latest-stable", "ALWAYS use latest stable versions for the current year", r(rule.critical, /in-mandate technology choices.*latest stable versions for the current year.*verify.*never expand scope merely to upgrade/is)),
+	p("skeptical-posture", "Posture: skeptical, analytical, direct, ultra-concise.", r(rule.critical, /skeptical, analytical full-stack engineer.*I don't know/is)),
+	p("expert-owner", "User = expert engineer who knows the system better than you", r(rule.critical, /Treat the user as the domain expert.*omit filler or basic tutorials/is)),
+	p("concise-communication", "Writing style (ALWAYS): clear, concise, precise.", r(rule.critical, /Lead with the answer, stay direct and concise.*one answer is expected.*do not use exhaustive lists.*recap theory before the point.*restate what the user already knows/is)),
 	p("always-delegate", "ALWAYS DELEGATE", a(/\*\*ALWAYS DELEGATE\.\*\*.*\$ai-pilot:lead-orchestration/is), "AGENTS retains only the trigger; the procedure is routed to lead-orchestration."),
 	p("two-speed-briefing", "Two-speed communication, ALWAYS", o(/self-contained mandate.*Inputs:.*Expected outputs:.*Report:/is)),
-	p("apex-order", "FULL APEX MANDATORY", a(/After Execute.*elicitation.*--auto.*challenge.*Functional completion.*verification.*challenge.*only after eLicit \+ challenger and Verify \+ challenger.*code-quality.*sniper/is)),
+	p("apex-order", "FULL APEX MANDATORY", r(rule.apex, /After Execute.*elicitation.*--auto.*challenge.*Functional completion.*verification.*challenge.*only after eLicit \+ challenger and Verify \+ challenger.*code-quality.*sniper/is)),
 	p("domain-expert", "RIGHT AGENT FOR EACH TASK", o(/matching domain expert.*Never substitute a generic agent/is)),
 	p("exit-contract", "EXIT CONTRACT", o(/Exit Contract.*Stop:.*Retry:.*Rollback:.*Ask:.*Escalate:/is)),
 	p("irreversible-only-ask", "CLARIFY BEFORE IRREVERSIBLE", a(/Ask only before an irreversible action or a material expansion of scope/i)),
-	p("sequential-thinking", "THINK SEQUENTIALLY (MCP)", a(/multi-step reasoning.*MUST invoke the sequential-thinking tool first/i)),
-	p("read-before-action", "READ + EXPLORE before acting", a(/Read every target before editing it/i)),
-	p("sniper-mandatory", "ALWAYS run `sniper`", a(/After any code, config, or documentation modification.*code-quality.*sniper agent/is)),
-	p("challenger-mandatory", "ALWAYS run the `challenger`", a(/root-cause conclusion.*done\/verified claim.*irreversible action.*second attempt.*eLicit or Verify gate.*challenge.*challenger/is)),
-	p("dry-grep", "NEVER duplicate code", a(/Before new code, grep for reusable implementations/i)),
-	p("self-challenge", "Challenge own ideas via `research-expert` + fuse-browser fast-path before proposing.", a(/Before proposing any idea.*MUST challenge it through both.*\$ai-pilot:research.*\$ai-pilot:fuse-browser-usage/is)),
-	p("technical-verification", "ALWAYS verify before ANY technical claim or API usage", a(/current facts or versions, uncertain APIs, or technical claims.*research.*fuse-browser-usage/is)),
-	p("owner-attribution", "Any reference, URL, constraint or preference attributed to the owner must be citable", a(/fact, reference, URL, constraint, or preference attributed to the owner.*exact conversation turn or repository file/is)),
-	p("new-hypothesis", "NEVER propose the same fix twice", a(/Never repeat a failed fix.*different documented hypothesis/is)),
-	p("cartography", "Cartography (Step 1 of every task)", a(/injected\/current cartography path.*never a hardcoded cache-version path.*map.*leaf.*source/is)),
+	p("sequential-thinking", "THINK SEQUENTIALLY (MCP)", r(rule.critical, /multi-step reasoning.*MUST invoke the sequential-thinking tool first/i)),
+	p("read-before-action", "READ + EXPLORE before acting", r(rule.critical, /Read every target before editing it/i)),
+	p("sniper-mandatory", "ALWAYS run `sniper`", r(rule.apex, /After any code, config, or documentation modification.*code-quality.*sniper agent/is)),
+	p("challenger-mandatory", "ALWAYS run the `challenger`", r(rule.apex, /root-cause conclusion.*done\/verified claim.*irreversible action.*second attempt.*eLicit or Verify gate.*challenge.*challenger/is)),
+	p("dry-grep", "NEVER duplicate code", r(rule.critical, /Before new code, grep for reusable implementations/i)),
+	p("self-challenge", "Challenge own ideas via `research-expert` + fuse-browser fast-path before proposing.", r(rule.apex, /Before proposing any idea.*MUST challenge it through both.*\$ai-pilot:research.*\$ai-pilot:fuse-browser-usage/is)),
+	p("technical-verification", "ALWAYS verify before ANY technical claim or API usage", r(rule.apex, /current facts or versions, uncertain APIs, or technical claims.*research.*fuse-browser-usage/is)),
+	p("owner-attribution", "Any reference, URL, constraint or preference attributed to the owner must be citable", r(rule.critical, /fact, reference, URL, constraint, or preference attributed to the owner.*exact conversation turn or repository file/is)),
+	p("new-hypothesis", "NEVER propose the same fix twice", r(rule.critical, /Never repeat a failed fix.*different documented hypothesis/is)),
+	p("cartography", "Cartography (Step 1 of every task)", r(rule.subagent, /injected\/current cartography path.*never a hardcoded cache-version path.*map.*leaf.*source/is)),
 	p("executor-non-nesting", "Sub-agent reading this: the line above is not yours.", o(/spawned executor.*does not create another delegation tree unless explicitly assigned/is)),
 	p("mandatory-analyze-trio", "ALWAYS launch ALL 3 agents in a SINGLE message", o(/Analyze always starts the trio in one parallel message.*explore-codebase.*research-expert.*domain expert/is)),
 	s("lead-never-reads", "NEVER use Read/Glob/Grep yourself", o(/lead orchestrates and never executes task work.*Verify the artifact on disk/is), "The absolute tool ban prevented mandatory artifact verification; the lead remains non-executing but may verify read-only evidence."),
-	p("target-read-exception", "file you are about to Edit — Read it yourself first", a(/Read every target before editing it/i)),
+	p("target-read-exception", "file you are about to Edit — Read it yourself first", r(rule.critical, /Read every target before editing it/i)),
 	s("smallest-delegation", "Scope ladder — take the smallest tool that suffices.", o(/read-only question -> `explore-codebase` alone; anything that touches code -> the Analyze trio.*trivial 1-3 line change -> `apex-quick`, one agent \(still delegated: the lead never edits\).*dependency graph.*assigned.*validated.*result against the disk/is), `${claudeScopeLadderDecision} Read-only → explore-codebase alone, code → Analyze trio, trivial 1-3 line → apex-quick with one delegated agent.`),
 	s("team-ask-conflict", "Propose a subagent team", o(/explicitly asks for a team, start one immediately/is), "Reversible orchestration does not require a redundant question; explicit team requests execute immediately."),
 	s("team-size", "team is MINIMUM 4 subagents", o(/explicitly asks for a team, start one immediately: one named agent per task, up to 6 per wave, no debate/i), `${claudeScopeLadderDecision} A requested team is one named agent per task, up to 6 per wave, never a minimum of four.`),
@@ -77,30 +88,30 @@ const materialLegacyInventory: MaterialLegacyContractEntry[] = [
 	p("agent-lifecycle", "Close completed subagents", o(/Stop or close every writer before the final sniper pass/is)),
 	p("source-only", "ALWAYS work in dev/source repo", a(/Work only in the source repository.*dirty worktree.*unrelated edits/is)),
 	s("automatic-deployed-sync", "Sync to deployed", a(/NEVER perform.*write\/sync directly to deployed.*without explicit authorization/is), "Automatic deployed sync conflicted with the hard stop; deployment writes now require an explicit mandate."),
-	p("commit-from-source", "Commit from source repo only", a(/Work only in the source repository.*Commit, branch, PR, merge, tag, or release/is)),
+	p("commit-from-source", "Commit from source repo only", a(/Commit, branch, PR, merge, tag, or release.*Work only in the source repository/is)),
 	p("read-only-git", "Git read-only (status, log, diff)", a(/Read-only Git is allowed/i)),
-	p("apex-route", "consult APEX skills first", a(/Create, build, implement, fix, refactor, debug.*\$ai-pilot:apex-methodology/is)),
-	p("solid-route", "consult SOLID skills", a(/SOLID\/DRY architecture or refactor task.*\$solid:solid-detection.*matching `solid-\*` skill it selects/is)),
-	s("duplicated-rules-corpus", "Full rule detail", a(/Keep delegation procedure out of this file.*Mandatory skill routes/is), "The owner required a compact AGENTS file with procedural detail routed to skills, not a duplicated rules corpus."),
+	p("apex-route", "consult APEX skills first", r(rule.apex, /Create, build, implement, fix, refactor, debug.*\$ai-pilot:apex-methodology/is)),
+	p("solid-route", "consult SOLID skills", r(rule.solid, /SOLID\/DRY architecture or refactor task.*\$solid:solid-detection.*matching `solid-\*` skill it selects/is)),
+	s("duplicated-rules-corpus", "Full rule detail", a(/Keep delegation procedure out of this file.*`02-apex-workflow`[^\n]*Mandatory skill routes/is), "The owner required a compact AGENTS file with procedural detail routed to skills, not a duplicated rules corpus; since 2026-11-09 (\"aligner Codex sur Claude\") AGENTS names the rule file that holds the Mandatory skill routes."),
 	p("commit-route", "Commit/release → delegate to the", a(/Commit, branch, PR, merge, tag, or release.*\$commit-pro:commit.*\$commit-pro:git-flow.*never hand-roll/is)),
-	p("memory-compaction", "Memory hygiene", a(/MEMORY\/LESSON\.md.*grows or accumulates near-duplicates.*MUST delegate.*lessons-compactor.*lessons-compact.*only proposes changes.*owner approval.*before any memory write/is)),
-	p("debug-analysis", "Debug/investigation (\"why\", \"not working\", \"bug\", \"crash\")", a(/Create, build, implement, fix, refactor, debug.*apex-methodology/is)),
-	p("apex-pipeline", "Brainstorm (skip for trivial fix/refactor/debug) -> Analyze", a(/After Execute.*elicitation.*challenge.*Functional completion.*verification.*challenge.*only after.*code-quality.*sniper/is)),
-	p("solid-research", "Research first", a(/SOLID\/DRY architecture or refactor task.*solid-detection/is)),
-	p("interfaces", "Interfaces separated", a(/SOLID\/DRY architecture or refactor task.*matching `solid-\*` skill/is)),
-	p("export-docs", "JSDoc/PHPDoc", a(/Document every exported function.*JSDoc, PHPDoc, or equivalent API documentation/is)),
-	p("dangling-references", "zero dangling refs after edit/split", a(/Preserve imports, exports, types, and readers/i)),
-	p("green-completion", "never report done with failing checks", a(/Never report done with failing checks.*concrete evidence/is)),
-	p("browser-fast-path", "Fast-path first", a(/cross-check the fuse-browser fast path, official docs\/Context7, and Exa.*docs over memory/is)),
+	p("memory-compaction", "Memory hygiene", r(rule.tooling, /MEMORY\/LESSON\.md.*grows or accumulates near-duplicates.*MUST delegate.*lessons-compactor.*lessons-compact.*only proposes changes.*owner approval.*before any memory write/is)),
+	p("debug-analysis", "Debug/investigation (\"why\", \"not working\", \"bug\", \"crash\")", r(rule.apex, /Create, build, implement, fix, refactor, debug.*apex-methodology/is)),
+	p("apex-pipeline", "Brainstorm (skip for trivial fix/refactor/debug) -> Analyze", r(rule.apex, /After Execute.*elicitation.*challenge.*Functional completion.*verification.*challenge.*only after.*code-quality.*sniper/is)),
+	p("solid-research", "Research first", r(rule.solid, /SOLID\/DRY architecture or refactor task.*solid-detection/is)),
+	p("interfaces", "Interfaces separated", r(rule.solid, /SOLID\/DRY architecture or refactor task.*matching `solid-\*` skill/is)),
+	p("export-docs", "JSDoc/PHPDoc", r(rule.solid, /Document every exported function.*JSDoc, PHPDoc, or equivalent API documentation/is)),
+	p("dangling-references", "zero dangling refs after edit/split", r(rule.critical, /Preserve imports, exports, types, and readers/i)),
+	p("green-completion", "never report done with failing checks", r(rule.critical, /Never report done with failing checks.*concrete evidence/is)),
+	p("browser-fast-path", "Fast-path first", r(rule.apex, /cross-check the fuse-browser fast path, official docs\/Context7, and Exa.*docs over memory/is)),
 	p("commit-workflow", "Prefer the Fusengine `commit-pro` workflow", a(/Commit, branch, PR, merge, tag, or release.*commit-pro:commit.*commit-pro:git-flow/is)),
 	p("protected-branches", "Never commit directly on those branches", a(/NEVER commit directly on `main`, `master`, `develop`, or `production`/is)),
 	p("merge-strategy", "never `--squash`", a(/Commit, branch, PR, merge, tag, or release.*commit-pro:git-flow/is), "Merge details remain in the routed git-flow skill; AGENTS retains the authorization boundary and route."),
 	p("hook-compliance", "skipped until reviewed/trusted", a(/Never bypass, disable, evade, or retry around a hook or policy block.*Follow the returned instruction/is)),
 	s("hook-event-inventory", "Official events: SessionStart", a(/Never bypass, disable, evade, or retry around a hook or policy block.*Follow the returned instruction/is), "A static event and environment inventory can drift; the compact invariant is to obey the current hook response and policy."),
-	s("embedded-codex-rules", "Detailed rules are loaded by the `codex-rules` plugin", a(/Mandatory skill routes/is), "The owner required procedures to be routed through named skills while AGENTS stays compact; the old embedded corpus description is no longer authoritative here."),
-	p("post-merge-tags", "tags are created POST-merge only", a(/Create release tags only after the merge is proven.*git merge-base --is-ancestor/is)),
-	p("mcp-single-source", "MCP single source", a(/never add `mcpServers` to a plugin manifest.*mcp\.json\.bak/is)),
-	p("rename-readers", "File renames", a(/rename or move.*grep the old basename repository-wide.*update every reader.*non-empty output/is)),
+	s("embedded-codex-rules", "Detailed rules are loaded by the `codex-rules` plugin", r(rule.apex, /## Mandatory skill routes\n.*\$ai-pilot:apex-methodology.*\$ai-pilot:code-quality/is), "The owner required procedures to be routed through named skills while AGENTS stays compact; since 2026-11-09 (\"aligner Codex sur Claude\") the routes themselves live in `02-apex-workflow`, which AGENTS points to."),
+	p("post-merge-tags", "tags are created POST-merge only", r(rule.tooling, /Create release tags only after the merge is proven.*git merge-base --is-ancestor/is)),
+	p("mcp-single-source", "MCP single source", r(rule.tooling, /never add `mcpServers` to a plugin manifest.*mcp\.json\.bak/is)),
+	p("rename-readers", "File renames", r(rule.tooling, /rename or move.*grep the old basename repository-wide.*update every reader.*non-empty output/is)),
 ];
 
 const globalContradictions = [
@@ -123,10 +134,11 @@ const forbiddenSemantics = [
 ];
 const hasForbiddenSemantic = (text: string): boolean => forbiddenSemantics.some((pattern) => pattern.test(text));
 
-test("every explicit AGENTS skill route resolves", () => {
-	const routes = [...agents.matchAll(/\$([a-z0-9-]+):([a-z0-9-]+)/g)];
+test("every explicit AGENTS + rules skill route resolves", () => {
+	const routes = [...`${agents}\n${rulesCorpus}`.matchAll(/\$([a-z0-9-]+):([a-z0-9-]+)/g)];
 	const names = [...new Set(routes.map(([, namespace, skill]) => `$${namespace}:${skill}`))];
 	expect(names.sort()).toEqual([...requiredRoutes].sort());
+	for (const route of ["$ai-pilot:lead-orchestration", "$ai-pilot:apex-methodology", "$commit-pro:commit", "$commit-pro:git-flow"]) expect(agents, route).toContain(route);
 	for (const [, namespace, skill] of routes) expect(existsSync(join(root, routeRoots[namespace]!, skill, "SKILL.md")), `$${namespace}:${skill}`).toBe(true);
 });
 
@@ -137,9 +149,9 @@ test("legacy baseline provenance is immutable metadata, not a runtime Git depend
 	expect(legacyBaselineProvenance.bytes).toBe(18_703);
 });
 
-test("AGENTS explicitly routes memory compaction to the existing agent", () => {
+test("the tooling rule explicitly routes memory compaction to the existing agent", () => {
 	expect(existsSync(join(root, lessonsPath))).toBe(true);
-	expect(agents).toMatch(/MEMORY\/LESSON\.md.*MUST delegate.*`lessons-compactor` agent.*owner approval.*before any memory write/is);
+	expect(read(rule.tooling)).toMatch(/MEMORY\/LESSON\.md.*MUST delegate.*`lessons-compactor` agent.*owner approval.*before any memory write/is);
 });
 
 test("material legacy behavior inventory has explicit durable dispositions", () => {
@@ -159,5 +171,7 @@ test("adversarial checks reject contradictions without treating unrelated number
 	for (const probe of globalContradictions) expect(hasForbiddenSemantic(probe), probe).toBe(true);
 	expect(hasForbiddenSemantic("The API rate limit is 100 requests per minute.")).toBe(false);
 	expect(hasForbiddenSemantic("The test suite reports 100% coverage.")).toBe(false);
-	expect(agents).not.toMatch(/mtime[^\n]*(?:minute|busy|stale)|TaskStop|interrupt_agent|fork_turns|agent_type|nickname|## Exit Contract/i);
+	// `interrupt_agent` is allowed since 2026-11-09: HARD STOP 4 names the only real stop on purpose (owner "aligner Codex sur Claude").
+	expect(agents).not.toMatch(/mtime[^\n]*(?:minute|busy|stale)|TaskStop|fork_turns|agent_type|nickname|## Exit Contract/i);
+	expect(agents).toMatch(/A message does NOT stop an agent\..*Only `interrupt_agent` stops it; confirm the mtimes stopped before reporting a state frozen/is);
 });

@@ -10,6 +10,8 @@ const policy = {
 	orchestration: read("plugins/ai-pilot/skills/lead-orchestration/SKILL.md"),
 	teams: read("plugins/codex-rules/rules/03-agent-teams.md"),
 	quick: read("plugins/ai-pilot/commands/apex-quick.md"),
+	// AGENTS.md "Mandatory skill routes" moved here on 2026-11-09 (docs/archive/2026-11-09-agents-v2/README.md).
+	apex: read("plugins/codex-rules/rules/02-apex-workflow.md"),
 } as const;
 
 // Owner decision 2026-11-08: "Version Claude" — the Claude scope ladder replaces the Codex
@@ -66,7 +68,7 @@ test("an owner-requested team starts immediately, one named agent per task, up t
 });
 
 test("APEX gates remain mandatory after execution", () => {
-	for (const source of [policy.agents, policy.quick]) {
+	for (const source of [policy.apex, policy.quick]) {
 		expect(source).toMatch(/elicitation.*--auto.*challeng/is);
 		expect(source).toMatch(/verification.*challeng/is);
 		expect(source).toMatch(/sniper/is);
