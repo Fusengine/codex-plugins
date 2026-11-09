@@ -1,4 +1,5 @@
 ## SOLID Skill per Stack (read before coding)
+File size: `FUSE_SOLID_MAX_LINES` is the only ceiling (AGENTS.md "Universal safety and quality"); a legitimate fix that cannot fit is never skipped — report it to the owner.
 
 | Agent | Skill | Interfaces |
 |-------|-------|------------|
@@ -13,4 +14,4 @@
 
 ## DRY (ZERO TOLERANCE)
 
-Before ANY new code: grep the codebase, then load the stack's SOLID skill — `$solid:solid-detection` routes to the right `solid-<stack>` (solid-nextjs, solid-react, solid-tanstack-start, solid-astro, solid-swift, solid-php, solid-go, solid-rust, solid-python, solid-java, solid-csharp, solid-ruby, solid-generic), which defines that stack's shared locations; extend/reuse what exists.
+Before ANY new code: apply `00-critical-rules` DRY Priority (grep first), then load the stack's SOLID skill — `$solid:solid-detection` routes to the right `solid-<stack>` (solid-nextjs, solid-react, solid-tanstack-start, solid-astro, solid-swift, solid-php, solid-go, solid-rust, solid-python, solid-java, solid-csharp, solid-ruby, solid-generic), which defines that stack's shared locations; extend/reuse what exists.

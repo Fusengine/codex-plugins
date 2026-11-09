@@ -87,19 +87,19 @@ git status
 ### Sync Frequently
 
 ```bash
-# Keep branch updated with main
+# Check how far the branch is behind main (read-only)
 git fetch origin main
-git rebase origin/main
-# OR
-git merge origin/main
+git log --oneline HEAD..origin/main
 ```
+
+Branch out of date with main → the `commit` agent's flow handles it (`mode: full`, end of mandate); never rebase and force-push a shared branch yourself (force-push needs the owner).
 
 ### Clean Commits
 
 ```text
 ✅ Atomic commits (one logical change)
 ✅ Conventional commit messages
-✅ No WIP commits in final PR
+✅ One conventional WIP commit per verified task, made by the `commit` agent — they stay in history (merge is `--merge`, never squash)
 ```
 
 ---

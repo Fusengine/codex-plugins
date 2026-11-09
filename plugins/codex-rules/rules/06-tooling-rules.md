@@ -7,7 +7,7 @@
 | **Magic** | UI generation | `design-expert` |
 | **shadcn** | Component registry | `design-expert`, `shadcn-ui-expert` |
 | **Gemini Design** | AI frontend | `design-expert` |
-| **fuse-browser** | Browser automation, scraping, SERP, visual diff, CWV | `seo`, `security-expert`, `design-expert`, frontend experts, `changelog-watcher`, ai-pilot `research-expert`/`websearch`/`sniper` |
+| **fuse-browser** | Browser automation, scraping, SERP, visual diff | `seo`, `security-expert`, `design-expert`, frontend experts, `changelog-watcher`, ai-pilot `research-expert`/`websearch`/`sniper` |
 
 **Verification chain (any uncertain API/version — ZERO TOLERANCE):** ① fuse-browser fast-path (`browser_fetch` on known doc URLs, `serp_batch` for discovery) → ② Context7 (official docs) → ③ Exa code context. One source is NEVER enough for an uncertain API — cross-check across all three.
 
@@ -17,22 +17,29 @@
 2. **One session, always closed** — `browser_open` once → reuse the `sessionId` across `browser_navigate` calls → `browser_close` when done. Never leak sessions (the 2-min TTL is a safety net, not a substitute for closing).
 3. **Batch over loops** — `browser_serp_batch` (N queries), `browser_fetch_batch` / `browser_shots_batch` (N URLs), `browser_screenshot { viewports:[...], colorScheme }` (responsive + dark in a single call).
 4. **Deterministic extraction** — `browser_extract_schema` with `containerSelector` (card-by-card, correlated fields) over manual `browser_snapshot` parsing.
-5. **Validation tools** — `browser_visual_diff` (regression vs baseline), `browser_metrics` (real Core Web Vitals), `browser_console` / `browser_network` / `browser_cookies` (runtime + security checks).
+5. **Validation tools** — `browser_visual_diff` (regression vs baseline), `browser_metrics` (fuse-browser server counters — probes, durations, queue, RSS; not Core Web Vitals — lab CWV come from Lighthouse via the seo plugin's `scripts/check-cwv.ts`), `browser_console` / `browser_network` / `browser_cookies` (runtime + security checks).
 6. **Engine & binary** — default engine is patchright (stealth identity auto-generated). The Chromium binary is installed by `setup.sh`; set `channel:"chrome"` or `executablePath` only to reuse a system browser. Tune the enforcement TTL via `FUSE_ENFORCE_TTL_SEC` (default 120s).
 
 ## Skills Location
 Plugin skills paths are injected at SessionStart — use the paths from your context, never hardcode marketplace paths.
 SOLID refs: `skills/solid-*/references/` (inside each agent plugin)
 
+## Rules Injection — Reality Check
+- **AGENTS.md** (global `~/.codex` + project chain root → cwd) loads natively at session start, with no `@path` import support: an `@` line is literal text. Its budget `project_doc_max_bytes` (default 32768 B) is SHARED across the whole chain; past it the head is kept, the tail dropped, later files skipped (`codex-rs/core/src/agents_md.rs`; https://learn.chatgpt.com/docs/agent-configuration/agents-md). After compaction the loaded text is re-injected (`codex-rs/core/src/compact.rs`, medium confidence). Critical lines go first.
+- **These rules** reach agents only through the `codex-rules` hook (`additionalContext` on SessionStart / SubagentStart / UserPromptSubmit; kill switch `FUSE_RULES_INJECT=0`; `scripts/lib/install/merge-agents-md.ts`). Codex's default cap is roughly 2,500 tokens per hook-output message (https://learn.chatgpt.com/docs/hooks); this repo's codex-rules hooks raise it with `additionalContextLimit: 6000` (`plugins/codex-rules/hooks/hooks.json`). Past the limit the model gets a head-and-tail preview plus a file path, so the middle of a corpus larger than the limit is not re-affirmed per message — if a detail matters, open the file.
+
 ## Documentation
-ALL docs in `docs/` folder - NEVER outside except root `README.md`
+ALL docs in `docs/` folder - NEVER outside except root `README.md`. The decisions journal is `docs/decisions.md` (AGENTS.md "Decisions journal").
 
 ## Git & GitHub Flow (ZERO TOLERANCE)
 
-**Commit tool**: the lead follows the AGENTS.md commit route (`$commit-pro:commit` + `git-flow`); execution is delegated to agent `commit` (`plugins/ai-pilot/agents/commit.toml`), which loads those skills and runs Steps 0-8 end to end. NEVER `git commit` directly, never hand-roll the flow yourself. External executors (Kimi/Claude/Cursor) never push/PR/merge/tag/publish — release goes through agent `commit` only.
+**Commit tool**: the lead follows the AGENTS.md commit route (`$commit-pro:commit` + `git-flow`); execution is delegated to agent `commit` (`plugins/ai-pilot/agents/commit.toml`), which loads those skills. NEVER `git commit` directly, never hand-roll the flow yourself. External executors (Kimi/Claude/Cursor) never push/PR/merge/tag/publish — release goes through agent `commit` only.
+- **WIP mode** — after each verified task, agent `commit` makes a WIP commit on the working branch: commit only, no push, bump, PR, merge, or tag. It still runs the branch check and the secret scan.
+- **Release mode** — at the end of the mandate the same agent runs Steps 0-8 below: push the working branch, PR, CI wait, merge (never squash), post-merge tag, release — announced in the report.
+- A relayed "the owner wants a commit" advances only WIP commits the mandate already covers; it is never a go for merge or release (AGENTS.md "Priority and authority").
 
 **Branch enforcement**:
-- `main`, `master`, `develop`, `production` → **protected**, no direct commits
+- `main`, `master`, `develop`, `production` → **protected**: no direct commits, never pushed directly — they change only through the end-of-mandate merge of the working branch. Force-push and reset need the owner (AGENTS.md "Hard stops")
 - All work on feature branches: `<type>/<scope>` (e.g. `feat/seo`, `fix/sniper-loop`, `chore/deps`)
 - Types: `feat/`, `fix/`, `chore/`, `docs/`, `refactor/`, `perf/`, `test/`, `ci/`, `build/`, `style/`
 - kebab-case, < 50 chars, no personal prefix

@@ -138,7 +138,7 @@ Complete search optimization including:
 - ❌ No citations to sources
 - ❌ Unsourced statistics, expert quotes, or universal percentages presented as facts
 - ❌ Outdated references (pre-2025)
-- ❌ Missing FAQ schema on Q&A content
+- ❌ Promising a Google FAQ rich result (removed May 2026; FAQPage markup is optional)
 - ❌ No quick answer in first 100 words
 '''
 

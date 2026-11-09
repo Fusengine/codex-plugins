@@ -7,7 +7,8 @@
  * the wrong revert until the owner did.
  *
  * Three checks: (a) every `plugins/*\/agents/*.toml` on disk sums to the
- * exact 30 medium / 5 high / 3 max tier counts with no agent outside those
+ * exact 31 medium / 5 high / 3 max tier counts (30 until `hermes-expert` was
+ * added 2026-11-09, owner "oui" to the Hermes port) with no agent outside those
  * three buckets, zero Sol and zero `ultra` (GPT-6.1 Terra fleet since
  * 2026-10-29, see `agent-toml.ts`'s JSDoc for the owner decision; earlier
  * policies are in docs/workflow/agents.md § History); (b) `agent-toml.ts`'s `AGENT_MODEL_PROFILES`
@@ -56,7 +57,7 @@ function shippedProfiles(): Map<string, ShippedProfile> {
  * Frozen v1.0.50 baseline: Sol/high was `design-expert` + `security-expert`.
  * Every other agent's baseline is asserted "as today" because this lock only
  * needs to catch a divergence from that specific floor, not reproduce full
- * historical group membership for every one of the 38 agents.
+ * historical group membership for every one of the 39 agents.
  */
 function baselineV1_0_50(): Record<string, ShippedProfile> {
 	return Object.fromEntries(
@@ -67,7 +68,7 @@ function baselineV1_0_50(): Record<string, ShippedProfile> {
 	);
 }
 
-test("shipped agent TOMLs match the exact 30/5/3 Terra tier matrix", () => {
+test("shipped agent TOMLs match the exact 31/5/3 Terra tier matrix", () => {
 	const profiles = shippedProfiles();
 	const byTier: Record<string, string[]> = { "gpt-6.1-terra|max": [], "gpt-6.1-terra|high": [], "gpt-6.1-terra|medium": [] };
 	const outsideMatrix: string[] = [];
@@ -79,7 +80,7 @@ test("shipped agent TOMLs match the exact 30/5/3 Terra tier matrix", () => {
 
 	expect(byTier["gpt-6.1-terra|max"]!.sort()).toEqual([...TERRA_MAX_NAMES].sort());
 	expect(byTier["gpt-6.1-terra|high"]!.sort()).toEqual([...TERRA_HIGH_NAMES].sort());
-	expect(byTier["gpt-6.1-terra|medium"]).toHaveLength(30);
+	expect(byTier["gpt-6.1-terra|medium"]).toHaveLength(31);
 	expect(outsideMatrix).toEqual([]);
 	expect([...profiles.values()].filter((profile) => profile.model === "gpt-6.1-sol" || profile.effort === "ultra")).toEqual([]);
 });

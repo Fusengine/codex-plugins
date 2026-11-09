@@ -134,9 +134,12 @@ Long-lived branches = merge hell
 ### Sync Frequently
 
 ```bash
+# Check how far the branch is behind main (read-only)
 git fetch origin main
-git rebase origin/main
+git log --oneline HEAD..origin/main
 ```
+
+Branch out of date with main → the `commit` agent's flow handles it (`mode: full`, end of mandate); never rebase and force-push a shared branch yourself (force-push needs the owner).
 
 ---
 

@@ -1,13 +1,33 @@
 ---
 name: 09-create-pr
-description: Create Pull Request for Swift/iOS changes
+description: Run Swift pre-PR checks, prepare the PR, hand the release to the commit agent
 prev_step: references/swift/08-check-test.md
 next_step: null
 ---
 
 # Swift Pull Request Guide
 
-## PR Template
+Run the Swift pre-PR checks, prepare the PR title and body, then hand the push / PR / CI / merge / tag to the `commit` agent (full mode). This phase never pushes, opens, merges or tags anything itself.
+
+## Pre-PR Checks (run by the APEX agent)
+
+```bash
+swiftlint --strict && \
+swift test
+```
+
+For an Xcode app target, run the scheme instead of `swift test`: `xcodebuild test -scheme MyApp -destination "platform=iOS Simulator,name=iPhone 16"`. Paste each command + result in your REPORT; a check not run is reported "not verified".
+
+## Hand-off to the Commit Agent (end of mandate)
+
+This phase never runs `git push`, `gh pr create`, `gh pr merge`, a rebase onto main, a force-push or a tag. Once the checks above are green and the Verify + sniper proofs are in the REPORT, the release goes to the `commit` agent in **full mode** (AGENTS.md Git policy; `$commit-pro:commit` + `$commit-pro:git-flow`):
+
+- It pushes the working branch, opens the PR (against the repo's base branch, e.g. `develop`), waits for CI, merges with a real `--merge` commit — never squash, which would orphan the release tag's bump commit — then tags post-merge and watches the release run.
+- The lead launches it at the end of the mandate and announces the merge/release in the report to the owner; an APEX sub-agent never launches it and never runs those commands itself.
+- Brief it with: `mode: full`, the PR title and body below, the base branch, and the files of the mandate.
+- Blocked (merge conflict, secret in the diff) → it stops with `status: blocked`; CI red → `status: left-open`, `ci: failed:<check>`. Either way: fix through the APEX loop (`06-fix-issue.md`), re-run the checks, hand off again.
+
+## PR Body Template (handed to the commit agent)
 
 ```markdown
 ## Summary
@@ -20,7 +40,7 @@ Brief description (1-2 sentences).
 ## Checklist
 - [ ] MVVM architecture followed
 - [ ] @Observable (not ObservableObject)
-- [ ] Files within `FUSE_SOLID_MAX_LINES`
+- [ ] Files within `FUSE_SOLID_MAX_LINES` (default 200) lines
 - [ ] SwiftLint passes
 - [ ] /// docs on public APIs
 - [ ] Unit tests added
@@ -34,17 +54,6 @@ Brief description (1-2 sentences).
 | N/A | [img] |
 ```
 
-## Creating PR
-
-```bash
-git push -u origin feature/PROFILE-123-user-profile
-
-gh pr create \
-  --title "feat(profile): add user profile (#123)" \
-  --base develop \
-  --assignee @me
-```
-
 ## Title Convention
 
 ```text
@@ -53,7 +62,7 @@ fix(scope): description (#ticket)
 refactor(scope): description
 ```
 
-## GitHub Actions Checks
+## GitHub Actions Checks (what the commit agent's CI wait gates on)
 
 ```yaml
 name: PR Checks
@@ -71,29 +80,21 @@ jobs:
       - run: xcodebuild test -scheme MyApp -destination "platform=iOS Simulator,name=iPhone 16"
 ```
 
-## Review Commands
+## After the Hand-off
 
-```bash
-gh pr diff 123                    # View diff
-gh pr checks 123                  # Check status
-gh pr merge 123 --merge --delete-branch   # Merge commit — never squash, it orphans the release tag's bump commit
-```
-
-## Post-Merge
-
-```bash
-git checkout develop && git pull
-git branch -d feature/PROFILE-123-user-profile
+```text
+[ ] Commit agent report read: PR URL, CI result, merge commit, tag
+[ ] Report to the owner: merge/release announced, with the PR URL and tag
 ```
 
 ## Update Task Phase
 
-At the **start** of this phase, record it (and mark the task `completed` once the PR is opened) in `.codex/apex/task.json`:
+At the **start** of this phase, record it (and mark the task `completed` once the commit agent reports the merge) in `.codex/apex/task.json`:
 
 ```bash
 jq --arg p "create-pr" '.tasks[.current_task].phase = $p' .codex/apex/task.json \
   > .codex/apex/task.json.tmp && mv .codex/apex/task.json.tmp .codex/apex/task.json
-# after the PR is created:
+# after the commit agent reports the merge:
 jq '.tasks[.current_task].status = "completed"' .codex/apex/task.json \
   > .codex/apex/task.json.tmp && mv .codex/apex/task.json.tmp .codex/apex/task.json
 ```

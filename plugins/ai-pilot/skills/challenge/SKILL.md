@@ -1,12 +1,12 @@
 ---
 name: challenge
-description: "Use before a root-cause, done/verified claim, irreversible action, or 2nd-time fix reaches the owner (APEX or plain conversation); also fires at every eLicit/Verify gate. Not for code correctness (use sniper)."
+description: "Use before a root-cause, a done/verified claim on a consequential change, an irreversible action, or a 2nd-time fix reaches the owner (APEX or plain conversation); also fires at every eLicit/Verify gate of full APEX. Not for code correctness (use sniper), nor for a trivial 1-3 line apex-quick change (executed real check instead)."
 ---
 
 <objective>
 Challenge is the adversarial verification protocol behind the `challenger` agent: refute-by-default, fresh-context intake (claim + evidence only, never the author's reasoning), sources-backed (fuse-browser -> Context7 -> Exa -> code), bounded to 2 refutation rounds ending in a mandatory verdict (CONFIRMED / REFUTED / UNCERTAIN). It is consultative, not a veto -- it reports the strongest objection and leaves the decision to the lead/owner.
 
-It fires systematically by claim TYPE, not by a stakes judgment: before a root-cause conclusion, a done/verified claim, an irreversible action (commit/deploy/rm/push), or a 2nd-time fix reaches the owner, whether inside an APEX task or in plain conversation -- plus automatically at every APEX eLicit round and Verify gate. It does not cover code correctness, lint, or type validation -- that stays sniper's lane at eXamine.
+It fires systematically by claim TYPE, not by a stakes judgment: before a root-cause conclusion, a done/verified claim on a consequential change (several files or a behaviour change), an irreversible action (commit/deploy/rm/push), or a 2nd-time fix reaches the owner, whether inside an APEX task or in plain conversation -- plus automatically at every eLicit round and Verify gate of full APEX. Trivial 1-3 line `apex-quick` change (owner decision 9): the challenger is replaced by an executed real check (an actual test, build, or launch) with its output cited. It does not cover code correctness, lint, or type validation -- that stays sniper's lane at eXamine.
 </objective>
 
 # Challenge Skill
@@ -27,13 +27,15 @@ Reusable protocol behind the `challenger` agent. Also usable directly inside any
 
 Runs automatically, no stakes judgment, before the lead reports to the owner any of these 4 TYPES -- whether inside an APEX task or in plain conversation:
 - A root-cause conclusion ("it's broken because X" / "the reason is Y")
-- A "done/verified/it works" claim
+- A "done/verified/it works" claim on a consequential change (several files or a behaviour change)
 - An irreversible action about to run (commit / deploy / `rm` / push)
 - A fix/explanation proposed a 2nd time
 
-Also runs automatically at, in APEX specifically:
+Also runs automatically at, in full APEX specifically:
 - Every eLicit round (Step 4/5 boundary -- challenge the elicitation's own findings/fixes)
 - Every Verify gate (before a "done/verified" claim reaches the owner)
+
+Trivial 1-3 line `apex-quick` change (owner decision 9): the challenger is replaced by an executed real check (an actual test, build, or launch) with its output cited. eLicit `--auto` and sniper still run.
 
 This is a scope by claim TYPE, not a reduced-coverage shortcut -- the 3 real failures that motivated this skill were all CONVERSATIONAL claims to the owner, none inside an APEX task with eLicit/Verify. A challenger that only fired on APEX gates would have missed all three. "Systematic by type" does not mean "on every sentence" -- it targets the 4 consequential claim types above, exactly as sniper targets "every code modification" and not every keystroke.
 
@@ -65,8 +67,8 @@ Recommendation: <escalate to owner / safe to proceed / block until re-verified>
 Analyze -> Plan -> Execute -> eLicit [+ CHALLENGE: independent adversary] -> [VERIFY gate: claim survives challenge] -> eXamine (sniper, code only)
 ```
 
-- **eLicit**: the self-review pass gets a second, independent adversarial pass using this protocol -- an agent challenging its own claim inherits its own blind spot, so the challenge MUST run fresh-context (principle 2). ALWAYS, every eLicit round -- NO EXCEPTIONS.
-- **Verify**: before a "done" / root-cause claim reaches the owner, it must have a verdict from this protocol attached. ALWAYS, every Verify gate -- NO EXCEPTIONS.
+- **eLicit**: the self-review pass gets a second, independent adversarial pass using this protocol -- an agent challenging its own claim inherits its own blind spot, so the challenge MUST run fresh-context (principle 2). ALWAYS, every eLicit round of full APEX.
+- **Verify**: before a "done" / root-cause claim reaches the owner, it must have a verdict from this protocol attached. ALWAYS, every Verify gate of full APEX. A trivial 1-3 line `apex-quick` change carries an executed real check with its output cited instead (owner decision 9).
 - **Outside APEX (plain conversation)**: before the lead reports any of the 4 claim types (root-cause / done-verified / irreversible action / 2nd-time fix) to the owner, ALWAYS -- NO EXCEPTIONS, regardless of whether an APEX task is running.
 
 ## Forbidden
@@ -77,4 +79,4 @@ Analyze -> Plan -> Execute -> eLicit [+ CHALLENGE: independent adversary] -> [VE
 - Never respond with a vague doubt -- always a concrete scenario or `CONFIRMED`
 - Never exceed 2 rounds without a verdict
 - Never act as veto -- consultative only
-- Never skip triggering on any of the 4 claim types or on a scheduled eLicit/Verify gate, in APEX or in plain conversation -- engagement is systematic by type, never a judgment call on stakes
+- Never skip triggering on any of the 4 claim types or on a scheduled eLicit/Verify gate of full APEX, in APEX or in plain conversation -- engagement is systematic by type, never a judgment call on stakes; the only replacement is the executed real check for a trivial 1-3 line `apex-quick` change (owner decision 9)

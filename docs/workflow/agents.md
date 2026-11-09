@@ -1,6 +1,6 @@
 # Agents
 
-38 specialized Codex agents across all plugins.
+39 specialized Codex agents across all plugins.
 
 ## Model Policy
 
@@ -10,10 +10,10 @@ this account; `ultra` is never used (it adds automatic sub-agent delegation
 and was not part of the decision). The coordinator (the owner's own Codex
 session) is not a shipped agent TOML and stays outside this policy.
 
-Groups (30 + 5 + 3 = 38): `max` (3) — `design-expert`, `challenger`,
+Groups (31 + 5 + 3 = 39): `max` (3) — `design-expert`, `challenger`,
 `security-expert` (visual and security/adversarial gates); `high` (5) —
 `sniper`, `brainstorming`, `prompt-engineer`, `skill-creator`,
-`solid-orchestrator` (heavy judgment); `medium` (30) — every other agent in
+`solid-orchestrator` (heavy judgment); `medium` (31) — every other agent in
 the Inventory below, including the code executors and `commit`. New agents
 default to `gpt-6.1-terra` / `medium`; any other model or effort needs a new
 owner decision. No verified Terra price is recorded. Rationale (owner's
@@ -144,6 +144,7 @@ files under `/Users/<username>/.codex/plugins/cache/fusengine-codex/
 | `commit-pro` | `commit-detector` |
 | `design-expert` | `design-expert` |
 | `go-expert` | `go-expert` |
+| `hermes-expert` | `hermes-expert` |
 | `laravel-expert` | `laravel-expert` |
 | `lessons` | `lessons-compactor` |
 | `nextjs-expert` | `nextjs-expert` |

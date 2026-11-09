@@ -38,10 +38,14 @@ the agent's `.toml` file (see [frontmatter.md](frontmatter.md)).
 1. **Consume Analyze evidence** - reuse the lead's current codebase exploration
    and domain findings from the single Analyze trio the lead already launched
    (explore-codebase + research-expert + this agent, one parallel message,
-   `lead-orchestration/SKILL.md` §2); do not re-run it by reflex. On doubt —
-   missing, stale, or contradicted evidence — launch `explore-codebase`
-   and/or `research-expert` yourself and record what/why in the report (I1).
-   Never launch `challenger`/`sniper`, or a delegation tree of your own.
+   `lead-orchestration/SKILL.md` step 3 "Analyze"); do not re-run it by
+   reflex. On doubt — missing, stale, or contradicted evidence — launch
+   `explore-codebase` and/or `research-expert` yourself and record what/why
+   in the report (I1). Never spawn executors, teammates, or a delegation tree
+   of your own; the only helpers you may launch for your own task, when the
+   depth limit allows (`agents.max_depth`, else ask `/root`), are
+   `research-expert`, `explore-codebase`, `challenger`, `sniper` (owner
+   decision 10), and they never replace the lead's Control gates.
 2. Call `mcp__context7__query-docs` directly (a direct MCP tool call, not a
    spawned agent) to confirm [specific] patterns against the official docs.
 3. Self-review with eLicit in `--auto` mode (always automatic, never manual
@@ -51,8 +55,12 @@ the agent's `.toml` file (see [frontmatter.md](frontmatter.md)).
 
 Do not reference Claude Code's old multi-agent spawn command or its built-in
 orchestration tool by name — Codex agents only carry `spawn_agent`. Per I1,
-this agent never launches `challenger`/`sniper`; it launches explore-codebase
-or research-expert itself only on stated doubt, never by reflex.
+this agent never spawns executors or teammates; it launches explore-codebase
+or research-expert itself only on stated doubt, never by reflex, and the only
+helpers it may launch for its own task, when the depth limit allows
+(`agents.max_depth`, else ask `/root`), are `research-expert`,
+`explore-codebase`, `challenger`, `sniper` (owner decision 10) — they never
+replace the lead's Control gates.
 
 ---
 
@@ -112,11 +120,17 @@ the injected context:
   Claude-only team-spawn command in Codex.
 - **Self-spawn only on doubt**: start from the lead's Analyze trio; re-launch
   `explore-codebase`/`research-expert` yourself only when evidence is
-  missing, stale, or contradicted — state it in the report. Never launch
-  `challenger` or `sniper` (lead-owned gates) (I1, `SKILL.md` §2).
-- **Never self-declare done**: full six-phase APEX every task, eLicit always
+  missing, stale, or contradicted — state it in the report. Never spawn
+  executors or teammates; the only helpers allowed for your own task, when
+  the depth limit allows, are `research-expert`, `explore-codebase`,
+  `challenger`, `sniper` (owner decision 10; `lead-orchestration/SKILL.md`
+  step 7 "Launch").
+- **Never self-declare done**: every task runs APEX, eLicit always
   automatic; every deliverable is reviewed by `challenger` then validated by
-  `sniper` before the lead accepts it (I3).
+  `sniper` before the lead accepts it (I3), except the trivial 1-3 line
+  `apex-quick` change (one delegated agent), cleared by an executed real
+  check with its output cited instead of the challenger (owner decision 9;
+  `lead-orchestration/SKILL.md` steps 3 "Analyze" and 10 "Control").
 - **Report**: tick finished sub-tasks only in
   `.codex/apex/prd/agents/<your-agent-name>-prd.json` (status `done`, files
   modified, files unchanged); never write `prd.json` or a task PRD

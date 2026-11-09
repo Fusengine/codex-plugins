@@ -140,6 +140,19 @@
       }
     },
     {
+      "name": "hermes-expert",
+      "source": {
+        "source": "local",
+        "path": "./plugins/hermes-expert"
+      },
+      "version": "1.0.0",
+      "category": "Productivity",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      }
+    },
+    {
       "name": "memory-neural",
       "source": {
         "source": "local",

@@ -15,6 +15,8 @@ Execute the comprehensive APEX methodology for professional-grade development.
 
 > Use explore-codebase to understand relevant parts of the system
 
+**Scope rule** (owner decision 2026-11-08): read-only question → `explore-codebase` alone; anything that touches code → the Analyze trio (`explore-codebase` + `research-expert` + the domain expert) in one parallel message; a trivial 1-3 line change → `/prompts:apex-quick`, one delegated agent (the lead never edits). One agent per task (one verifiable deliverable, exclusive files); at most 6 agents concurrently — a ceiling, never a minimum; more tasks → waves of up to 6. Allocation details: `$ai-pilot:lead-orchestration`.
+
 **Goals**:
 - Identify where changes need to be made; understand existing patterns and conventions
 - Map dependencies and impacts; locate relevant tests

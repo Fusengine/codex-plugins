@@ -27,7 +27,7 @@ Per `elicitation/SKILL.md`'s top-level contract, eLicit always runs in auto mode
 - Expert agent that coded
 
 **Output for next steps:**
-- `{elicit_mode}`: manual | auto | skip
+- `{elicit_mode}`: auto (the only mode inside APEX)
 - `{code_files}`: list of modified files
 - `{code_type}`: detected code category
 - `{expert_agent}`: which expert coded
@@ -59,8 +59,8 @@ Gather from previous phase:
 ### 3. Load Prior Artifact (if present)
 
 ```
-Derive {task-slug} (see SKILL.md's Artifact Contract).
-IF .codex/apex/docs/elicit-{task-slug}.json exists:
+Derive <branch-slug> (see references/artifact-contract.md).
+IF docs/verify/elicit-<branch-slug>.json exists:
   → Load it as {prior_artifact}
   → In Step 2, techniques already "pass" in {prior_artifact} are
     deselected by default; "fail"/"deferred" ones are re-selected first
@@ -77,14 +77,7 @@ Required for next steps:
 ✓ Expert agent known
 ```
 
-### 5. Handle Skip Mode (dead branch — kept for history, never fires)
-
-```
-{elicit_mode} can never be "skip" (see Step 1: superseded, I3) — eLicit never ends here.
-IF {elicit_mode} == "skip":  # unreachable
-  → Output: "Elicitation skipped. Proceeding to sniper validation."
-  → END (do not continue to step 1)
-```
+There is no skip mode: eLicit is never skipped and always continues to Step 1.
 
 ---
 

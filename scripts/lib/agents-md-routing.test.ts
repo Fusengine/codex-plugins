@@ -26,8 +26,10 @@ const o = (...required: RegExp[]): Route => ({ destination: orchestrationPath, r
 const p = (id: string, legacyEvidence: string, route: Route, rationale = "The compact destination preserves the normative behavior."): MaterialLegacyContractEntry => ({ id, legacyEvidence, disposition: "preserved", ...route, rationale });
 const s = (id: string, legacyEvidence: string, route: Route, rationale: string): MaterialLegacyContractEntry => ({ id, legacyEvidence, disposition: "superseded", ...route, rationale });
 
+const claudeScopeLadderDecision = "Owner decision 2026-11-08: 'Version Claude' — Claude scope ladder replaces the Codex ≥3-experts floor; cap 6 ('on plafone a 6 alors').";
+
 const materialLegacyInventory: MaterialLegacyContractEntry[] = [
-	p("git-authorization", "NEVER git commit / push / reset", a(/NEVER commit, push, reset.*without explicit user authorization.*Read-only Git is allowed/is)),
+	s("git-authorization", "NEVER git commit / push / reset", a(/Git writes go only through the commit agent.*\$commit-pro:commit.*WIP commit on the working branch \(commit only — no push, bump, PR, merge, or tag\).*end of the mandate.*announced in the report.*NEVER push a protected branch, force-push, or reset without the owner.*needs explicit user authorization.*Read-only Git is allowed/is), "Owner decision 2026-11-08 (codex-port-contract #4): after each verified task the commit agent makes a WIP commit on the working branch; at the end of the mandate it pushes, merges (never squash), tags and releases, announced in the report. Protected branches are never pushed, force-push/reset need the owner, any other Git write needs explicit authorization."),
 	s("reversible-edit-authorization", "NEVER modify files", a(/clear request.*authorizes reversible edits.*Do not ask again/is), "The owner corrected redundant permission prompts; an explicit change request now authorizes reversible in-scope edits."),
 	p("scope-and-secrets", "NEVER write outside the mandate", a(/NEVER write outside the mandate.*real secrets.*setup\.sh.*install\*\.ts/is)),
 	p("exclusive-folder-owner", "ONE folder = ONE owner", o(/one folder = one owner.*disjoint file lots/is)),
@@ -62,10 +64,10 @@ const materialLegacyInventory: MaterialLegacyContractEntry[] = [
 	p("mandatory-analyze-trio", "ALWAYS launch ALL 3 agents in a SINGLE message", o(/Analyze always starts the trio in one parallel message.*explore-codebase.*research-expert.*domain expert/is)),
 	s("lead-never-reads", "NEVER use Read/Glob/Grep yourself", o(/lead orchestrates and never executes task work.*Verify the artifact on disk/is), "The absolute tool ban prevented mandatory artifact verification; the lead remains non-executing but may verify read-only evidence."),
 	p("target-read-exception", "file you are about to Edit — Read it yourself first", a(/Read every target before editing it/i)),
-	s("smallest-delegation", "Scope ladder — take the smallest tool that suffices.", o(/no scope ladder and no "too small to delegate" case.*dependency graph.*assigned.*validated.*result against the disk/is), "Owner doctrine retains the full APEX workflow but replaces a fixed executor quota with dependency-based ownership."),
+	s("smallest-delegation", "Scope ladder — take the smallest tool that suffices.", o(/read-only question -> `explore-codebase` alone; anything that touches code -> the Analyze trio.*trivial 1-3 line change -> `apex-quick`, one agent \(still delegated: the lead never edits\).*dependency graph.*assigned.*validated.*result against the disk/is), `${claudeScopeLadderDecision} Read-only → explore-codebase alone, code → Analyze trio, trivial 1-3 line → apex-quick with one delegated agent.`),
 	s("team-ask-conflict", "Propose a subagent team", o(/explicitly asks for a team, start one immediately/is), "Reversible orchestration does not require a redundant question; explicit team requests execute immediately."),
-	p("team-size", "team is MINIMUM 4 subagents", o(/team.*independent batches.*at least four agents/is)),
-	p("three-experts", "at least three domain experts", o(/at least three domain experts matching the project stack.*disjoint file lots/is)),
+	s("team-size", "team is MINIMUM 4 subagents", o(/explicitly asks for a team, start one immediately: one named agent per task, up to 6 per wave, no debate/i), `${claudeScopeLadderDecision} A requested team is one named agent per task, up to 6 per wave, never a minimum of four.`),
+	s("three-experts", "at least three domain experts", o(/At most 6 agents run concurrently — a ceiling, never a minimum; more tasks run in waves of up to 6/i), `${claudeScopeLadderDecision} One agent per task; 6 is a concurrency ceiling, never a quota.`),
 	p("parallel-independence", "trigger is NOT the file count, it is the INDEPENDENCE", o(/parallel agents only for independent batches with disjoint ownership/i)),
 	p("collision-preservation", "START FROM the on-disk state, preserving the other's contribution", o(/collision occurs.*one owner.*current on-disk state.*preserving both contributions/is)),
 	p("v2-contract", "V2 contract", o(/\[features\.multi_agent_v2\].*tool_namespace.*exact `agent_type`.*bounded `fork_turns`.*Never omit.*"all"/is)),

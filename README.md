@@ -117,6 +117,7 @@ normalized plugin name.
 | `core-guards` | `core-guards` | 1.1.55 | Pre-tool-use safety, SOLID enforcement hooks, statusline |
 | `design-expert` | `design-expert` | 2.1.49 | Design director for web, web apps, iOS and Android; OKLCH tokens, Gemini Design MCP |
 | `go-expert` | `go-expert` | 1.0.19 | Go 1.27: idioms, concurrency, backend services, golangci-lint v2, govulncheck |
+| `hermes-expert` | `hermes-expert` | 1.0.0 | Nous Research Hermes Agent 0.23+: deploy from a company description, config.yaml, profiles, delegation, cron, gateways, security, chief-of-staff patterns |
 | `laravel-expert` | `laravel-expert` | 1.2.23 | Laravel 13, PHP 8.5, Eloquent, Livewire, Reverb, AI SDK, Stripe |
 | `lessons` | `lessons` | 1.0.9 | Project memory hooks for never-reproduce lessons in MEMORY/LESSON.md |
 | `memory-neural` | `memory-neural` | 1.0.10 | Persistent neural memory with Graphiti and Qdrant |
