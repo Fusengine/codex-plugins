@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.62] - 2026-11-09
+
+- refactor(codex-rules): align `AGENTS.md` (and `plugins/codex-rules/templates/AGENTS.md.template`) on the Claude template structure — HARD STOPS / COORDINATOR PATH / RECURRING TRAPS / AUTONOMY / Where the rules live, 15 759 -> ~12.3 KB; detail moved into codex-rules rules 00, 02, 03, 04, 06 and 08; previous version archived in `docs/archive/2026-11-09-agents-v2/`. Tests: `agent-orchestration-contract.test.ts`, `agents-md-routing.test.ts`
+- fix(codex-rules): lift hook `additionalContextLimit` 6000 -> 0 (no limit, `codex-rs/hooks/src/output_spill.rs`) on SessionStart, SubagentStart and UserPromptSubmit so the rules corpus is never truncated — a real Codex 0.167.0 run shows the full 30 517-byte corpus arriving at every event (before: truncated to 24 107 B); documented in `06-tooling-rules.md`
+- chore(release): bump codex-rules 1.0.37 -> 1.0.38 + suite to 1.0.62; mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.62
+
 ## [1.0.61] - 2026-11-09
 
 - feat(agents): port the coordinator workflow, web-performance skill and hermes-expert plugin from the Claude plugins — lead-orchestration rewrite (max 6 agents) across `AGENTS.md`, codex-rules, apex-methodology references and ai-pilot commands, previous versions archived in `docs/archive/2026-10-29-agents-v1/`; expert agents and skills refreshed across 21 plugins; new ai-pilot `web-performance` skill wired into the astro, laravel, nextjs, react and tanstack-start expert agents; `browser_metrics` documented as fuse-browser server counters, not Core Web Vitals (lab CWV come from Lighthouse via the seo plugin); new `hermes-expert` plugin (13 skills, `agents/hermes-expert.toml`) registered in `.agents/plugins/marketplace.json`, README and harness hook routes; agent policy and tests moved to 39 agents (31 medium + 5 high + 3 max)
