@@ -171,15 +171,19 @@ function UserProfile({ id }: Props) {
 
 ## Commit Fixes
 
-```bash
-# For validation fixes
-git commit -m "fix(UserCard): resolve missing dependency warning"
+This phase never runs `git commit` itself. Once the fix is verified, the lead hands it to the `commit` agent (`$commit-pro:commit` + `$commit-pro:git-flow`) in **WIP mode** (`mode: wip`: one conventional commit on the working branch — no bump, no push, no PR, no merge, no tag); an APEX sub-agent never launches it. Push/PR/merge/tag happen only at the end of the mandate, in full mode (`09-create-pr.md`). Never squash or rebase: a follow-up fix is its own commit.
 
-# For review fixes
-git commit -m "refactor(auth): extract useAuth hook per review"
+Suggested messages, passed to the commit agent:
 
-# For test fixes
-git commit -m "test(Button): fix async assertion"
+```text
+# Validation fix
+fix(UserCard): resolve missing dependency warning
+
+# Review fix
+refactor(auth): extract useAuth hook per review
+
+# Test fix
+test(Button): fix async assertion
 ```
 
 ---

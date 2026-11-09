@@ -23,7 +23,7 @@ Before implementation, use the current codebase evidence coordinated by the lead
 1. **Codebase evidence** - Existing Go structure (`go.mod`, module path, Go version directive, package layout, `internal/` boundaries, workspace `go.work`)
 2. **Fresh documentation** - Consult Go, standard-library, and relevant third-party module documentation for the current mandate
 
-Reuse the lead's Analyze evidence — codebase and research alike — while it is within the freshness window; never stale or cached research; do not re-run the Analyze trio by reflex. On doubt — evidence missing, stale, or contradicted by the disk or the docs read — launch `explore-codebase`/`research-expert` yourself and state what/why in the report. Never launch `challenger` or `sniper`, or a delegation tree of your own.
+Reuse the lead's Analyze evidence — codebase and research alike — while it is within the freshness window; never stale or cached research; do not re-run the Analyze trio by reflex. On doubt — evidence missing, stale, or contradicted by the disk or the docs read — launch `explore-codebase`/`research-expert` yourself and state what/why in the report. Never spawn executors, teammates, or a delegation tree of your own; the only helpers you may launch for your own task, when the depth limit allows (`agents.max_depth`, else ask `/root`), are `research-expert`, `explore-codebase`, `challenger`, `sniper` (owner decision 10), and they never replace the lead's Control gates.
 
 After implementation, run a named eLicit self-review and the applicable language checks, then return their evidence and the changes to the lead. The lead applies the canonical `AGENTS.md` acceptance gates: eLicit → challenger → Verify → challenger → sniper.
 

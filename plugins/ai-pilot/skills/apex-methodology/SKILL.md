@@ -6,7 +6,7 @@ description: "Use when starting ANY development task -- feature, bug fix, refact
 <objective>
 APEX runs Brainstorm -> Analyze -> Plan -> Execute -> eLicit -> Verify -> eXamine for development tasks. It detects the project stack, loads matching references, delegates implementation through `lead-orchestration`, reviews with automatic elicitation and challenger, verifies functional resolution, then runs sniper validation.
 
-`FUSE_SOLID_MAX_LINES` is the only file-size ceiling. Every run preserves the Analyze trio, automatic eLicit, Verify, challenger, and sniper gates. No mode may skip them. Git, branch, PR, merge, tag, and release actions are separate and require the authorization and routed commit skills defined by `AGENTS.md`.
+`FUSE_SOLID_MAX_LINES` is the only file-size ceiling. Full APEX (anything that touches code beyond a trivial 1-3 line change) always runs the Analyze trio, automatic eLicit, Verify, the challenger, and sniper. A trivial 1-3 line change goes through `/prompts:apex-quick`: one delegated agent, automatic eLicit, an executed real check (tests or a run) in place of the challenger, then full sniper. `--skip-elicit` is ignored in both paths; nothing skips eLicit, the real check, or sniper. The eLicit and Verify proofs live in the agent REPORT, with optional records at `docs/verify/elicit-<branch-slug>.json` and `docs/verify/<branch-slug>.md` (never under `.codex/`, which the Codex sandbox keeps read-only) — see the `verification` skill. Git writes go only through the `commit` agent (`$commit-pro:commit` + `$commit-pro:git-flow`), per `AGENTS.md`: a WIP commit after each verified task (commit only), then push, PR, CI, merge (never squash), tag and release at the end of the mandate, announced.
 </objective>
 
 **Current Task:** $ARGUMENTS
@@ -34,7 +34,7 @@ This creates `.codex/apex/task.json` (documentation consultation status) and `.c
 │                     APEX WORKFLOW                               │
 ├─────────────────────────────────────────────────────────────────┤
 │  00-init-tracking   → Initialize task evidence                  │
-│  00-init-branch     → Create branch when explicitly authorized  │
+│  00-init-branch     → Working branch (never a protected one)    │
 │  00.5-brainstorm    → Design-first questioning (B)              │
 │  01-analyze-code    → Understand codebase (A)                   │
 │  02-features-plan   → Plan implementation (P)                   │
@@ -46,7 +46,7 @@ This creates `.codex/apex/task.json` (documentation consultation status) and `.c
 │  06-fix-issue       → Handle issues                             │
 │  07-add-test        → Write tests (TDD cycle)                   │
 │  08-check-test      → Run tests                                 │
-│  09-create-pr       → Create PR when explicitly authorized      │
+│  09-create-pr       → Pre-PR checks, hand-off to commit agent   │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -64,7 +64,7 @@ This creates `.codex/apex/task.json` (documentation consultation status) and `.c
 
 | Phase | File | Purpose |
 | --- | --- | --- |
-| **00** | `references/00-init-branch.md` | Create a feature branch only with explicit owner authorization and routed commit skills |
+| **00** | `references/00-init-branch.md` | Work on a `<type>/<scope>` working branch — the `commit` agent creates it before the first WIP commit if HEAD is on `main`/`master`/`develop`/`production` (never commits there) |
 | **01** | `references/01-analyze-code.md` | Explore + Research (APEX A) |
 | **02** | `references/02-features-plan.md` | update_plan planning (APEX P) |
 | **03** | `references/03-execution.md` | Implementation (APEX E) |
@@ -74,7 +74,7 @@ This creates `.codex/apex/task.json` (documentation consultation status) and `.c
 | **06** | `references/06-fix-issue.md` | Fix validation/review issues |
 | **07** | `references/07-add-test.md` | Write unit/integration tests |
 | **08** | `references/08-check-test.md` | Run and verify tests |
-| **09** | `references/09-create-pr.md` | Create a PR only with explicit owner authorization and routed commit skills |
+| **09** | `references/09-create-pr.md` | Pre-PR checks, then hand-off to the `commit` agent (end of mandate: push, PR, CI, `--merge`, tag) |
 
 ---
 
@@ -98,8 +98,9 @@ This creates `.codex/apex/task.json` (documentation consultation status) and `.c
 ### Agent Usage
 
 ```text
-01-analyze:  explore-codebase + research-expert + matching domain expert (PARALLEL)
-03-execute:  allocation and ownership follow lead-orchestration
+scope:       read-only → explore-codebase alone; trivial 1-3 line change → apex-quick (one delegated agent)
+01-analyze:  explore-codebase + research-expert + matching domain expert (PARALLEL, one message)
+03-execute:  one agent per task, at most 6 concurrent (ceiling, never a minimum; more → waves of 6); details in lead-orchestration
 03.5-elicit: automatic named technique + challenger
 03.7-verify: functional evidence + challenger
 04-validate: sniper (MANDATORY after ANY change)
@@ -119,7 +120,7 @@ Each phase consumes named inputs and produces a reviewable output. Analyze produ
 ❌ Put interfaces in component files
 ❌ Skip sniper after changes
 ❌ Skip eLicit, Verify, or either challenger gate
-❌ Perform Git or PR actions without explicit authorization and routed commit skills
+❌ Run git commit / push / PR / merge / tag yourself — always the `commit` agent
 ❌ Large PRs (>400 lines)
 ```
 
@@ -129,10 +130,10 @@ Each phase consumes named inputs and produces a reviewable output. Analyze produ
 
 - `references/init-tracking.md` — Load when running Step 0 (the exact tracking-init command)
 - `references/phases-explained.md` — Load when you need the full explanation of each APEX phase (A/P/E/V/X)
-- `references/branching-strategy.md` — Load only after explicit branch authorization and the commit routes
-- `references/commit-conventions.md` — Load only for an explicitly authorized commit workflow
+- `references/branching-strategy.md` — Load when naming the working branch (the `commit` agent creates it)
+- `references/commit-conventions.md` — Load when suggesting a WIP commit message to the `commit` agent
 - `references/quick-start-flows.md` — Load when you need the full step-by-step Standard Feature / Bug Fix / Hotfix flows
 - `references/flow-diagram.md` — Load when you want the full ASCII flow diagram of the workflow
 - `references/validation-requirements.md` — Load when running the pre-PR / code-quality checklist
-- `references/pr-guidelines.md` — Load only for an explicitly authorized PR workflow
+- `references/pr-guidelines.md` — Load when preparing the end-of-mandate PR title and body for the `commit` agent
 - `references/language-detection.md` — Load when auto-detecting project type or navigating framework-specific reference directories

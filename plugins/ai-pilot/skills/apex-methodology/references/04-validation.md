@@ -11,25 +11,32 @@ next_step: references/05-review.md
 
 ## Gate — Required Proof Artefacts
 
-**Validation does NOT start** unless both proof files exist on disk for the current task. A claim made in context ("I already verified/elicited this") is not proof — only the file on disk is:
+**Validation does NOT start** without both proofs for the current task, each carried by the agent REPORT or by its optional record under `docs/verify/` (slug from the git branch, per the `verification` skill — never under `.codex/`, which the Codex sandbox keeps read-only):
+- **eLicit** — the Step 5 report (techniques, verdicts, evidence, challenge verdict), or `docs/verify/elicit-<branch-slug>.json`.
+- **Verify** — one evidence item per criterion + the challenge verdict, or `docs/verify/<branch-slug>.md`.
+
+A claim made in context ("I already verified/elicited this") is not proof — only the reported evidence or the record is:
 
 ```bash
-TASK_SLUG=$(jq -r '.current_task' .codex/apex/task.json)
-if [ ! -f ".codex/apex/docs/elicit-${TASK_SLUG}.json" ]; then
-  echo "❌ Missing .codex/apex/docs/elicit-${TASK_SLUG}.json — go back to references/03.5-elicit.md first."
-  exit 1
+BRANCH=$(git branch --show-current)
+if [ -n "$BRANCH" ]; then
+  BRANCH_SLUG=$(printf '%s' "${BRANCH#*/}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g')
+else
+  BRANCH_SLUG="detached-$(git rev-parse --short HEAD)"
 fi
-if [ ! -f ".codex/apex/docs/verify-${TASK_SLUG}.md" ]; then
-  echo "❌ Missing .codex/apex/docs/verify-${TASK_SLUG}.md — go back to the verification skill (runs between eLicit and eXamine) first."
-  exit 1
+if [ -f "docs/verify/elicit-${BRANCH_SLUG}.json" ]; then
+  echo "✅ eLicit record: docs/verify/elicit-${BRANCH_SLUG}.json"
+else
+  echo "ℹ️ No docs/verify/elicit-${BRANCH_SLUG}.json — the eLicit verdict must be in the agent REPORT. No such report → go back to references/03.5-elicit.md first."
 fi
-if [ ! -f ".codex/apex/docs/challenge-${TASK_SLUG}.md" ]; then
-  echo "❌ Missing .codex/apex/docs/challenge-${TASK_SLUG}.md — the challenger runs SYSTEMATICALLY at every eLicit round and every Verify gate (Step 4.5 of 03.5-elicit.md, Step 6 of the verification skill), no exceptions. Go run it first."
-  exit 1
+if [ -f "docs/verify/${BRANCH_SLUG}.md" ]; then
+  echo "✅ Verify record: docs/verify/${BRANCH_SLUG}.md"
+else
+  echo "ℹ️ No docs/verify/${BRANCH_SLUG}.md — the Verify proof must be in the agent REPORT (evidence per criterion + challenge verdict). No such report → go back to the verification skill first."
 fi
 ```
 
-Only once all three checks pass does this phase proceed. `challenge-${TASK_SLUG}.md` holds the verdict (`CONFIRMED` / `REFUTED` / `UNCERTAIN`); a `REFUTED` verdict must be resolved or explicitly owner-accepted before this gate is considered passed — soft-gate on content, hard-gate on artefact presence (same pattern as `elicit-*.json` / `verify-*.md`).
+Only once both proofs are present does this phase proceed. The challenger runs SYSTEMATICALLY at every eLicit round and every Verify gate (Step 4.5 of `03.5-elicit.md`, Step 6 of the `verification` skill), no exceptions; its verdict (`CONFIRMED` / `REFUTED` / `UNCERTAIN`) travels in the Verify REPORT (or the `docs/verify/<branch-slug>.md` record). A `REFUTED` verdict must be resolved or explicitly owner-accepted before this gate is considered passed.
 
 ---
 

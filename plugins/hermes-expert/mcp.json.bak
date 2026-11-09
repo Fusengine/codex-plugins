@@ -1,0 +1,32 @@
+{
+  "context7": {
+    "command": "npx",
+    "args": [
+      "-y",
+      "@upstash/context7-mcp"
+    ],
+    "env": {
+      "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
+    }
+  },
+  "exa": {
+    "url": "https://mcp.exa.ai/mcp?tools=web_search_exa,get_code_context_exa,crawling_exa,company_research_exa,linkedin_search_exa,deep_researcher_start,deep_researcher_check",
+    "env_http_headers": {
+      "x-api-key": "${EXA_API_KEY}"
+    }
+  },
+  "fuse-browser": {
+    "command": "npx",
+    "args": [
+      "-y",
+      "@fusengine/browser-mcp@latest"
+    ]
+  },
+  "sequential-thinking": {
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-sequential-thinking"
+    ]
+  }
+}

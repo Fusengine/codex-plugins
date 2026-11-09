@@ -6,7 +6,7 @@ description: "Use when marking a task complete, finishing a feature, or claiming
 <objective>
 Verification confirms the original request is actually fulfilled -- distinct from sniper, which only confirms the code is clean. It runs a 6-step process: re-read the original request word for word, list every acceptance criterion (explicit and implicit), verify each with concrete evidence (test output, logs, screenshots, diffs), run the full test suite to check for regressions, review every modified file for accidental side effects, then route the "functionally resolved" claim through the `challenger` agent before writing it down.
 
-Step 6 always persists `.codex/apex/docs/verify-{task-slug}.md` -- an in-context "it works" declaration doesn't survive a session boundary, and this artifact is what later gates (sniper, elicitation) actually check. It sits between eLicit and eXamine in APEX: a task is only complete when both verification and sniper pass.
+The proof lives in the agent's REPORT to the lead (proof per part, not verified, files touched); when a file is needed it goes to `docs/verify/<branch-slug>.md`, never under a dot-folder. Proof by type (UI, tests, commit, migration/deploy, platform advice) is defined once below and applied at `AGENTS.md` COORDINATOR PATH step 9. It sits between eLicit and eXamine in APEX: a task is only complete when both verification and sniper pass.
 </objective>
 
 # Verification Before Completion
@@ -46,6 +46,8 @@ For each criterion, provide concrete evidence of resolution:
 - Screenshot of the UI change
 - Code diff showing the implementation
 
+**Proof by type** (COORDINATOR PATH step 9): UI = capture opened and compared with the reference; tests = actually run, output quoted; commit = `git log` + the remote state; migration/deploy = a real login or a real call on the target; platform advice = the constraint checked at its source (docs URL or source line).
+
 **Look before done (canonical rule):** open the real output -- rendered page/screenshot, extracted frames, runtime log of the real target (running dev server, real DB, installed build) -- and state what you see in it. Tests green or isolated fixtures ≠ done; a crash fix first reproduces the crash in a test, and "error gone" ≠ behaviour correct.
 
 **Step 4: Check for regressions**
@@ -54,12 +56,12 @@ Run the full test suite. Compare results before and after. No new failures, no n
 **Step 5: Check for side effects**
 Review every modified file. Confirm no accidental changes to unrelated code. Verify dependencies and configuration are unchanged unless required.
 
-**Step 6: Confirm functional resolution -- challenge, then write the artifact**
-Before writing "Original problem is FUNCTIONALLY resolved," ALWAYS route the claim through the `challenger` agent (or `challenge` skill), fresh-context: claim = "functionally resolved" + evidence from Steps 3-5, NEVER the investigation reasoning. This is systematic -- every Verify gate, no exception, exactly like sniper runs at every eXamine. Only write the "FUNCTIONALLY resolved" verdict after a `CONFIRMED` result (or an `UNCERTAIN` explicitly accepted by the owner). A `REFUTED` verdict must be resolved (fix and re-verify) before the claim reaches the owner -- soft-gate, not a hard veto.
+**Step 6: Confirm functional resolution -- challenge, then report the proof**
+Before writing "Original problem is FUNCTIONALLY resolved," ALWAYS route the claim through the `challenger` agent (or `challenge` skill), fresh-context: claim = "functionally resolved" + evidence from Steps 3-5, NEVER the investigation reasoning. This is systematic at every Verify gate of full APEX and for any consequential change (several files or a behaviour change), exactly like sniper runs at every eXamine. Trivial 1-3 line `apex-quick` change (owner decision 9): the challenger is replaced by an executed real check (an actual test, build, or launch) with its output cited. Only write the "FUNCTIONALLY resolved" verdict after a `CONFIRMED` result. A `REFUTED` or `UNCERTAIN` verdict must be resolved (fix and re-verify) or explicitly accepted by the owner before any "done" claim.
 
-Write `.codex/apex/docs/verify-{task-slug}.md` (template: `references/verify-template.md`): every verification step checked, one evidence item per criterion (command output, log excerpt, screenshot path, or diff), plus the challenge verdict from this step. A context-only "it works" declaration does not survive a session boundary; the written artifact is the guardrail gates (sniper, later elicitation passes) actually check. Then state explicitly in your response: "Original problem is FUNCTIONALLY resolved" with a summary of evidence, or list what remains unresolved. Any criterion without its own evidence is reported as "not verified", never folded into "done".
+Put the proof in your REPORT to the lead: one evidence item per criterion (command output, log excerpt, screenshot path, or diff), the challenge verdict, what is not verified, files touched. When the proof must survive the session (long mandate, several agents, owner asked for a record), also write `docs/verify/<branch-slug>.md` using the body of `references/verify-template.md` -- never under `.codex/`, which the `workspace-write` sandbox protects as read-only (https://learn.chatgpt.com/docs/agent-approvals-security). Then state explicitly in your response: "Original problem is FUNCTIONALLY resolved" with a summary of evidence, or list what remains unresolved. Any criterion without its own evidence is reported as "not verified", never folded into "done".
 
-`{task-slug}`: derive per `apex-methodology/references/init-tracking.md` (git branch slug or active `update_plan` id) -- same pattern used by the `elicitation` skill's artifact.
+`<branch-slug>`: from the git branch only -- `git branch --show-current`, drop the `<type>/` prefix, lowercase, every character outside `a-z0-9` becomes `-` (`feat/use-harness` -> `use-harness`). Detached HEAD: `detached-<short sha from git rev-parse --short HEAD>`. The `elicitation` skill uses the same slug.
 
 ---
 
@@ -69,7 +71,7 @@ Write `.codex/apex/docs/verify-{task-slug}.md` (template: `references/verify-tem
 |----------|------|---------|
 | Checklist | `references/checklist.md` | Full verification checklist with all categories |
 | Common Misses | `references/common-misses.md` | Frequently forgotten verification items |
-| Artifact Template | `references/verify-template.md` | `verify-{task-slug}.md` template + task-slug derivation |
+| Artifact Template | `references/verify-template.md` | Optional `docs/verify/<branch-slug>.md` record: path, slug derivation, body |
 
 ---
 
@@ -94,4 +96,4 @@ This ensures functional correctness is confirmed before code quality validation.
 | Full test suite, not just new tests | Catches regressions |
 | Review ALL modified files | Catches accidental side effects |
 | Both verification AND sniper must pass | Quality without correctness is useless |
-| Step 6 writes `verify-{task-slug}.md` to disk | In-context self-review without persisted state regresses across sessions |
+| Step 6 proof goes in the REPORT; a file, if needed, in `docs/verify/<branch-slug>.md` | A claim without its proof regresses across sessions; `.codex/` is read-only under `workspace-write` |

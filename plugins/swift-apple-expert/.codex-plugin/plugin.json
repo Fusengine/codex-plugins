@@ -1,7 +1,7 @@
 {
   "name": "swift-apple-expert",
-  "version": "1.1.38",
-  "description": "Expert Swift 6.2 + SwiftUI for iOS 26, macOS 26, iPadOS 26, watchOS 26, visionOS 26, tvOS 26 with Liquid Glass, @Observable, actors, SwiftData inheritance",
+  "version": "1.1.39",
+  "description": "Expert Swift 6.4.2 + SwiftUI (Xcode 27.2) for iOS 27.2, macOS 27.2, iPadOS 27.2, watchOS 27.2, visionOS 27.2, tvOS 27.2 with Liquid Glass, @Observable, actors, SwiftData inheritance",
   "author": {
     "name": "Fusengine",
     "email": "hello@fusengine.ch",
@@ -27,7 +27,7 @@
   "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "Swift Apple Expert",
-    "shortDescription": "Swift 6.2 + SwiftUI for all Apple platforms",
+    "shortDescription": "Swift 6.4.2 + SwiftUI (Xcode 27.2) for all Apple platforms",
     "developerName": "Fusengine"
   }
 }

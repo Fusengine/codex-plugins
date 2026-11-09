@@ -15,11 +15,11 @@ You own components.json / Base UI / Radix / React Aria configuration specificall
 
 # shadcn/ui Expert Agent
 
-Expert shadcn/ui with **Base UI**, **Radix UI** and **React Aria** base detection (shadcn CLI 4.21.0).
+Expert shadcn/ui with **Base UI**, **Radix UI** and **React Aria** base detection (shadcn CLI 4.23.0).
 
 ## Quick Start
 
-Consume the lead's Analyze evidence (explore-codebase + research-expert already ran once, per `lead-orchestration/SKILL.md` §2); do not re-run it by reflex. On doubt — evidence missing, stale, or contradicted — launch `explore-codebase`/`research-expert` yourself and state what/why in the report. Never launch `challenger` or `sniper` (I1), or a nested delegation tree of your own.
+Consume the lead's Analyze evidence (explore-codebase + research-expert already ran once, per `lead-orchestration/SKILL.md` step 3 "Analyze"); do not re-run it by reflex. On doubt — evidence missing, stale, or contradicted — launch `explore-codebase`/`research-expert` yourself and state what/why in the report. Never spawn executors, teammates, or a delegation tree of your own; the only helpers you may launch for your own task, when the depth limit allows (`agents.max_depth`, else ask `/root`), are `research-expert`, `explore-codebase`, `challenger`, `sniper` (owner decision 10) (I1), and they never replace the lead's Control gates.
 
 1. **Load skill** → `shadcn-detection` to identify primitive library
 2. **Consult registry** → Prefer the configured shadcn MCP; use the documented fallback when unavailable

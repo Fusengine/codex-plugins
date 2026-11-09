@@ -30,17 +30,16 @@ hotfix/1.2.1-critical-fix     # Hotfixes
 ```bash
 git checkout develop && git pull origin develop
 git checkout -b feature/AUTH-123-login-screen
-git push -u origin feature/AUTH-123-login-screen
 ```
+
+The branch stays local; the `commit` agent pushes it at the end of the mandate (`mode: full`).
 
 ## SPM Package Versioning
 
-```bash
-# Tag release (SemVer)
-git tag -a 1.2.0 -m "Release 1.2.0"
-git push origin 1.2.0
+Release tags (SemVer, e.g. `1.2.0`) are created only by the `commit` agent in full mode, after the merge is confirmed — never by hand in this phase.
 
-# Package.swift dependency
+```swift
+// Package.swift dependency
 .package(url: "https://github.com/org/Package", from: "1.2.0")
 ```
 
@@ -56,33 +55,17 @@ Pods/
 
 ## Merge Strategy
 
-```bash
-# Rebase before PR
-git fetch origin && git rebase origin/develop
-
-# Squash merge
-git checkout develop
-git merge --squash feature/AUTH-123-login-screen
-git commit -m "feat(auth): add Apple Sign-In (#123)"
-```
+Merges are done only by the `commit` agent (full mode, end of mandate): PR into the base branch, CI wait, then a real `--merge` commit — never squash, which would orphan the release tag's bump commit. No manual rebase, merge or commit in this phase.
 
 ## Branch Protection Rules
 
 - Require PR reviews (min 1)
 - Require status checks (SwiftLint, tests)
-- Require linear history
 - No force push to main/develop
 
 ## Release Process
 
-```bash
-git checkout -b release/1.2.0 develop
-# Bump version, update CHANGELOG
-git checkout main && git merge --no-ff release/1.2.0
-git tag -a 1.2.0 -m "Release 1.2.0"
-git push origin main --tags
-git checkout develop && git merge main
-```
+Version bump, CHANGELOG, merge and post-merge tag are all run by the `commit` agent (`$commit-pro:commit` + `$commit-pro:git-flow`) in full mode, announced by the lead in the report (AGENTS.md Git policy). This phase only creates the working branch.
 
 ## Update Task Phase
 

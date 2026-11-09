@@ -6,7 +6,7 @@ description: "Use when an expert agent self-reviews and self-corrects code after
 <objective>
 Elicitation lets an expert agent self-review and self-correct its own work after Execute. In APEX it always runs automatically: the expert selects and names techniques from the catalog, records evidence and unresolved findings, persists the artifact, then hands the claim to challenger before Verify. Manual selection and skip flags cannot bypass this gate.
 
-It sits between Execute and eXamine in the APEX flow, scores itself against an exit threshold (>=90% proceed, 70-89% document gaps, <70% iterate), and persists its findings to `.codex/apex/docs/elicit-{task-slug}.json` so a later pass can diff against prior verdicts instead of restarting.
+It sits between Execute and eXamine in the APEX flow, scores itself against an exit threshold (>=90% proceed, 70-89% document gaps, <70% iterate), reports its verdict in the agent REPORT, and — when it must persist — writes `docs/verify/elicit-<branch-slug>.json` (never under `.codex/`, read-only under the `workspace-write` sandbox) so a later pass can diff against prior verdicts instead of restarting.
 </objective>
 
 # Elicitation Skill
@@ -117,7 +117,7 @@ Analyze → Plan → Execute → [eLicit] → challenger → Verify → challeng
 
 ## Artifact Contract
 
-Step 5 persists `.codex/apex/docs/elicit-{task-slug}.json`. The report records inputs, named techniques, findings, corrections, evidence, unresolved items, escalation, and status. Reuse a prior artifact only when its input revision and task scope match the current frozen artifacts; otherwise refresh it. Then send the claim and evidence only to challenger. Verify starts after the challenger report. Full schema: `references/artifact-contract.md`.
+Step 5 puts the verdict in the agent REPORT and, when it must persist, writes `docs/verify/elicit-<branch-slug>.json` (never under `.codex/`). The report records inputs, named techniques, findings, corrections, evidence, unresolved items, escalation, and status. Reuse a prior artifact only when its input revision and task scope match the current frozen artifacts; otherwise refresh it. Then send the claim and evidence only to challenger. Verify starts after the challenger report. Full contract, `<branch-slug>` derivation, and schema: `references/artifact-contract.md`.
 
 ---
 
@@ -130,4 +130,4 @@ Step 5 persists `.codex/apex/docs/elicit-{task-slug}.json`. The report records i
 | 2 | `steps/step-02-select-techniques.md` | Select techniques |
 | 3 | `steps/step-03-apply-review.md` | Apply review |
 | 4 | `steps/step-04-self-correct.md` | Self-correct |
-| 5 | `steps/step-05-report.md` | Generate report, persist `elicit-{task-slug}.json` |
+| 5 | `steps/step-05-report.md` | Generate report, optionally persist `docs/verify/elicit-<branch-slug>.json` |

@@ -300,6 +300,18 @@
     "scope": "core"
   },
   {
+    "plugin": "hermes-expert",
+    "event": "PreToolUse",
+    "matcher": "apply_patch",
+    "scope": "core"
+  },
+  {
+    "plugin": "hermes-expert",
+    "event": "PostToolUse",
+    "matcher": "",
+    "scope": "core"
+  },
+  {
     "plugin": "laravel-expert",
     "event": "PreToolUse",
     "matcher": "apply_patch",

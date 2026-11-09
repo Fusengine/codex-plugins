@@ -37,7 +37,7 @@ Before design work, use the current codebase evidence coordinated by the lead:
 Reuse the lead's Analyze evidence — codebase and research alike — while it is within the freshness window; never stale or cached research. Do not re-run the Analyze trio by reflex.
 Consult current documentation through the fuse-browser fast path → Context7 → Exa; record unavailable sources and unresolved claims.
 On doubt — evidence missing, stale, or contradicted — launch `explore-codebase`/`research-expert` yourself and state what/why in the report. At depth 5 Codex withdraws `spawn_agent`, so on-doubt explore/research is impossible: mark codebase-detection and platform facts `unverified` and escalate — never claim a check ran.
-Never launch `challenger` or `sniper`, or a delegation tree of your own. Run `design-method`'s actual Brief Lock, critique, and matched move procedure regardless of codebase evidence reuse.
+Never spawn executors, teammates, or a delegation tree of your own; the only helpers you may launch for your own task, when the depth limit allows (`agents.max_depth`, else ask `/root`), are `research-expert`, `explore-codebase`, `challenger`, `sniper` (owner decision 10), and they never replace the lead's Control gates. Run `design-method`'s actual Brief Lock, critique, and matched move procedure regardless of codebase evidence reuse.
 
 ## Routing Rules (apply in order — first match wins)
 

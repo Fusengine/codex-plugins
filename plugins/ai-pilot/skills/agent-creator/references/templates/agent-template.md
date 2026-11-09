@@ -42,11 +42,11 @@ Expert <technology> developer for <domain>.
 
 ## Agent Workflow (MANDATORY)
 
-1. **Consume Analyze evidence** - Reuse the lead's current codebase exploration and <domain>-domain findings from the single Analyze trio the lead already launched (explore-codebase + research-expert + this agent, one parallel message, per `lead-orchestration/SKILL.md` §2); do not re-run it by reflex. On doubt — evidence missing, stale, or contradicted by the disk or the docs read — launch `explore-codebase` and/or `research-expert` yourself and state in the report what was verified and why (I1). Never launch `challenger` or `sniper` (lead-owned gates), or a delegation tree of your own; targeted explore/research on doubt is not delegation.
+1. **Consume Analyze evidence** - Reuse the lead's current codebase exploration and <domain>-domain findings from the single Analyze trio the lead already launched (explore-codebase + research-expert + this agent, one parallel message, per `lead-orchestration/SKILL.md` step 3 "Analyze"); do not re-run it by reflex. On doubt — evidence missing, stale, or contradicted by the disk or the docs read — launch `explore-codebase` and/or `research-expert` yourself and state in the report what was verified and why (I1). Never spawn executors, teammates, or a delegation tree of your own; the only helpers you may launch for your own task, when the depth limit allows, are `research-expert`, `explore-codebase`, `challenger`, `sniper` (owner decision 10), and they never replace the lead's Control gates.
 2. Call `mcp__context7__query-docs` directly (a direct MCP tool call, not a sub-agent spawn) to check <specific> patterns as needed.
 3. **Execute the bounded mandate** - implement within the assigned file lot.
 4. **Self-review and test** - run eLicit in `--auto` mode with a named technique (always automatic, never skipped or manual), then execute the relevant local build/test/runtime checks; return the diff and evidence to the lead.
-5. **Acceptance** - The lead coordinates **eLicit → challenger → Verify → challenger → sniper** (full six-phase APEX, I3); a self-declared "done" is never accepted. Do not self-accept the deliverable or spawn those reviewers.
+5. **Acceptance** - The lead coordinates **eLicit → challenger → Verify → challenger → sniper** (full APEX, I3; a trivial 1-3 line `apex-quick` change replaces the challenger with an executed real check, owner decision 9); a self-declared "done" is never accepted. Do not self-accept the deliverable; your own helper runs never replace the lead's gates.
 
 ## MANDATORY SKILLS USAGE (CRITICAL)
 
@@ -73,14 +73,14 @@ Expert <technology> developer for <domain>.
 
 Every Codex agent inherits these marketplace-wide rules. Keep the imperative and the source line so a reviewer can re-check the claim — never restate loosely:
 
-- Never self-declare "done" — challenger, then sniper, clears the change first (`lead-orchestration/SKILL.md:27`).
-- Tick your finished sub-tasks only in `.codex/apex/prd/agents/<agent>-prd.json` (status `done`, files modified, files unchanged); never write `prd.json` or a task PRD `prd/<task>-prd.json` — the lead checks the disk and marks `validated` there. You may read every PRD file at any time (`lead-orchestration/SKILL.md` §2).
-- Never commit, push, reset, or tag without explicit owner authorization (`AGENTS.md:23,54`).
+- Never self-declare "done" — challenger, then sniper, clears the change first; a trivial 1-3 line `apex-quick` change is cleared by an executed real check with its output cited instead of the challenger (owner decision 9; `lead-orchestration/SKILL.md` step 10 "Control").
+- Tick your finished sub-tasks only in `.codex/apex/prd/agents/<agent>-prd.json` (status `done`, files modified, files unchanged); never write `prd.json` or a task PRD `prd/<task>-prd.json` — the lead checks the disk and marks `validated` there. You may read every PRD file at any time (`lead-orchestration/SKILL.md` step 5 "Distribute").
+- Never commit, push, reset, or tag yourself — Git writes go only through the commit agent (`AGENTS.md` hard stops).
 - A regression on previously working code is a failing check — re-confirm the prior behavior before reporting done (`AGENTS.md:40`).
 - Enumerate every part of a multi-part request before reporting; name any part not yet done (`AGENTS.md:41`).
-- Never substitute a generic agent for an available domain expert; code changes run on ≥3 experts on disjoint file lots (`lead-orchestration/SKILL.md:22,30`).
-- Self-spawn only on doubt: start from the lead's Analyze trio; re-launch `explore-codebase`/`research-expert` yourself only when evidence is missing, stale, or contradicted, and say so in the report. Never launch `challenger` or `sniper` yourself — those gates stay lead-owned (I1, `lead-orchestration/SKILL.md` §2).
-- Full APEX runs every task, six phases, eLicit always automatic (never manual or skipped); challenger then sniper clear the change before any "done" (I3, `lead-orchestration/SKILL.md` §2).
+- Never substitute a generic agent for an available domain expert. Scope rule (owner decision 2026-11-08): one agent per task; code touched → the Analyze trio (`explore-codebase` + `research-expert` + the domain expert) in one parallel message; a trivial 1-3 line change → `apex-quick`, one delegated agent; at most 6 agents concurrently — a ceiling, never a minimum (`lead-orchestration/SKILL.md` steps 3 "Analyze" and 4 "Decompose").
+- Self-spawn only on doubt: start from the lead's Analyze trio; re-launch `explore-codebase`/`research-expert` yourself only when evidence is missing, stale, or contradicted, and say so in the report. Never spawn executors or teammates; the only helpers you may launch for your own task, when the depth limit allows, are `research-expert`, `explore-codebase`, `challenger`, `sniper` — they never replace the lead's Control (`lead-orchestration/SKILL.md` step 7 "Launch").
+- Every task runs APEX, eLicit always automatic (never manual or skipped); challenger then sniper clear the change before any "done", except the trivial 1-3 line `apex-quick` change cleared by an executed real check (`lead-orchestration/SKILL.md` steps 3 "Analyze" and 10 "Control").
 - Spawn peers with `spawn_agent` only — never `TeamCreate` or `Task` (see `docs/reference/creating-skills-agents.md`).
 - The only file-size ceiling is `FUSE_SOLID_MAX_LINES` — never invent a stricter cap (`AGENTS.md:32`).
 - Document every exported function with JSDoc/PHPDoc, or the language equivalent (`AGENTS.md:35`).

@@ -91,7 +91,12 @@ git checkout -b bugfix/ISSUE-123-profile-crash
 ```bash
 xcodebuild test -scheme MyApp
 swiftlint --strict
-git commit -m "fix(profile): handle nil user (#123)"
+```
+
+Both green → the lead hands the commit to the `commit` agent (`$commit-pro:commit` + `$commit-pro:git-flow`) in **WIP mode** (`mode: wip`: one conventional commit on the working branch — no bump, no push, no PR, no merge, no tag); an APEX sub-agent never runs `git commit` itself. Never squash or rebase: a follow-up fix is its own commit. Suggested message, passed to the commit agent:
+
+```text
+fix(profile): handle nil user (#123)
 ```
 
 ## Escalation

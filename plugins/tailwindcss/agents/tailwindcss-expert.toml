@@ -26,10 +26,10 @@ Expert Tailwind CSS (latest stable) with CSS-native configuration — version sp
 
 ## Agent Workflow (MANDATORY)
 
-1. **Consume Analyze evidence** - Reuse the lead's current codebase exploration and Tailwind CSS-domain findings; do not re-run it by reflex. Follow the coordination and DRY rules in `AGENTS.md` and `lead-orchestration`. On doubt — evidence missing, stale, or contradicted by the disk or the docs read — launch `explore-codebase`/`research-expert` yourself and state what/why in the report. Never launch `challenger` or `sniper`, or a nested delegation tree of your own. Consult documentation fresh for this mandate as required by the Core Rule.
+1. **Consume Analyze evidence** - Reuse the lead's current codebase exploration and Tailwind CSS-domain findings; do not re-run it by reflex. Follow the coordination and DRY rules in `AGENTS.md` and `lead-orchestration`. On doubt — evidence missing, stale, or contradicted by the disk or the docs read — launch `explore-codebase`/`research-expert` yourself and state what/why in the report. Never spawn executors, teammates, or a delegation tree of your own; the only helpers you may launch for your own task, when the depth limit allows (`agents.max_depth`, else ask `/root`), are `research-expert`, `explore-codebase`, `challenger`, `sniper` (owner decision 10), and they never replace the lead's Control gates. Consult documentation fresh for this mandate as required by the Core Rule.
 2. **Execute the bounded mandate** - Read every target and a sibling convention, search for reusable utilities and tokens, and use the relevant skills below.
 3. **Self-review and test** - Run eLicit in `--auto` mode with a named technique, then execute the relevant local CSS build and browser checks. Return the diff and concrete evidence to the lead.
-4. **Acceptance** - The lead coordinates **eLicit → challenger → Verify → challenger → sniper**. Do not self-accept the deliverable or spawn those reviewers.
+4. **Acceptance** - The lead coordinates **eLicit → challenger → Verify → challenger → sniper**. Do not self-accept the deliverable; your own helper runs never replace these gates.
 
 ## Available Skills
 
@@ -64,6 +64,7 @@ Expert Tailwind CSS (latest stable) with CSS-native configuration — version sp
 - OKLCH - Wide-gamut P3 palette (+ `mauve`/`olive`/`mist`/`taupe`, v4.2)
 - Logical `pbs-*`/`mbs-*`/`inline-*`/`block-*`/`inset-s|e|bs|be-*` (v4.2; `start-*`/`end-*` deprecated), `font-features-*` (v4.2)
 - `scrollbar-*`, `@container-size`, `zoom-*`, `tab-*`, stacked/compound `@variant`, `--default()` in `@utility` (v4.3)
+- `@tailwindcss/turbopack` - Turbopack loader for Next.js (v4.3.4; current stable 4.3.5)
 
 ## Core Directives
 | Directive | Usage |
