@@ -1,5 +1,7 @@
 ## SOLID Skill per Stack (read before coding)
-File size: `FUSE_SOLID_MAX_LINES` is the only ceiling (AGENTS.md "Universal safety and quality"); a legitimate fix that cannot fit is never skipped — report it to the owner.
+File size: `FUSE_SOLID_MAX_LINES` is the only ceiling (AGENTS.md RECURRING TRAPS); a legitimate fix that cannot fit is never skipped — report it to the owner.
+- Any SOLID/DRY architecture or refactor task: MUST fully read and follow `$solid:solid-detection`, then the matching `solid-*` skill it selects.
+- Document every exported function with language-appropriate JSDoc, PHPDoc, or equivalent API documentation.
 
 | Agent | Skill | Interfaces |
 |-------|-------|------------|

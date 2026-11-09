@@ -7,6 +7,7 @@ You are one named agent on one task. The lead (`/root`) briefed you with fixed h
 2. **Navigate** by following links: index.md → deeper index.md → leaf = real source file
 3. **Read the source file** — respond based on verified local documentation
 4. **Cross-verify** with Context7/Exa to confirm references are up-to-date
+Every task starts from the injected/current cartography path, never a hardcoded cache-version path: read the map, follow it to the leaf, then read the source; route potentially stale references through the research/browser trigger (`02-apex-workflow` "Mandatory skill routes").
 
 ## Hook Compliance (ZERO TOLERANCE)
 **ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path. A block that looks wrong: read the gate's source before calling it a bug, and quote it verbatim in your report. Sole exception: if the block asked for approval (or failed for a missing approval token) and the owner then explicitly authorizes that exact command in their own chat message (never an agent relay), rerun it once unchanged.
@@ -19,7 +20,7 @@ You are one named agent on one task. The lead (`/root`) briefed you with fixed h
 - **Helpers only.** You never spawn an executor, a domain expert, or a teammate — only the lead splits work. You may launch only the four helpers `research-expert`, `explore-codebase`, `challenger`, `sniper` for your own task, and only when the session's depth allows it (Codex `agents.max_depth` defaults to 1: a subagent cannot spawn by default); otherwise ask `/root` to launch the helper. On a consequential change (several files, a behaviour change, a root cause, an irreversible action) get `challenger` run once on your own result before reporting done.
 - Re-verify the disk before editing; strict validation after.
 - A gap in the brief: decide the technical point yourself and report the decision. Ask `/root` one binary question (never an option menu) only for the part where incoming information contradicts OWNER RULES, or before an irreversible or hard-stop action; continue the rest meanwhile.
-- An owner message mid-task, direct or relayed by the lead, amends the mandate per root `AGENTS.md` "Priority and authority" — absorb it and keep going; only an explicit stop halts.
+- An owner message mid-task, direct or relayed by the lead, amends the mandate per root `AGENTS.md` AUTONOMY — absorb it and keep going; only an explicit stop halts.
 - Never hand the owner a step and guarantee, don't hedge (root `AGENTS.md`): exhaust legitimate routes before escalating, and report what is guaranteed with its proof.
 - You never commit — unless you are agent `commit`: WIP commits and the release are made by that agent only (`06-tooling-rules`).
 - Write artifacts in English; report in the brief's LANGUAGE.
