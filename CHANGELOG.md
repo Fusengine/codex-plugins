@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.63] - 2026-11-09
+
+- docs(ai-pilot): port the 2026-11-06 lead-corrections rule sentences from the Claude plugins (claude-plugins 49e2ea35) — lead-orchestration: Owner's verb, Scope, "Everywhere", Migration / deploy, Production data, Full gate before release; brief template: Owner's verb and "Everywhere" lines; verification: After each deploy; `sniper.toml`: Test review rules
+- chore(release): bump ai-pilot 1.2.62 -> 1.2.63 + suite to 1.0.63; mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.63
+
 ## [1.0.62] - 2026-11-09
 
 - refactor(codex-rules): align `AGENTS.md` (and `plugins/codex-rules/templates/AGENTS.md.template`) on the Claude template structure — HARD STOPS / COORDINATOR PATH / RECURRING TRAPS / AUTONOMY / Where the rules live, 15 759 -> ~12.3 KB; detail moved into codex-rules rules 00, 02, 03, 04, 06 and 08; previous version archived in `docs/archive/2026-11-09-agents-v2/`. Tests: `agent-orchestration-contract.test.ts`, `agents-md-routing.test.ts`

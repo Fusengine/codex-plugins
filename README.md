@@ -1,6 +1,6 @@
 # Fusengine Codex Plugins
 
-![version](https://img.shields.io/badge/version-1.0.62-blue?style=flat-square)
+![version](https://img.shields.io/badge/version-1.0.63-blue?style=flat-square)
 ![plugins](https://img.shields.io/badge/plugins-26-brightgreen?style=flat-square)
 ![runtime](https://img.shields.io/badge/runtime-Bun-black?style=flat-square)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)
