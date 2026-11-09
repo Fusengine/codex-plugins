@@ -24,6 +24,9 @@ No edit (even one line), no ssh, no UI driving, no script, no migration, no LESS
 
 Restate the request as numbered named parts, including negative constraints ("don't touch X"), every question the owner asked, and every reference the owner sent (mockup, file, style) — the reference is the source of truth, not a hint. This list is the requests ledger. An owner message mid-task amends the list: add the part, tell the running agents (step 8), keep going; only an explicit stop halts. Each item carries one status — `open`, `done` (with its proof pointer: screenshot path, HTTP status, test output), or `waiting` (on whom).
 
+**Owner's verb**: it sets the mandate type and is relayed unchanged — audit / analyse / explain / check = read-only (WRITE: none); fix / implement / create = write. Never turn an audit into a fix or a question into an action.
+**Scope**: a terse owner command means exactly that action — never substitute an easier task. A document or deliverable request covers the whole product unless the owner narrows it; each item is tagged done / partial / planned, never silently dropped.
+
 The ledger lives in the step-11 report, not in a file: the PRD router (step 5) is written only before spawning and at each `validated` mark, never per owner message, so a ledger there or in a new file would add writes, while the report already goes out every turn. After a context compaction, rebuild the ledger from the last report before acting.
 
 <example>
@@ -97,6 +100,8 @@ prd/task-1-prd.json (after validation, compacted): { "agent-1": { "status": "val
 
 Fill `references/brief-template.md`, whose fixed headers are OWNER RULES (verbatim) / WRITE / OUTPUT / TOOLS / PROOF / NON-GOALS / TEAM / LANGUAGE / REPORT. Owner corrections and recorded decisions go first, under OWNER RULES (step 11). A protected path (`~/.codex`, `~/.claude`, a deployed or marketplace path, install scripts) goes into WRITE only when the owner named it in this session; quote the exact sentence, and the agent writes that target and nothing else.
 
+**"Everywhere"**: when the owner says "everywhere / from any X / on every screen", grep every place the entity is rendered or handled; OUTPUT lists each component and route by path, with one test per place and each place verified on a real capture before reporting.
+
 The headers carry every field below. A missing field makes the mandate incomplete:
 
 - **Inputs:** owner request and corrections, verified local context, dependencies, and a current-mandate research record with newly consulted sources, versions, and captured-at time (OWNER RULES, OUTPUT context);
@@ -145,6 +150,8 @@ Poll every running executor at a fixed cadence (`wait_agent` with a timeout, `li
 2. Verify the artifact on disk after every report. A report or idle notification is not proof of delivery.
 3. Open the actual deliverable against the real target (screenshot, extracted frames, running dev server, real DB, installed version — not the manifest or an isolated fixture) per `$ai-pilot:verification` "Look before done" and its "Proof by type" (UI, tests, commit, migration/deploy, platform advice). Tick each ledger item from step 1 by name; an omitted or unproven part is written "not verified". A proven part is stated as guaranteed with its proof; never "I can't guarantee".
 4. A `done` cites an observation taken AFTER the last edit to its files (screenshot path, HTTP status, test output), and the report's ledger carries that pointer. For a visual item, that proof is a screenshot taken after the last edit (the `AGENTS.md` rule: screenshot before naming a cause or claiming a fix). If the claim contradicts the lead's own latest observation (e.g. "in place" while the last fetch returned 404), it is not done: the item stays `open`.
+   - **Migration / deploy**: never "available / deployed / fixed" until all four are measured — deploy finished (timestamp + version/commit), a real call or login, the data rows of each fixed defect, the real screen. Check for an existing session before asking the owner to sign in.
+   - **Production data**: any data-changing command on a production system is announced before it runs with the release tag/commit it comes from and its dry-run result, then reported with its real-run result.
 5. Each task verified -> launch the `commit` agent in WIP mode on the working branch (commit only — no push, bump, PR, merge, or tag): standing owner policy (`AGENTS.md` hard stops), never re-asked. On `main`, `master`, `develop` or `production` the commit agent's branch step creates the working branch first; never a WIP commit directly there.
 
 **Check:** each part has a proof artifact path observed after its last edit, or is marked "not verified"; no done claim contradicts the lead's latest observation; each verified task has its WIP commit hash; each executor report lists the skills it consulted, and a missing one is "not verified".
@@ -153,6 +160,7 @@ Poll every running executor at a fixed cadence (`wait_agent` with a timeout, `li
 
 1. Stop or close every writer before the final sniper pass, then confirm relevant mtimes remain stable.
 2. Run no validation mid-flight. Hand off to the eLicit, Verify, challenge, and code-quality routes required by `AGENTS.md` only after execution is frozen: `sniper` once on all changes, then the `challenger` before any "done" on a consequential change, root-cause, irreversible action or 2nd-time fix (trivial 1-3 line `apex-quick` change: an executed real check with its output cited instead, owner decision 9). A REFUTED verdict is resolved or explicitly accepted by the owner before "done".
+   - **Full gate before release**: before the `commit` agent is dispatched in release mode, an agent runs the project's full gate and the lead reads its output itself, never quoting an "all green". A CI job on a different engine/environment than local -> the touched tests run there, or that job is awaited, before merge; base-branch CI red after a merge = stop.
 3. **Core first:** prove the deliverable the owner asked for, on the owner's real input, before polishing side pieces. A REFUTED on a side piece is fixed once and reported; it never displaces work on the core deliverable. No round cap — order, not count.
 4. **No over-engineering:** build what the request needs with the simplest design that meets it, reusable and maintainable (DRY + SOLID) — the files, helpers, tests and shared code that need implies are good structure. Over-engineering is a speculative mechanism beyond the need (a new subsystem, a replacement for a tool the owner already has, hardening the owner did not ask for, extra modes or flags "just in case"): it is proposed in one line in the report, not built.
 
