@@ -266,4 +266,4 @@ bun run scripts/fix-conformance.ts      # align manifests/models/marketplace
 
 ## License
 
-MIT. See [LICENSE](LICENSE) when available.
+MIT. See [LICENSE](LICENSE).
