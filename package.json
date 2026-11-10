@@ -4,6 +4,7 @@
 	"private": true,
 	"type": "module",
 	"description": "Fusengine plugin ecosystem migrated to Codex CLI",
+	"license": "MIT",
 	"scripts": {
 		"migrate": "bun run scripts/migrate.ts",
 		"sync:agents": "bun run scripts/sync-agents.ts",
