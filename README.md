@@ -1,11 +1,11 @@
 # Fusengine Codex Plugins
 
-![version](https://img.shields.io/badge/version-1.0.64-blue?style=flat-square)
-![plugins](https://img.shields.io/badge/plugins-26-brightgreen?style=flat-square)
+![version](https://img.shields.io/badge/version-1.0.65-blue?style=flat-square)
+![plugins](https://img.shields.io/badge/plugins-27-brightgreen?style=flat-square)
 ![runtime](https://img.shields.io/badge/runtime-Bun-black?style=flat-square)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)
 
-> **Codex CLI plugin marketplace.** 25 expert plugins for APEX workflow,
+> **Codex CLI plugin marketplace.** 27 plugins for APEX workflow,
 > SOLID/DRY enforcement, framework specialists, and MCP integrations. The
 > implementation follows the official Codex CLI documentation at
 > `developers.openai.com/codex`.
@@ -26,7 +26,7 @@ codex plugin marketplace add https://github.com/fusengine/codex.git
 
 That is all. The script runs from the temporary Codex marketplace checkout,
 installs dependencies, registers the marketplace, enables hooks, copies
-`AGENTS.md`, enables the 19 plugins, prompts for Codex configuration (model,
+`AGENTS.md`, enables the 27 plugins, prompts for Codex configuration (model,
 reasoning effort, personality, approval policy, sandbox mode) and MCP API keys,
 installs a shell autoloader (`~/.config/fish/conf.d/codex-env.fish`,
 `~/.zshrc`, `~/.bashrc`, or the PowerShell profile), and resolves plugin
@@ -86,7 +86,7 @@ are detected and the prompt is skipped.
    direct `~/.codex/config.toml` patch when Codex CLI is unavailable)
 3. Enables hooks and MultiAgentV2 in `~/.codex/config.toml`, removing incompatible legacy agent limits
 4. Copies `AGENTS.md` to `~/.codex/AGENTS.md` with overwrite prompt
-5. Enables the 19 plugins (`[plugins."NAME@fusengine-codex"] enabled = true`)
+5. Enables the 27 plugins (`[plugins."NAME@fusengine-codex"] enabled = true`)
 6. Prompts for Codex config and auto-sets `suppress_unstable_features_warning`
 7. Prompts for API keys and writes `~/.codex/.env` with `chmod 600`
 8. Installs the shell autoloader
@@ -116,6 +116,7 @@ normalized plugin name.
 | `commit-pro` | `commit-pro` | 1.2.35 | Conventional commits, security check, version bump, tag, push |
 | `core-guards` | `core-guards` | 1.1.55 | Pre-tool-use safety, SOLID enforcement hooks, statusline |
 | `design-expert` | `design-expert` | 2.1.49 | Design director for web, web apps, iOS and Android; OKLCH tokens, Gemini Design MCP |
+| `devops-expert` | `devops-expert` | 1.0.0 | Self-hosted IT/DevOps: Docker, Kubernetes, Linux, Proxmox, OpenStack, Terraform/OpenTofu, Ansible, CI/CD, observability, backup, secrets, databases |
 | `go-expert` | `go-expert` | 1.0.19 | Go 1.27: idioms, concurrency, backend services, golangci-lint v2, govulncheck |
 | `hermes-expert` | `hermes-expert` | 1.0.0 | Nous Research Hermes Agent 0.23+: deploy from a company description, config.yaml, profiles, delegation, cron, gateways, security, chief-of-staff patterns |
 | `laravel-expert` | `laravel-expert` | 1.2.23 | Laravel 13, PHP 8.5, Eloquent, Livewire, Reverb, AI SDK, Stripe |
@@ -179,8 +180,8 @@ codex-plugins/
 ├── setup.sh                           # install entry point
 ├── package.json                       # Bun, type: module
 ├── tsconfig.json                      # Bun strict
-├── .agents/plugins/marketplace.json   # 19-plugin registry
-├── plugins/                           # 19 plugins
+├── .agents/plugins/marketplace.json   # 27-plugin registry
+├── plugins/                           # 27 plugins
 │   └── <plugin>/
 │       ├── .codex-plugin/plugin.json
 │       ├── skills/<name>/SKILL.md
@@ -248,7 +249,7 @@ All gaps identified in the v1.1.x parity diff are closed in v1.2.0:
 ### `plugin-scanner` Output
 
 ```text
-Plugin diagnostic (19 plugins scanned):
+Plugin diagnostic (27 plugins scanned):
   ai-pilot              manifest OK  hooks 4 evt / 12 hdl  mcp 2  skills 6  agents 5
   astro-expert          manifest OK  hooks 2 evt /  4 hdl  mcp 1  skills 12 agents 1
   ...

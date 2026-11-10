@@ -15,11 +15,14 @@ const TERRA_HIGH: ModelProfile = { model: "gpt-6.1-terra", effort: "high" };
 const TERRA_MAX: ModelProfile = { model: "gpt-6.1-terra", effort: "max" };
 
 /**
- * Canonical shipped-agent policy (39 agents, GPT-6.1 Terra fleet, applied
- * 2026-10-29): 31 `gpt-6.1-terra` `medium` + 5 `high` + 3 `max`, zero Sol,
+ * Canonical shipped-agent policy (40 agents, GPT-6.1 Terra fleet, applied
+ * 2026-10-29): 32 `gpt-6.1-terra` `medium` + 5 `high` + 3 `max`, zero Sol,
  * no `ultra`. 2026-11-09: `hermes-expert` added on the new-agent default
  * (`medium`, the Claude source's `effort: medium`) when the owner approved
  * porting the Hermes plugin ("oui"), taking 30 + 5 + 3 = 38 to 31 + 5 + 3 = 39.
+ * 2026-11-10: `devops-expert` added on the same default (`medium`, the Claude
+ * source's `effort: medium`) when the owner approved porting the DevOps plugin
+ * ("oui"), taking 31 + 5 + 3 = 39 to 32 + 5 + 3 = 40.
  *
  * Owner decision (verbatim, 2026-10-29): "That is 30 + 5 + 3 = 38 agents. No
  * agent stays on Sol. Do not use `ultra`, which adds automatic sub-agent
@@ -30,7 +33,7 @@ const TERRA_MAX: ModelProfile = { model: "gpt-6.1-terra", effort: "max" };
  *
  * Resulting matrix: `max` (3) is `design-expert`, `challenger`,
  * `security-expert`. `high` (5) is `sniper`, `brainstorming`,
- * `prompt-engineer`, `skill-creator`, `solid-orchestrator`. `medium` (31) is
+ * `prompt-engineer`, `skill-creator`, `solid-orchestrator`. `medium` (32) is
  * every other agent, including the code executors and `commit`.
  *
  * Superseded policies (GPT-5.6 tiers; the 2026-09-23 GPT-6 Sol/Luna split and
@@ -39,6 +42,7 @@ const TERRA_MAX: ModelProfile = { model: "gpt-6.1-terra", effort: "max" };
  */
 export const AGENT_MODEL_PROFILES: Record<string, ModelProfile> = {
 	"astro-expert": TERRA_MEDIUM,
+	"devops-expert": TERRA_MEDIUM,
 	"go-expert": TERRA_MEDIUM,
 	"hermes-expert": TERRA_MEDIUM,
 	"laravel-expert": TERRA_MEDIUM,

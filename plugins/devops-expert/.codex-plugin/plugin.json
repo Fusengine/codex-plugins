@@ -1,0 +1,31 @@
+{
+  "name": "devops-expert",
+  "version": "1.0.0",
+  "description": "Expert self-hosted IT/DevOps — Docker, Kubernetes, Linux, Proxmox VE, OpenStack, Terraform/OpenTofu, Ansible, CI/CD, observability, storage and backup, secrets, databases — with a discovery, dry-run, one-go, verify, rollback safety model",
+  "author": {
+    "name": "Fusengine",
+    "email": "hello@fusengine.ch",
+    "url": "https://github.com/fusengine"
+  },
+  "repository": "https://github.com/fusengine/agents",
+  "homepage": "https://github.com/fusengine/agents",
+  "license": "MIT",
+  "keywords": [
+    "devops",
+    "docker",
+    "kubernetes",
+    "linux",
+    "proxmox",
+    "openstack",
+    "terraform",
+    "ansible",
+    "observability",
+    "infrastructure"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "DevOps Expert",
+    "shortDescription": "Self-hosted IT/DevOps specialist with a dry-run, one-go, rollback safety model",
+    "developerName": "Fusengine"
+  }
+}

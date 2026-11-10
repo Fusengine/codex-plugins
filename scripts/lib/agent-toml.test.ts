@@ -9,6 +9,7 @@ const TERRA_MEDIUM = [
 	"laravel-expert", "nextjs-expert", "react-expert", "typescript-expert", "php-expert", "astro-expert",
 	"tanstack-start-expert", "swift-expert", "go-expert", "rust-expert", "tailwindcss-expert", "shadcn-ui-expert",
 	"hermes-expert", // 2026-11-09: owner approved porting the Hermes plugin ("oui"), new-agent default tier
+	"devops-expert", // 2026-11-10: owner approved porting the DevOps plugin ("oui"), new-agent default tier
 	"sniper-faster", "explore-codebase", "research-expert", "websearch", "cartographer", "changelog-watcher",
 	"commit-detector", "commit", "lessons-compactor", "seo-cluster", "seo-content", "seo-expert", "seo-geo",
 	"seo-images", "seo-local", "seo-schema", "seo-sitemap", "seo-technical",
@@ -62,18 +63,18 @@ function shippedAgentConfigs(): Map<string, Record<string, unknown>> {
 	return configs;
 }
 
-test("ships the exact 39-agent model and reasoning-effort matrix", () => {
+test("ships the exact 40-agent model and reasoning-effort matrix", () => {
 	const configs = shippedAgentConfigs();
 
-	expect(configs.size).toBe(39);
+	expect(configs.size).toBe(40);
 	expect([...configs.keys()].sort()).toEqual(Object.keys(EXPECTED_PROFILES).sort());
 	for (const [name, [model, effort]] of Object.entries(EXPECTED_PROFILES)) {
 		expect(configs.get(name)?.model).toBe(model);
 		expect(configs.get(name)?.model_reasoning_effort).toBe(effort);
 	}
 
-	expect(TERRA_MEDIUM).toHaveLength(31);
-	expect(new Set(TERRA_MEDIUM).size).toBe(31);
+	expect(TERRA_MEDIUM).toHaveLength(32);
+	expect(new Set(TERRA_MEDIUM).size).toBe(32);
 	expect(TERRA_HIGH).toHaveLength(5);
 	expect(TERRA_MAX).toHaveLength(3);
 	expect([...configs.values()].filter((config) => String(config.model) !== "gpt-6.1-terra")).toEqual([]);
