@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.68] - 2026-11-11
+
+### Changed
+
+- chore(license): `LICENSE` copyright holder is now "Fusengine Sàrl" (legal entity; owner decision 2026-11-11 recorded in `docs/decisions.md`); author fields and release history unchanged
+- chore(release): bump suite to 1.0.68 (no plugin touched); mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.68
+
 ## [1.0.67] - 2026-11-11
 
 ### Added
