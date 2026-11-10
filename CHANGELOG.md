@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.66] - 2026-11-10
+
+- chore(deps): bump `@fusengine/harness` ^0.1.115 -> ^0.1.116 (`HARNESS_VERSION` audited across 11/11 scopes)
+- fix(harness): 0.1.116 removes the 0.1.115 Bash write guard false positive on `(cmd 2>&1) || true` (fd dup/close or `/dev/null` target glued to `)`); real file redirects are still guarded
+- chore(release): bump suite to 1.0.66 (no plugin touched); mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.66
+
 ## [1.0.65] - 2026-11-10
 
 - feat(devops-expert): port the fuse-devops plugin to Codex — new `devops-expert` plugin (18 skills, `agents/devops-expert.toml`, no hooks) registered in `.agents/plugins/marketplace.json` and README; codex-rules `01-project-detection.md` routes infrastructure indicators to it (Infrastructure tier); docs `docs/plugins/devops.md`, `docs/workflow/agents.md`, `docs/workflow/skills.md`
