@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.65] - 2026-11-10
+
+- feat(devops-expert): port the fuse-devops plugin to Codex — new `devops-expert` plugin (18 skills, `agents/devops-expert.toml`, no hooks) registered in `.agents/plugins/marketplace.json` and README; codex-rules `01-project-detection.md` routes infrastructure indicators to it (Infrastructure tier); docs `docs/plugins/devops.md`, `docs/workflow/agents.md`, `docs/workflow/skills.md`
+- chore(deps): bump `@fusengine/harness` ^0.1.108 -> ^0.1.115 (`HARNESS_VERSION` audited across 11/11 scopes)
+- chore(release): bump codex-rules 1.0.38 -> 1.0.39 + suite to 1.0.65; devops-expert ships at 1.0.0 (initial release); mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.65
+
 ## [1.0.64] - 2026-11-10
 
 - feat(security-expert): port the security plugin refresh from claude-plugins v1.39.47 — new `agentic-security` skill (agent config, MCP trust, hooks/plugins, prompt injection, permissions, secrets, CI agents, standards map); refreshed `security-scan`, `auth-audit`, `cve-research`, `dependency-audit`, `security-headers` skills, rules, `/prompts:scan` command and `docs/plugins/security.md`; `security-expert.toml` merged (scope table, agent-config detection, refutation pass mapped onto Codex dispositions); Codex adaptations: read-only agent returns the report and the caller writes `docs/security/`, no helper agents, `${PLUGIN_ROOT}` paths, closed skill frontmatter. Test: `security-agent-pilot.test.ts` (7 skills)
