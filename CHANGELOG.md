@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.67] - 2026-11-11
+
+### Added
+
+- chore(license): MIT `LICENSE` at the repo root (identical to `@fusengine/harness`, Copyright (c) 2026 Fusengine); `"license": "MIT"` in the root `package.json`; README License section links it; owner decision recorded in `docs/decisions.md`
+- chore(release): bump suite to 1.0.67 (no plugin touched); mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.67
+
 ## [1.0.66] - 2026-11-10
 
 - chore(deps): bump `@fusengine/harness` ^0.1.115 -> ^0.1.116 (`HARNESS_VERSION` audited across 11/11 scopes)
