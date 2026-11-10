@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.64] - 2026-11-10
+
+- feat(security-expert): port the security plugin refresh from claude-plugins v1.39.47 — new `agentic-security` skill (agent config, MCP trust, hooks/plugins, prompt injection, permissions, secrets, CI agents, standards map); refreshed `security-scan`, `auth-audit`, `cve-research`, `dependency-audit`, `security-headers` skills, rules, `/prompts:scan` command and `docs/plugins/security.md`; `security-expert.toml` merged (scope table, agent-config detection, refutation pass mapped onto Codex dispositions); Codex adaptations: read-only agent returns the report and the caller writes `docs/security/`, no helper agents, `${PLUGIN_ROOT}` paths, closed skill frontmatter. Test: `security-agent-pilot.test.ts` (7 skills)
+- chore(release): bump security-expert 1.0.32 -> 1.0.33 + suite to 1.0.64; mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.64
+
 ## [1.0.63] - 2026-11-09
 
 - docs(ai-pilot): port the 2026-11-06 lead-corrections rule sentences from the Claude plugins (claude-plugins 49e2ea35) — lead-orchestration: Owner's verb, Scope, "Everywhere", Migration / deploy, Production data, Full gate before release; brief template: Owner's verb and "Everywhere" lines; verification: After each deploy; `sniper.toml`: Test review rules
