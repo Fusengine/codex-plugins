@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.69] - 2026-11-11
+
+### Changed
+
+- chore(commit-pro): `plugins/commit-pro/LICENSE` copyright holder is now "Fusengine Sàrl" (was a personal name; owner decision 2026-11-11 recorded in `docs/decisions.md`); year, author fields and release history unchanged
+- chore(release): bump commit-pro 1.2.39 -> 1.2.40 + suite to 1.0.69; mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.69
+
 ## [1.0.68] - 2026-11-11
 
 ### Changed
