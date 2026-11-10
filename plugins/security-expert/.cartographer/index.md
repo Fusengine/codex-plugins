@@ -3,6 +3,7 @@
 ├── agents/
 │   └── [security-expert](./agents/security-expert.md) — Security vulnerability detection and remediation s
 ├── skills/
+│   ├── [agentic-security](./skills/agentic-security/index.md) — Use when auditing the security of an AI-coding-agent setup in a repository: Clau
 │   ├── [auth-audit](./skills/auth-audit/index.md) — Audit authentication and authorization patterns. Checks JWT, sessions, OAuth2, P
 │   ├── [cve-research](./skills/cve-research/index.md) — Research CVEs and security advisories for project dependencies. Uses Exa, NVD AP
 │   ├── [dependency-audit](./skills/dependency-audit/index.md) — Audit project dependencies for known vulnerabilities using ecosystem-specific to

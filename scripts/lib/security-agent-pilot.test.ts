@@ -40,19 +40,47 @@ async function materializedConfig(): Promise<{ config: AgentConfig; cleanup: () 
 	return { config: parsedConfig(join(root, "security-expert.toml")), cleanup: () => rmSync(root, { recursive: true, force: true }) };
 }
 
-test("materialized security agent preserves the captured metadata and six skills", async () => {
+// Security plugin refresh port, claude-plugins v1.39.47, 2026-11-10: three routing triggers added to the description and skill `agentic-security` inserted after `auth-audit`.
+const AGENTIC_SECURITY_SKILL: SkillConfig = { enabled: true, path: "plugins/security-expert/skills/agentic-security/SKILL.md" };
+const AGENTIC_SECURITY_INDEX = 5;
+const PORTED_DESCRIPTION =
+	"Use when: security audit requested (whole repository or a change vs its merge base), scanning for OWASP Top 10, CVE research, dependency audit, secrets detection, auth hardening, agent-configuration review (.claude/, .mcp.json, hooks, plugins, skills). Do NOT use for: fixing the audited code (the caller dispatches the domain expert + sniper with this agent's findings), general code quality (use sniper), feature implementation.";
+const DESCRIPTION_PORT_DELTA: ReadonlyArray<readonly [string, string]> = [
+	["security audit requested,", "security audit requested (whole repository or a change vs its merge base),"],
+	["auth hardening.", "auth hardening, agent-configuration review (.claude/, .mcp.json, hooks, plugins, skills)."],
+	["Do NOT use for: ", "Do NOT use for: fixing the audited code (the caller dispatches the domain expert + sniper with this agent's findings), "],
+];
+
+function portedSkills(baseline: AgentConfig): SkillConfig[] {
+	const skills = [...skillConfigs(baseline)];
+	skills.splice(AGENTIC_SECURITY_INDEX, 0, AGENTIC_SECURITY_SKILL);
+	return skills;
+}
+
+test("the v1.39.47 description port delta applies exactly once to the captured baseline description", () => {
+	let description = String(parsedConfig(BASELINE_PATH).description);
+	for (const [from, to] of DESCRIPTION_PORT_DELTA) {
+		expect(description.split(from)).toHaveLength(2);
+		description = description.replace(from, to);
+	}
+	expect(description).toEqual(PORTED_DESCRIPTION);
+});
+
+test("materialized security agent preserves the captured metadata and seven skills (six captured + agentic-security)", async () => {
 	const baseline = parsedConfig(BASELINE_PATH);
 	const { config, cleanup } = await materializedConfig();
 	try {
-		for (const field of ["name", "description", "sandbox_mode", "nickname_candidates"]) {
+		for (const field of ["name", "sandbox_mode", "nickname_candidates"]) {
 			expect(config[field]).toEqual(baseline[field]);
 		}
+		expect(config.description).toEqual(PORTED_DESCRIPTION);
+		expect(skillConfigs(baseline)[AGENTIC_SECURITY_INDEX - 1]?.path).toBe("plugins/security-expert/skills/auth-audit/SKILL.md");
 		expect(config.model).toEqual(AGENT_MODEL_PROFILES["security-expert"]?.model);
 		expect(config.model).toEqual(parsedConfig(AGENT_PATH).model);
 		expect(config.model_reasoning_effort).toEqual(AGENT_MODEL_PROFILES["security-expert"]?.effort);
 		expect(config.model_reasoning_effort).toEqual(parsedConfig(AGENT_PATH).model_reasoning_effort);
-		expect(normalizedSkills(config)).toEqual(skillConfigs(baseline));
-		expect(skillConfigs(config)).toHaveLength(6);
+		expect(normalizedSkills(config)).toEqual(portedSkills(baseline));
+		expect(skillConfigs(config)).toHaveLength(7);
 		for (const skill of skillConfigs(config)) {
 			expect(skill.enabled).toBe(true);
 			expect(typeof skill.path).toBe("string");
