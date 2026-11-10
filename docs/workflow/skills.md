@@ -131,3 +131,26 @@
 | `guardrails` | Security techniques |
 | `prompt-testing` | A/B testing |
 | `prompt-library` | 18+ templates |
+
+## devops-expert (18 skills)
+
+| Skill | Description |
+|-------|-------------|
+| `devops-ansible` | ansible-core, inventory, roles/collections, idempotency, check mode, Vault, Molecule |
+| `devops-cicd` | GitHub Actions, GitLab CI, self-hosted runners, OIDC, deploy strategies and rollback |
+| `devops-databases` | PostgreSQL ops (PgBouncer, pgBackRest, Patroni, CloudNativePG), MariaDB, Redis/Valkey pointers |
+| `devops-docker` | Docker Engine, Compose, BuildKit, firewall-safe publishing, registry, cosign, Podman/Quadlet |
+| `devops-gitops-packaging` | Helm 4, Kustomize, Argo CD, Flux, GitOps layout, promotion, drift |
+| `devops-iac` | OpenTofu/Terraform state, modules, saved-plan workflow, drift, infra providers |
+| `devops-k8s-cluster` | kubeadm, k3s, Talos, etcd, upgrades, Cilium, bare-metal LoadBalancer |
+| `devops-kubernetes` | Workloads, Gateway API, RBAC, NetworkPolicy, safe kubectl, pod troubleshooting |
+| `devops-linux` | systemd, apt/dnf, users/sshd, LVM, SELinux/AppArmor, performance troubleshooting |
+| `devops-networking` | nftables, bridges/VLANs, DNS, TLS/ACME, reverse proxies, WireGuard |
+| `devops-opnsense` | OPNsense rules/NAT, DNS/DHCP, VPN, multi-WAN, CARP HA, upgrades and rollback, config backup, REST API |
+| `devops-observability` | Prometheus, Alertmanager, Grafana as code, Loki/Alloy, OpenTelemetry |
+| `devops-openstack` | Service map, SLURP upgrades, Kolla-Ansible/OSA/OpenStack-Helm, `openstack` CLI |
+| `devops-proxmox` | Proxmox VE 9.x cluster, HA, storage, SDN, firewall, `qm`/`pct`/`pvesh`, upgrades |
+| `devops-secrets` | SOPS+age, Vault/OpenBao, External Secrets, rotation, leak response |
+| `devops-sre-ops` | SLOs, burn-rate alerts, incident response, postmortems, change management |
+| `devops-storage-backup` | ZFS, Ceph, S3 storage, 3-2-1-1-0, restic/borg/Velero, restore tests, DR |
+| `devops-virtualization` | KVM/QEMU/libvirt, Incus/LXC, cloud-init NoCloud, Packer |

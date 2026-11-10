@@ -114,6 +114,19 @@
       }
     },
     {
+      "name": "devops-expert",
+      "source": {
+        "source": "local",
+        "path": "./plugins/devops-expert"
+      },
+      "version": "1.0.0",
+      "category": "Productivity",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      }
+    },
+    {
       "name": "laravel-expert",
       "source": {
         "source": "local",

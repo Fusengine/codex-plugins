@@ -22,6 +22,7 @@
 - [design](plugins/design.md) - UI/UX with shadcn/ui
 - [shadcn](plugins/shadcn.md) - shadcn/ui expert with Radix/Base UI detection
 - [security](plugins/security.md) - Security audit, OWASP, CVE research
+- [devops](plugins/devops.md) - Self-hosted IT/DevOps expert (Docker, Kubernetes, Linux, Proxmox, OpenStack, IaC, observability)
 - [changelog](plugins/changelog.md) - Codex CLI update watcher, community pulse
 - [solid](plugins/solid.md) - SOLID principles
 - [prompt-engineer](plugins/prompt-engineer.md) - Prompt optimization
