@@ -1,6 +1,6 @@
 {
   "name": "fusengine-codex",
-  "version": "1.0.69",
+  "version": "1.0.70",
   "description": "Fusengine plugin ecosystem for Codex CLI: expert agents, APEX workflow, SOLID/DRY enforcement, cartography, security",
   "author": {
     "name": "Fusengine",
@@ -301,7 +301,7 @@
         "source": "local",
         "path": "./plugins/swift-apple-expert"
       },
-      "version": "1.1.39",
+      "version": "1.1.40",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
