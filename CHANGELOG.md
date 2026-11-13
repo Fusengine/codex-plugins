@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- feat(solid-swift): add `references/state-machines.md` (sum-type state modeling, `LoadState<Value>` with a `Sendable` + `Equatable` `LoadFailure`, Tier 2 transition functions) and move the `viewmodel.md` / `view.md` templates from `isLoading` booleans to `state: LoadState<…>`; adapted from the `coreyfloyd/agents` fork, credit to coreyfloyd (https://github.com/coreyfloyd/agents) (swift-apple-expert)
+
 ## [1.0.69] - 2026-11-11
 
 ### Changed
