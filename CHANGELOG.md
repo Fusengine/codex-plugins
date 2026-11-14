@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.0.71] - 2026-11-14
+
+### Added
+
+- feat(swift-apple-expert): port the Apple 27 skills from claude-plugins v1.40.0 (Fusengine/claude-plugins#85): four new skills `apple-intelligence`, `apple-frameworks`, `graphics-games`, `media-vision` (11 -> 15 skills), new 2026/27 references across build-distribution, ios, ipados, macos, mcp-tools, swiftui-core, tvos and visionos, swift-expert routing and cartographer indexes (swift-apple-expert)
+- feat(design-expert): six new design-ios references (`app-icons`, `app-store-assets`, `apple-design-tools`, `bars-menus-scroll`, `generative-ai`, `system-surfaces`) and refreshed Apple-platform references (design-expert)
+- docs(tests): real Codex CLI run report `docs/real-conditions-apple-skills-27-2026-11-14.md` (T1–T5 PASS)
+
+### Changed
+
+- docs: README and docs (`docs/README.md`, `docs/plugins/design.md`, `docs/plugins/swift.md`, `docs/workflow/skills.md`) updated for the Apple 27 skills
+- chore(release): bump swift-apple-expert 1.1.40 -> 1.1.41 + design-expert 2.1.53 -> 2.1.54 + suite to 1.0.71; mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.71
+
 ## [1.0.70] - 2026-11-13
 
 ### Added
