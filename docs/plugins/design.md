@@ -12,11 +12,16 @@ Expert UI/UX design with shadcn/ui, 21st.dev, and WCAG accessibility.
 
 | Skill | Description |
 |-------|-------------|
-| `design` | APEX design workflow |
-| `generating-components` | Production-ready components |
-| `designing-systems` | Design tokens, palettes |
-| `adding-animations` | Framer Motion |
-| `validating-accessibility` | WCAG 2.2 AA compliance |
+| `design-method` | Entry point: brief, signature element, routing to the target skill |
+| `design-system` | Tokens (color, type, spacing), contrast check |
+| `design-web` | Marketing, landing and campaign pages |
+| `taste-first` | Autonomous art-direction workflow for brand-register generate and redesign moves |
+| `design-webapp` | Dashboards, SaaS and authenticated app screens |
+| `design-ios` | Apple-platform HTML mockup and handoff spec: Dynamic Type, Liquid Glass, touch on Mac, bars/menus/scroll, system surfaces, app icons, App Store assets, generative AI, Apple design tools |
+| `design-android` | Android HTML mockup and handoff spec |
+| `design-motion` | Motion on a settled layout or component |
+| `ux-copy` | Headlines, buttons, errors, empty states |
+| `design-review` | Final quality gate before a deliverable is reported done |
 
 ## Commands
 
