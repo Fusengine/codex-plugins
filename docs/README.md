@@ -8,7 +8,7 @@
 - [APEX Methodology](workflow/apex.md) - Analyze → Plan → Execute → eLicit → eXamine
 - [Agents](workflow/agents.md) - 34 specialized agents
 - [Agent Teams](workflow/agent-teams.md) - Delegation, parallel execution, coordination
-- [Skills](workflow/skills.md) - 100 framework skills
+- [Skills](workflow/skills.md) - 237 skills
 - [Commands](workflow/commands.md) - 33 Codex command prompts
 
 ## Plugins
@@ -17,7 +17,7 @@
 - [laravel](plugins/laravel.md) - Laravel 12+ expert
 - [nextjs](plugins/nextjs.md) - Next.js 16+ expert
 - [react](plugins/react.md) - React 19 expert
-- [swift](plugins/swift.md) - Swift/SwiftUI expert
+- [swift](plugins/swift.md) - Swift/SwiftUI expert (15 skills: Apple Intelligence, system frameworks, Metal, media)
 - [tailwindcss](plugins/tailwindcss.md) - Tailwind CSS v4.1
 - [design](plugins/design.md) - UI/UX with shadcn/ui
 - [shadcn](plugins/shadcn.md) - shadcn/ui expert with Radix/Base UI detection

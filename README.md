@@ -1,6 +1,6 @@
 # Fusengine Codex Plugins
 
-![version](https://img.shields.io/badge/version-1.0.70-blue?style=flat-square)
+![version](https://img.shields.io/badge/version-1.0.71-blue?style=flat-square)
 ![plugins](https://img.shields.io/badge/plugins-27-brightgreen?style=flat-square)
 ![runtime](https://img.shields.io/badge/runtime-Bun-black?style=flat-square)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)
@@ -131,7 +131,7 @@ normalized plugin name.
 | `seo` | `seo` | 1.0.23 | SEO / SEA / GEO 2026, AI Overviews, structured data |
 | `shadcn-expert` | `shadcn-expert` | 1.0.32 | shadcn/ui with Base UI (default), Radix and React Aria; theming, registries |
 | `solid` | `solid` | 1.0.29 | Multi-language SOLID orchestrator |
-| `swift-apple-expert` | `swift-apple-expert` | 1.1.35 | Swift 6.4 and SwiftUI for iOS 27 and all Apple platforms |
+| `swift-apple-expert` | `swift-apple-expert` | 1.1.35 | Swift 6.4 and SwiftUI for iOS 27 and all Apple platforms; Apple Intelligence, system frameworks, Metal, media (15 skills) |
 | `tailwindcss` | `tailwindcss` | 1.1.25 | Tailwind v4.3, Oxide engine, OKLCH, container queries |
 | `tanstack-start-expert` | `tanstack-start-expert` | 1.0.19 | TanStack Start: file-based routing, server functions, selective SSR, Nitro |
 | `typescript-expert` | `typescript-expert` | 1.0.19 | TypeScript 7 for CLIs, libraries and backends on Node or Bun |

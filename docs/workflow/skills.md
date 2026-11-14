@@ -1,6 +1,6 @@
 # Skills
 
-71 specialized skills across all plugins.
+237 skills in total across all plugins; this page details a selection.
 
 ## fuse-ai-pilot (9 skills)
 
@@ -75,21 +75,24 @@
 | `react-i18n` | react-i18next |
 | `solid-react` | SOLID for React |
 
-## fuse-swift-apple-expert (12 skills)
+## fuse-swift-apple-expert (15 skills)
 
 | Skill | Description |
 |-------|-------------|
-| `swiftui-components` | SwiftUI views |
-| `swiftui-navigation` | NavigationStack |
-| `swiftui-data` | SwiftData, Core Data |
-| `swift-concurrency` | async/await, actors |
-| `swift-architecture` | MVVM, Clean |
-| `swiftui-testing` | XCTest, UI tests |
-| `swift-performance` | Instruments |
-| `apple-platforms` | macOS, watchOS, visionOS |
-| `swift-build` | Xcode, signing |
-| `swift-app-icons` | Icons, SF Symbols |
-| `swift-i18n` | Localization |
+| `swift-core` | Swift Testing, Swift 6.2 concurrency defaults, architecture, i18n, performance, Xcode 27 agents and `xcrun mcpbridge` |
+| `swiftui-core` | SwiftUI views, navigation, SwiftData 27, WebView, App Intents, WidgetKit/ActivityKit, state, HIG checks |
+| `ios` | iPhone apps, simulator/device testing, UI automation |
+| `ipados` | iPad split views, keyboard, multitasking, Stage Manager, menu bar, toolbars |
+| `macos` | Menu bar extras, windows, toolbars, touch on Mac, AppKit, notarized distribution |
+| `watchos` | Complications, workouts, HealthKit, connectivity |
+| `tvos` | Focus navigation, Siri Remote, media UI |
+| `visionos` | Spatial computing, RealityKit 27, ARKit, spatial web, immersive spaces |
+| `apple-intelligence` | Foundation Models, Writing Tools, Genmoji, Image Playground, Visual Intelligence |
+| `apple-frameworks` | Passkeys, MapKit, CloudKit, Core Data, TipKit, background tasks, MetricKit, App Attest, CarPlay, Chart3D |
+| `graphics-games` | Metal 4, MetalFX, GameKit, Game Controller, Game Porting Toolkit 4 |
+| `media-vision` | AVFoundation, Now Playing, PhotoKit, Vision, Speech, Core ML, Core Location, WeatherKit, EventKit |
+| `build-distribution` | Signing, TestFlight, App Store submission, icons, CI, 2027 deadlines (Developer ID G2, age ratings, SDK 27) |
+| `mcp-tools` | XcodeBuildMCP and apple-docs lookup |
 | `solid-swift` | SOLID for Swift |
 
 ## fuse-tailwindcss (15 skills)
@@ -112,14 +115,20 @@
 | `tailwindcss-custom-styles` | @utility, @variant |
 | `tailwindcss-utility-classes` | All utilities |
 
-## fuse-design (4 skills)
+## fuse-design (10 skills)
 
 | Skill | Description |
 |-------|-------------|
-| `generating-components` | shadcn/ui, 21st.dev |
-| `designing-systems` | Design tokens |
-| `adding-animations` | Framer Motion |
-| `validating-accessibility` | WCAG 2.2 |
+| `design-method` | Entry point: brief, signature element, routing to the target skill |
+| `design-system` | Tokens (color, type, spacing) and design-system.md |
+| `design-web` | Marketing, landing and campaign pages |
+| `taste-first` | Autonomous art-direction workflow for brand-register generate and redesign moves |
+| `design-webapp` | Dashboards, SaaS and authenticated app screens |
+| `design-ios` | Apple-platform HTML mockup and handoff spec, App Store assets, app icons, generative AI, touch on Mac |
+| `design-android` | Android HTML mockup and handoff spec |
+| `design-motion` | Motion on a settled layout or component |
+| `ux-copy` | Headlines, buttons, errors, empty states |
+| `design-review` | Final quality gate before a design deliverable is reported done |
 
 ## fuse-prompt-engineer (6 skills)
 
