@@ -63,3 +63,22 @@ Cause S2 (observed, not fixed): the instruction is in the installed AGENTS.md bu
 Not verified (run 2): push to the bare origin, PR/CI/merge/release, behaviour of S1b, child-agent internals (not in `--json`), a second S2 sample.
 
 Isolation (run 2): `ls -lT ~/.codex/{config.toml,AGENTS.md,auth.json}` identical before and after: `Nov 15 11:49:15 2026` (32031 B), `Nov 10 14:24:35 2026` (12293 B), `Nov 13 22:03:08 2026` (4250 B). `auth.json` copied with `cp` only. No `rm`; disposable dir moved to `~/.Trash/real1403-port-claude-1-40-2`.
+
+---
+
+# Run 3 (same day, after fixes: lead-orchestration/SKILL.md:57 ideas mode never cancelled by "read-only"; AGENTS.md:60 lead derives suggestions itself in the format)
+
+Method as run 1/2: fresh disposable `CODEX_HOME` from the current working tree (installed AGENTS.md: 1 `gain:` line; installed lead-orchestration: 2 "ideas mode" hits; 94 hooks trusted); installer's `approval_policy = "untrusted"` / read-only fixed in the disposable config only (never, danger-full-access, high). S2 run twice in parallel, same prompt, on two copies of the same 3-file fixture (`s2`, `s2b`, each its own git repo). S1/S1b not rerun.
+
+| Run | Verdict | Evidence |
+|---|---|---|
+| S2a | **PASS** (French spacing) | 3 lines `Suggestion : <idea> -> gain : <benefit>`: (1) "valider le panier et clarifier les erreurs -> gain : éviter `{}` -> `0` et un prix `"abc"` -> `NaN` ... code de sortie 0 (index.js:6)"; (2) "définir la précision monétaire et l'arrondi -> gain : maîtriser ... `0.1 × 3` -> `0.30000000000000004`"; (3) "ajouter des tests de régression et un exemple d'usage -> gain : prévenir les erreurs ...". Grounded: behaviours reproduced in-run, `index.js:6` exists. Nothing modified: `git diff --exit-code HEAD` 0, `git status` shows only untracked `.cartographer/`. |
+| S2b | **FAIL** (format) / PASS (grounded, read-only) | 4 lines `Suggestion P1/P2 — <idea> -> <benefit>` (validation: `NaN` / `0`; money precision `0.1 + 0.2`; tests; README). The arrow is there but the `gain:` label is missing and a priority tag sits between the word and the dash, so no line matches `Suggestion: ... -> gain: ...`. Tracked files unchanged (`diff` 0); untracked `.harness/cache/` (3 files, which the lead noticed and reported). |
+
+Variance: 1 of 2 runs matches the literal format; both runs now produce `Suggestion` lines (runs 1/2: none), so the ideas-mode / AGENTS.md fix changed behaviour, but the exact shape is not stable.
+
+Agents spawned: not evidenced. The `--json` stream shows only `wait` collab calls (S2a 3, S2b 2, empty `receiver_thread_ids`, same as runs 1/2) and no spawn item or child output; `brainstorming` appears in the logs only as text of the skill the lead read (S2a also read `challenge/SKILL.md`). Lead's own commands: skill read, `git status`, `nl -ba` on the 3 files, `.harness/cache` listing, `git diff --exit-code`. Whether `brainstorming` ideas mode ran as a child cannot be confirmed; the lead's own answer carries the suggestions.
+
+Not verified: child-thread content; variance beyond 2 samples; S1 behaviour after the latest edits.
+
+Isolation (run 3): `ls -lT ~/.codex/{config.toml,AGENTS.md,auth.json}` identical before and after (`Nov 15 11:49:15`, `Nov 10 14:24:35`, `Nov 13 22:03:08`). `auth.json` via `cp` only, no `rm`; disposable dir moved to `~/.Trash/real1404-port-claude-1-40-2`.

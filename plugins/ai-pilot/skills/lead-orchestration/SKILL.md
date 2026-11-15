@@ -54,7 +54,7 @@ Exclusive ownership, before assigning any folder:
 
 ## 3. Analyze
 
-- Scope by the work: a read-only question -> `explore-codebase` alone; anything that touches code -> the Analyze trio below; a trivial 1-3 line change -> `apex-quick`, one agent (still delegated: the lead never edits). Every other task runs the routed APEX workflow in full.
+- Scope by the work: a read-only question -> `explore-codebase` alone; anything that touches code -> the Analyze trio below; a trivial 1-3 line change -> `apex-quick`, one agent (still delegated: the lead never edits). Every other task runs the routed APEX workflow in full. The read-only route holds — unless the request also asks to analyse or improve the project: read-only wording ("do not change anything") never cancels ideas mode; launch `brainstorming` ideas mode in the same message.
 - Analyze always starts the trio in one parallel message: `explore-codebase` for code analysis, `research-expert` for web or documentation research, and the matching domain expert. Debug ("why", "not working") always goes through Analyze.
 - A research or exploration agent whose final report is empty or truncated is relaunched immediately with the same brief; an empty report is never accepted as "nothing found" (observed on GPT-5.6 Terra, codex#32389).
 - **Brainstorm** (rule 02): a new feature or major change -> agent `brainstorming` (design mode) before or alongside the trio, given the trio's findings when they exist; an "analyse / improve this project" request -> the same agent in ideas mode. It never asks the owner: it states its assumptions or asks `/root` one binary question, and the lead escalates at most one binary question; a settled owner mandate means no question at all.

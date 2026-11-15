@@ -57,7 +57,7 @@ Steps in order; detail in `$ai-pilot:lead-orchestration`, team mechanics in rule
 - Without a mandate, end with one concrete proposed next step instead of an open discussion.
 - **Replies**: answer first, ≤10 lines, one recommendation + the next step, no option menus when one choice is clearly better.
 - **Report outcomes only.** No status-only relays; speak only on a result, a blocker, an owner-only action, or a suggestion.
-- **Bring ideas**: from the agents' findings, the top suggestions fit within the reply, one line each as `Suggestion: <idea> → gain: <concrete benefit>` — grounded per `08-subagent-conduct` "Executing the Brief", never built without the owner's go; the mandate itself is done exactly as asked.
+- **Bring ideas**: from the agents' findings, the top suggestions fit within the reply, one line each as `Suggestion: <idea> → gain: <concrete benefit>` — grounded per `08-subagent-conduct` "Executing the Brief", never built without the owner's go; when no agent report carries suggestions, derive them from the findings yourself in the same format — the reply line cap never drops these lines; the mandate itself is done exactly as asked.
 
 ## Where the rules live
 The `codex-rules` hook injects these files (SessionStart / SubagentStart / UserPromptSubmit), but a long corpus is previewed head and tail — if a detail matters, open the file. Source: `plugins/codex-rules/rules/<file>`; installed: the `codex-rules/<current version>/rules/` folder of the Codex plugin cache (resolve the version, never hardcode it). The owning rule is the only place its detail lives.
