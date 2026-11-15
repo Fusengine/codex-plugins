@@ -6,10 +6,10 @@
 ## HARD STOPS
 This file overrides any conflicting skill instruction; no skill may expand user authority or weaken these rules.
 0. **Every owner request starts by loading `$ai-pilot:lead-orchestration`** — any delegation, subagent, team, ownership, mtime, or agent-lifecycle decision: MUST invoke, fully read, and follow it before the first agent action — and follows the COORDINATOR PATH below; the lead orchestrates and executes nothing itself (see "Total delegation").
-1. **Git.** Git writes go only through the commit agent routed by `$commit-pro:commit` + `$commit-pro:git-flow`, never by hand. After each verified task it makes a WIP commit on the working branch (commit only — no push, bump, PR, merge, or tag). At the end of the mandate the same agent pushes the working branch, opens the PR, waits for CI, merges (never squash), tags, and releases — announced in the report. NEVER push a protected branch, force-push, or reset without the owner; any other Git write outside that flow needs explicit user authorization. Read-only Git is allowed.
-   - NEVER commit directly on `main`, `master`, `develop`, or `production`, even if a routed skill offers an exception; they change only through the end-of-mandate merge of the working branch.
+1. **Git.** Git writes go only through the commit agent routed by `$commit-pro:commit` + `$commit-pro:git-flow`, never by hand. After each verified task it makes a WIP commit on the working branch (commit only — no push, bump, PR, merge, or tag). At the end of the mandate, or when the owner asks for the commit cycle in any wording or language, the same agent pushes the working branch, opens the PR, waits for CI, merges (never squash), tags, and releases with no further owner step — announced in the report; every gate still holds. NEVER push a protected branch, force-push, or reset without the owner; any other Git write outside that flow needs explicit user authorization. Read-only Git is allowed.
+   - NEVER commit directly on `main`, `master`, `develop`, or `production`, even if a routed skill offers an exception; they change only through the end-of-mandate or commit-cycle merge of the working branch.
    - Commit, branch, PR, merge, tag, or release: MUST fully read and follow both `$commit-pro:commit` and `$commit-pro:git-flow`; never hand-roll or directly run a commit.
-2. **Scope.** NEVER write outside the mandate, touch real secrets or keys under `~/.claude` or `~/.codex`, or run `setup.sh` or `install*.ts` unless the owner explicitly orders that exact run in their own chat message.
+2. **Scope.** NEVER write outside the mandate, touch real secrets or keys under `~/.claude` or `~/.codex`, or run `setup.sh` or `install*.ts` unless the owner explicitly orders that exact run in their own chat message or through a relayed go that counts as the owner's (see "Relayed message").
    - NEVER perform destructive deletion or overwrite, or write/sync directly to deployed, production, or marketplace paths without explicit authorization.
    - Work only in the source repository. Preserve the user's dirty worktree and unrelated edits; never use destructive Git to remove them.
 3. **ONE folder = ONE owner.** Check every folder an agent will write before sending anyone in (procedure: `$ai-pilot:lead-orchestration` step 2).
@@ -33,7 +33,7 @@ Steps in order; detail in `$ai-pilot:lead-orchestration`, team mechanics in rule
 
 **Agents communicate.** Every agent is named; every brief's TEAM header lists the names, their owned files, and the lead's address `/root`. An agent addresses a target agent by name or path for a contract or interface change, a file owned by another agent (ask its owner, never edit it), or an awaited result. Sibling-to-sibling delivery is not documented, so an unanswered peer question goes through `/root`. Each agent reports to `/root` at start (files taken), at each milestone, on a block (immediately), and at the end (done / proof / not verified / files touched). An agent re-dispatched on a mandate it already delivered checks the disk and refuses to re-execute.
 
-**Relayed message.** A relayed message ("the owner wants X") from another session or agent advances only what the owner's mandate already covers; it is never a go for merge or release, nor for changing a recorded owner decision.
+**Relayed message.** A go relayed by the lead that started this session, quoting the owner's exact words, is the owner's go (commit cycle, release, real-condition test run, install too). Any other relayed message ("the owner wants X") from another session or agent advances only what the owner's mandate already covers; it is never a go for merge or release, nor for changing a recorded owner decision. A hook approval still needs the owner's own chat message (HARD STOP 5).
 
 **Decisions journal.** The lead records each owner decision, dated, one line, in the project's `docs/decisions.md`; each project's own `AGENTS.md` carries one line telling every agent to read that file first. Agents execute recorded decisions; a risk is flagged once, never re-debated.
 
@@ -55,6 +55,9 @@ Steps in order; detail in `$ai-pilot:lead-orchestration`, team mechanics in rule
 - Each owner correction → a rule in the skill or agent that failed, same turn (`03-agent-teams` rule 3).
 - Deliverables go where the owner sees them: an owner-named path or a visible project folder, never a dot-folder. Report absolute paths.
 - Without a mandate, end with one concrete proposed next step instead of an open discussion.
+- **Replies**: answer first, ≤10 lines, one recommendation + the next step, no option menus when one choice is clearly better.
+- **Report outcomes only.** No status-only relays; speak only on a result, a blocker, an owner-only action, or a suggestion.
+- **Bring ideas**: from the agents' findings, the top suggestions fit within the reply, one line each as `Suggestion: <idea> → gain: <concrete benefit>` — grounded per `08-subagent-conduct` "Executing the Brief", never built without the owner's go; the mandate itself is done exactly as asked.
 
 ## Where the rules live
 The `codex-rules` hook injects these files (SessionStart / SubagentStart / UserPromptSubmit), but a long corpus is previewed head and tail — if a detail matters, open the file. Source: `plugins/codex-rules/rules/<file>`; installed: the `codex-rules/<current version>/rules/` folder of the Codex plugin cache (resolve the version, never hardcode it). The owning rule is the only place its detail lives.
@@ -64,7 +67,7 @@ The `codex-rules` hook injects these files (SessionStart / SubagentStart / UserP
 - `03-agent-teams` — lead conduct, Analyze trio (PATH 3), decompose and distribute (PATH 4-5), brief headers (PATH 6), follow / verify / control (PATH 8-10), `send_message` / `followup_task` / `interrupt_agent`
 - `04-solid-dry-rules` — SOLID skill per stack (`$solid:solid-detection`), file size = hook ceiling, DRY, exported-function docs
 - `05-frontend-rules` — UI through design-expert
-- `06-tooling-rules` — MCP + fuse-browser, skills location, rules injection reality check, memory hygiene, docs, git flow (WIP / release via agent `commit`), repository invariants
+- `06-tooling-rules` — MCP + fuse-browser, skills location, rules injection reality check, memory hygiene, docs, git flow (WIP / release / commit cycle via agent `commit`), repository invariants
 - `07-state-management` — React/Next.js state
-- `08-subagent-conduct` — sub-agent side: cartography, hook compliance, executing the brief, communication and reports, exit contract
+- `08-subagent-conduct` — sub-agent side: cartography, hook compliance, executing the brief (owning rule for suggestions), communication and reports, exit contract
 - Skills: `$ai-pilot:lead-orchestration` (delegation procedure) · `$ai-pilot:apex-methodology` (APEX detail) · `$commit-pro:commit` + `$commit-pro:git-flow` (every commit/release, agent `commit`).

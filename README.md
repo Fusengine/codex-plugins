@@ -57,8 +57,9 @@ prompted value.
 
 The namespace/metadata pair is runtime-proven on Codex 0.144.1 but remains V2
 internal behavior, not a stable public API. Exact custom selection uses
-`agent_type` with `fork_turns = "none"` (or bounded positive history); omitted
-or `"all"` history rejected role/model/reasoning overrides in that tested runtime.
+`agent_type` with `fork_turns = "none"` (a numeric value is accepted but means
+full history, codex rust-v0.169.0 `multi_agents_v2/spawn.rs`; use `"none"` for
+a brief-only child); omitted or `"all"` history rejected role/model/reasoning overrides in that tested runtime.
 The returned configured nickname is identity evidence; the task path alone is
 not.
 

@@ -27,7 +27,7 @@ Brainstorm → Analyze → Plan → Execute (TDD) → eLicit → Verify → eXam
 
 | Phase | Skill / owner | When |
 |-------|---------------|------|
-| **Brainstorm** | `brainstorming` | New features, major changes. Skip for trivial fixes, bug fixes with clear repro |
+| **Brainstorm** | agent `brainstorming` | Required for new features and major changes (design mode, before or alongside Analyze); ideas mode on any "analyse / improve this project" request. Skip for trivial fixes, bug fixes with clear repro |
 | **Analyze** | explore-codebase + research-expert + domain-expert | Every code request except `/apex-quick` (parallel trio, COORDINATOR PATH 3) |
 | **Plan** | update_plan + decompose, distribute, brief (COORDINATOR PATH 4-6; `03-agent-teams`) | Always. Two tasks that must edit the same file are merged or sequenced; files stay within `FUSE_SOLID_MAX_LINES` (default 200) lines |
 | **Execute** | Domain expert + `tdd` | Write test FIRST (RED), then code (GREEN), then refactor |

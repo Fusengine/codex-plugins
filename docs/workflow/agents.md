@@ -191,7 +191,9 @@ fusengine_agents.spawn_agent({
 ```
 
 `agent_type` selects the exact custom TOML. It must be paired with
-`fork_turns = "none"` or a bounded positive history; the default/`"all"`
+`fork_turns = "none"` (a numeric value is accepted but means full history,
+codex rust-v0.169.0 `multi_agents_v2/spawn.rs`; use `"none"` for a brief-only
+child); the default/`"all"`
 rejected role/model/reasoning overrides in the tested runtime. A returned
 configured nickname is identity evidence — a task path is not.
 

@@ -38,11 +38,12 @@ ALL docs in `docs/` folder - NEVER outside except root `README.md`. The decision
 
 **Commit tool**: the lead follows the AGENTS.md commit route (`$commit-pro:commit` + `git-flow`); execution is delegated to agent `commit` (`plugins/ai-pilot/agents/commit.toml`), which loads those skills. NEVER `git commit` directly, never hand-roll the flow yourself. External executors (Kimi/Claude/Cursor) never push/PR/merge/tag/publish — release goes through agent `commit` only.
 - **WIP mode** — after each verified task, agent `commit` makes a WIP commit on the working branch: commit only, no push, bump, PR, merge, or tag. It still runs the branch check and the secret scan.
-- **Release mode** — at the end of the mandate the same agent runs Steps 0-8 below: push the working branch, PR, CI wait, merge (never squash), post-merge tag, release — announced in the report.
-- A relayed "the owner wants a commit" advances only WIP commits the mandate already covers; it is never a go for merge or release (AGENTS.md COORDINATOR PATH "Relayed message").
+- **Release mode** — at the end of the mandate, or on the owner's commit-cycle request, the same agent runs Steps 0-8 below: push the working branch, PR, CI wait, merge (never squash), post-merge tag, release — announced in the report.
+- **Commit cycle** — any owner wording that asks for the commit cycle, in any language, starts Release mode run to the end with no further owner step (WIP commits, push, PR, CI, merge never squash, tag, release); every gate below still holds.
+- Relayed gos (commit cycle, release): AGENTS.md COORDINATOR PATH "Relayed message".
 
 **Branch enforcement**:
-- `main`, `master`, `develop`, `production` → **protected**: no direct commits, never pushed directly — they change only through the end-of-mandate merge of the working branch. Force-push and reset need the owner (AGENTS.md HARD STOPS 1)
+- `main`, `master`, `develop`, `production` → **protected**: no direct commits, never pushed directly — they change only through the end-of-mandate or commit-cycle merge of the working branch (announced in the report). Force-push and reset need the owner (AGENTS.md HARD STOPS 1)
 - All work on feature branches: `<type>/<scope>` (e.g. `feat/seo`, `fix/sniper-loop`, `chore/deps`)
 - Types: `feat/`, `fix/`, `chore/`, `docs/`, `refactor/`, `perf/`, `test/`, `ci/`, `build/`, `style/`
 - kebab-case, < 50 chars, no personal prefix
