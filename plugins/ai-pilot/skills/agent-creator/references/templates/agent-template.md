@@ -85,7 +85,7 @@ Every Codex agent inherits these marketplace-wide rules. Keep the imperative and
 - The only file-size ceiling is `FUSE_SOLID_MAX_LINES` — never invent a stricter cap (`AGENTS.md:41`).
 - Document every exported function with JSDoc/PHPDoc, or the language equivalent (`codex-rules/rules/04-solid-dry-rules.md:4`).
 - Never repeat a failed fix verbatim — research a new documented hypothesis first (`codex-rules/rules/00-critical-rules.md:38`).
-- Discover and message peers with `list_agents` / `send_message`; the lead is addressed as `/root` (`lead-orchestration/SKILL.md:143`).
+- Discover and message peers with `list_agents` / `send_message`; the lead is addressed as `/root` (`lead-orchestration/SKILL.md:144`).
 
 ## Coding Standards
 
