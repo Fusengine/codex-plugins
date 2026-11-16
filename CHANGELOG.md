@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.0.75] - 2026-11-16
+
+### Added
+
+- feat(ai-pilot): harness PRD mode in `lead-orchestration` — the lead runs `prd init` itself (no init agent, nothing waits on it), then `prd status` / `prd validate` / `prd compact` as coordinator commands; executors are spawned only after `init` rc 0 and the task PRD `<project>/.codex/apex/prd/<task>-prd.json` exist on disk (ai-pilot)
+- feat(ai-pilot): every brief carries `PRD mode: on|off` and verbatim "never run `prd init`"; sub-agents never run any `harness prd` command; with PRD mode on each executor brief carries its absolute report path `<project>/.codex/apex/prd/agents/<key>-prd.json` (ai-pilot)
+- feat(ai-pilot): PRD off = one refused `init` by the lead, no extra spawn, no wait, no status/validate/compact; `init` answering `exists` (router already on disk, nothing written) counts as on (ai-pilot)
+- feat(rules): `AGENTS.md` lets the lead perform read-only verification of deliverables and state (`AGENTS.md`, `AGENTS.md.template`); `08-subagent-conduct` has each agent tick its sub-tasks only at the absolute report path `<project>/.codex/apex/prd/agents/<key>-prd.json`, written with `apply_patch` (codex-rules)
+- docs(tests): real Codex CLI run report `docs/real-conditions-port-roadmap-prd-2026-11-16.md` — harness 0.1.123: R2-123 PASS (init < task PRD < first executor, validated 2/2, second init `exists` rc 0, router unchanged), R3-123 PASS (one refused init, no extra spawn)
+
+### Changed
+
+- chore(deps): pin `@fusengine/harness` 0.1.123 (`package.json`, `bun.lock`, `HARNESS_VERSION`)
+- chore(release): bump ai-pilot 1.2.65 -> 1.2.66, codex-rules 1.0.42 -> 1.0.43 + suite to 1.0.75; mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.75
+
 ## [1.0.74] - 2026-11-16
 
 ### Added
