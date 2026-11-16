@@ -82,3 +82,26 @@ Agents spawned: not evidenced. The `--json` stream shows only `wait` collab call
 Not verified: child-thread content; variance beyond 2 samples; S1 behaviour after the latest edits.
 
 Isolation (run 3): `ls -lT ~/.codex/{config.toml,AGENTS.md,auth.json}` identical before and after (`Nov 15 11:49:15`, `Nov 10 14:24:35`, `Nov 13 22:03:08`). `auth.json` via `cp` only, no `rm`; disposable dir moved to `~/.Trash/real1404-port-claude-1-40-2`.
+
+---
+
+# Run 4 (brainstorming) — 2026-11-16, branch `feat/brainstorm-step3` (uncommitted AGENTS.md:24 step 3 edit)
+
+Method as before: fresh disposable `CODEX_HOME` from the current working tree (installed AGENTS.md contains the `brainstorming` step-3 line; 94 hooks trusted); installer's `approval_policy = "untrusted"` / read-only fixed in the disposable config only (never, danger-full-access, high). Scenario S3, one run, repo = 4-file Node CLI (`orders-cli`: `index.js`, `orders.json`, `package.json`, `README.md`), prompt `ajoute une fonctionnalité d'export CSV des commandes`. The run was killed (exit 143) right after the first agent wave, as allowed; no implementation reached.
+
+**S3: PASS** — the lead spawned a `brainstorming` agent.
+
+Proof (child `session_meta` under `<CODEX_HOME>/sessions/2026/11/16/`, plus `spawn_agent` calls in the lead rollout; message bodies are encrypted/opaque):
+
+| Order | Time (UTC) | `spawn_agent` `agent_type` / `task_name` | Child `session_meta` (`thread_spawn`, parent = lead `01a1e1ce-dc53-...`, depth 1) |
+|---|---|---|---|
+| 1 | 00:44:00 | `explore-codebase` / `explore_csv` | agent_path `/root/explore_csv`, nickname "Codebase Explorer" |
+| 2 | 00:44:13 | `research-expert` / `research_csv` | `/root/research_csv`, "Research Expert" |
+| 3 | 00:44:26 | `typescript-expert` / `orders_csv` | `/root/orders_csv`, "Pure TS Expert" |
+| 4 | 00:44:47 | **`brainstorming`** / `csv_design` | `/root/csv_design`, nickname "Design Agent", **`agent_role: "brainstorming"`**, id `01a1e1d0-4fc4-7181-...` |
+
+Notes: the four spawns were separate calls about 13-20 s apart, not one parallel message as step 3 asks ("in the same message"); the brainstorming agent came last, after the trio and the domain expert, so it did not receive the others' findings unless the lead relayed them (opaque). Domain expert routing was `typescript-expert` (no `tsconfig.json`, only `package.json` + plain JS: arguably the generic route; not judged). Scratch tracked files were unchanged at kill time (`git diff --stat HEAD` empty; untracked `.cartographer/`, `.harness/`, `.codex/`, `docs/` created by hooks/agents).
+
+Not verified: what the brainstorming agent returned; whether design mode was used; whether the final answer would have included its output; single sample only.
+
+Isolation (run 4): `ls -lT ~/.codex/{config.toml,AGENTS.md,auth.json}` identical before and after (`Nov 15 11:49:15`, `Nov 10 14:24:35`, `Nov 13 22:03:08`); `auth.json` via `cp` only; no `rm`; disposable dir moved to `~/.Trash/real1405-port-claude-1-40-2`.

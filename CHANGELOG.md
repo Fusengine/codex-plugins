@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.73] - 2026-11-16
+
+### Added
+
+- feat(rules): COORDINATOR PATH step 3 (Analyze) also launches the `brainstorming` agent, design or ideas mode, in the same message for new features and "analyse / improve" requests, read-only wording included (`AGENTS.md`, `AGENTS.md.template`) (codex-rules)
+- docs(tests): real Codex CLI run report `docs/real-conditions-port-claude-1-40-2-2026-11-15.md` gains Run 4 (brainstorming): PASS, the lead spawned a `brainstorming` agent on a new-feature prompt
+
+### Changed
+
+- chore(release): bump codex-rules 1.0.40 -> 1.0.41 + suite to 1.0.73; mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.73
+
 ## [1.0.72] - 2026-11-16
 
 Port of Fusengine/claude-plugins v1.40.1–v1.40.2.
