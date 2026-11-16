@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.0.74] - 2026-11-16
+
+### Added
+
+- feat(ai-pilot): `lead-orchestration` keeps a per-project `docs/roadmap.md` and a project skill `.agents/skills/project-<name>/` (SKILL.md + references), created by a `skill-creator` child at step 11; read-only mandates never bootstrap it; sniper runs on the step-11 diff (ai-pilot)
+- feat(rules): COORDINATOR PATH reads `docs/roadmap.md` at Receive and has `skill-creator` update the roadmap and project skill once per mandate before the release PR; the project skill is the sole dot-folder deliverable exception; the lead may write coordinator-only PRD files (`AGENTS.md`, `AGENTS.md.template`) (codex-rules)
+- test: `scripts/lib/agents-md-template-identity.test.ts` asserts `AGENTS.md` and `plugins/codex-rules/templates/AGENTS.md.template` stay byte-identical
+- docs(tests): real Codex CLI run report `docs/real-conditions-port-roadmap-prd-2026-11-16.md` (R1 PASS: project skill + 5 references + `docs/roadmap.md` created by a `skill-creator` child)
+
+### Changed
+
+- chore(deps): pin `@fusengine/harness` 0.1.121 (`package.json`, `bun.lock`, `HARNESS_VERSION`)
+- fix(ai-pilot): sniper-then-challenger order in `agent-creator` references, `commit.toml`, `skill-creator.toml` and `skill-creator` SKILL.md (ai-pilot)
+- chore(release): bump ai-pilot 1.2.64 -> 1.2.65, codex-rules 1.0.41 -> 1.0.42 + suite to 1.0.74; mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.74
+
+### Pending
+
+- Harness PRD mode in the lead workflow (part B) stays on branch `feat/harness-prd-mode`, unreleased until the harness fix lands
+
 ## [1.0.73] - 2026-11-16
 
 ### Added
