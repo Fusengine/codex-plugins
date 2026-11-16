@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.0.72] - 2026-11-16
+
+Port of Fusengine/claude-plugins v1.40.1–v1.40.2.
+
+### Added
+
+- feat(rules): commit cycle in any wording or language — an owner request for the commit cycle starts the full release flow (WIP commits, push, PR, CI, merge never squash, tag, release) with no further owner step; every gate still holds (`AGENTS.md`, `AGENTS.md.template`, rule `06-tooling-rules`, `commit` agent, `lead-orchestration`) (ai-pilot, codex-rules)
+- feat(ai-pilot): real-run proof gate in the `commit` agent before any push or publish; commit message passed via stdin (`git commit -F -`, no temp file, no `rm`); proof accepted as real tool output (e.g. `codex exec -o <file>`) (ai-pilot)
+- feat(rules): `Suggestion: <idea> -> gain: <benefit>` format owned by rule `08-subagent-conduct`, "Bring ideas" line, and the lead derives suggestions itself in that format (ai-pilot, codex-rules)
+- feat(ai-pilot): `brainstorming` ideas mode (helpers, questions routed via the lead); read-only wording ("do not change anything") never cancels ideas mode (ai-pilot)
+- feat(ai-pilot): `challenger` product lens (coherence, usability, consistency) after the verdict on new features and behaviour changes, never changing the verdict (ai-pilot)
+- docs(tests): real Codex CLI run report `docs/real-conditions-port-claude-1-40-2-2026-11-15.md` (3 runs)
+
+### Changed
+
+- feat(rules): relayed go aligned with `docs/decisions.md` 2026-11-15 (a go relayed by the starting lead quoting the owner's exact words counts as the owner's go) (codex-rules)
+- feat(ai-pilot): `lead-orchestration` step 4 runs the full chain; honest `fork_turns` wording (ai-pilot)
+- docs: `fork_turns` fix in `README.md`, `docs/getting-started/installation.md`, `docs/workflow/agents.md`
+- chore(release): bump ai-pilot 1.2.63 -> 1.2.64 + codex-rules 1.0.39 -> 1.0.40 + suite to 1.0.72; mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.72
+
 ## [1.0.71] - 2026-11-14
 
 ### Added

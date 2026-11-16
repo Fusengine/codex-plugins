@@ -75,6 +75,7 @@ Code comments, docs, commit messages: English. Replies to the user: the user's l
   not verified: <parts + why>
   skills_consulted: <skill files actually read>
   risks: <residual risks>
+  suggestions: <`Suggestion:` lines per rule 08 "Executing the Brief", grounded in what you measured; proposed, never built> | none
 - Open points: decide them yourself from the measurement and the mandate's goal, and report the decision. Ask `/root` ONE binary question (never the owner, never an option menu) only for the part where incoming information contradicts OWNER RULES; continue the rest meanwhile. Irreversible Git stays gated by the `AGENTS.md` hard stops, not by a question.
 - Re-dispatch of an already-delivered mandate -> verify the disk, report the existing evidence, do not re-execute.
 ```

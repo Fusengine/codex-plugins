@@ -18,7 +18,7 @@ Ensures alignment between user intent and implementation plan.
 
 ## Question Categories
 
-Ask questions ONE AT A TIME from these categories as needed.
+Use these categories as a checklist of open points. Answer each from the evidence (code, `docs/decisions.md`, the brief) and record it as an explicit assumption; a point that changes the design and cannot be inferred becomes ONE binary question to the lead (`/root`) via `send_message`. Never question the owner directly.
 
 ### Problem-Framing (do this first)
 
@@ -31,7 +31,7 @@ Before any category below, reformulate the problem in your own words and get it 
 | 5-whys | Ask "why does this matter" up to 5 times on the stated request | The root need behind the ask |
 | Double Diamond (Discover-Define) | Discover: gather context/pain points. Define: state one crisp problem statement | A single confirmed problem statement |
 
-Confirm the reformulated problem with the user before moving to Purpose/Constraints/Data/Integrations questions. If they push back, revise and reconfirm — do not proceed on an unconfirmed framing.
+State the reformulated problem at the top of the design doc and in the report to the lead; when it departs from the brief's wording, flag it so the lead can confirm. If the lead pushes back, revise — do not design on a framing the lead rejected.
 
 ### Purpose
 
@@ -116,7 +116,7 @@ Save to: `docs/plans/YYYY-MM-DD-<topic>-design.md`
 # [Feature Name] - Design Document
 
 **Date**: YYYY-MM-DD
-**Status**: Approved
+**Status**: Draft | Approved (by the lead)
 
 ## Summary
 

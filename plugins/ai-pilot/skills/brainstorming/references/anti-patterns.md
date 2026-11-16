@@ -117,7 +117,7 @@ Watch for these signals that brainstorming is being skipped:
 | No design doc saved | No audit trail | Save to `docs/plans/` |
 | "This is straightforward" in reasoning | Rationalization detected | Challenge the assumption |
 | User says "just do X" | Mandate given | Proceed; state assumptions in one line |
-| Large feature, zero questions asked, no mandate | Requirements assumed, not gathered | Full brainstorming needed |
+| Large feature, no mandate, no assumptions stated and no open point sent to the lead | Requirements guessed silently | Write the assumptions or ask the lead one binary question |
 | Code written before approval or mandate | Design step skipped | Revert and brainstorm |
 
 ---
@@ -126,9 +126,9 @@ Watch for these signals that brainstorming is being skipped:
 
 Before transitioning to APEX, verify (a settled mandate satisfies the questions, alternatives and approval items):
 
-- [ ] At least 2 clarifying questions were asked and answered
+- [ ] Open points resolved (explicit assumptions, or answered by the lead)
 - [ ] At least 2 alternative approaches were presented
-- [ ] User explicitly approved the chosen approach
+- [ ] Chosen approach approved (through the lead)
 - [ ] Design document saved to `docs/plans/`
 - [ ] Edge cases and constraints documented
 - [ ] Out-of-scope items explicitly listed

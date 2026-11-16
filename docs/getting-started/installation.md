@@ -75,8 +75,10 @@ Setup prompts for `max_concurrent_threads_per_session` with `4`, `6`, `8`,
 root, so `4` allows the root plus three sub-agents.
 
 The namespace/metadata pair enables exact custom-agent selection through
-`agent_type`. With Codex 0.144.1, calls must set `fork_turns = "none"` (or a
-bounded positive history); the default/`"all"` rejected role/model/reasoning
+`agent_type`. With Codex 0.144.1, calls must set `fork_turns = "none"` (a
+numeric value is accepted but means full history, codex rust-v0.169.0
+`multi_agents_v2/spawn.rs`; use `"none"` for a brief-only child); the
+default/`"all"` rejected role/model/reasoning
 overrides in the tested runtime. These V2 settings are runtime-proven internal
 knobs, not a stable public API.
 
