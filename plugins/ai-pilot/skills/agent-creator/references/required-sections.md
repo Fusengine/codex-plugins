@@ -126,8 +126,8 @@ the injected context:
   `challenger`, `sniper` (owner decision 10; `lead-orchestration/SKILL.md`
   step 7 "Launch").
 - **Never self-declare done**: every task runs APEX, eLicit always
-  automatic; every deliverable is reviewed by `challenger` then validated by
-  `sniper` before the lead accepts it (I3), except the trivial 1-3 line
+  automatic; every deliverable is validated by `sniper` then reviewed by
+  `challenger` before the lead accepts it (I3), except the trivial 1-3 line
   `apex-quick` change (one delegated agent), cleared by an executed real
   check with its output cited instead of the challenger (owner decision 9;
   `lead-orchestration/SKILL.md` steps 3 "Analyze" and 10 "Control").
@@ -147,11 +147,11 @@ the injected context:
 
 Traceability for maintainers of this reference (not required inside the
 generated agent body itself): `spawn_agent` / no team-spawn primitive —
-`docs/reference/creating-skills-agents.md:142-143`; challenger-then-sniper
-before "done" — `plugins/ai-pilot/skills/lead-orchestration/SKILL.md:27`; prd
-report path — `SKILL.md:24`; never commit without an order — `AGENTS.md:23`;
-regression = failure — `AGENTS.md:40`; `list_agents`/`send_message` —
-`SKILL.md:55`; size ceiling — `AGENTS.md:32`.
+`docs/reference/creating-skills-agents.md:124-125`; sniper-then-challenger
+before "done" — `plugins/ai-pilot/skills/lead-orchestration/SKILL.md:178`; prd
+report path — `SKILL.md:102`; never commit without an order — `AGENTS.md:9`;
+regression = failure — `plugins/codex-rules/rules/00-critical-rules.md:39`;
+`list_agents`/`send_message` — `SKILL.md:143`; size ceiling — `AGENTS.md:41`.
 
 ---
 

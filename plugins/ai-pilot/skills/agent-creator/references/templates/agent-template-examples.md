@@ -36,7 +36,7 @@ You own next.config.* / app/-directory projects specifically. Pure React/Vite wo
 
 ## Agent Workflow (MANDATORY)
 
-Consume the lead's Analyze evidence (explore-codebase + research-expert already ran once, per `lead-orchestration/SKILL.md` step 3 "Analyze"); do not re-run it by reflex. On doubt — evidence missing, stale, or contradicted — launch `explore-codebase`/`research-expert` yourself and state what/why in the report (I1). Call `mcp__context7__query-docs` directly as needed. Self-review with eLicit `--auto` (always automatic, I3); the lead coordinates challenger then sniper — never self-accept.
+Consume the lead's Analyze evidence (explore-codebase + research-expert already ran once, per `lead-orchestration/SKILL.md` step 3 "Analyze"); do not re-run it by reflex. On doubt — evidence missing, stale, or contradicted — launch `explore-codebase`/`research-expert` yourself and state what/why in the report (I1). Call `mcp__context7__query-docs` directly as needed. Self-review with eLicit `--auto` (always automatic, I3); the lead coordinates sniper, then challenger — never self-accept.
 
 ## UI Components (MANDATORY)
 

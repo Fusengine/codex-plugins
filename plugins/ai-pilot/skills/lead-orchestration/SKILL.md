@@ -35,9 +35,11 @@ Ledger after owner message 3: R6 done (/checkout 200, curl 10:47 after last edit
 
 **Decisions journal.** Read the project's `docs/decisions.md` first: recorded owner decisions are executed, never re-debated; a risk is flagged once. Record each new owner decision there, dated, one line. Codex has no `@` import in `AGENTS.md` (the loader only concatenates files: https://learn.chatgpt.com/docs/agent-configuration/agents-md), so the lead reads the journal at every Receive; make sure the project's `AGENTS.md` has one pointer line to `docs/decisions.md` — if missing, an agent adds it (the lead executes nothing).
 
+**Roadmap.** The project keeps `docs/roadmap.md` (three sections: Done / In progress / Next). Read it with `docs/decisions.md` at every Receive; the project's `AGENTS.md` pointer line names both files. If the roadmap or its pointer is missing, an agent creates it in this mandate; a read-only mandate (audit / analyse / explain / check, WRITE: none — owner's verb rule) creates nothing: report the missing roadmap and create it at the next write mandate. The lead never writes the roadmap (step 11 has `skill-creator` update it).
+
 **Relayed message.** `AGENTS.md` COORDINATOR PATH "Relayed message" (owning rule).
 
-**Check:** every owner sentence maps to a ledger item; no item was invented by the lead; every owner question is an item until answered; new decisions are in `docs/decisions.md`; the project's `AGENTS.md` points to it.
+**Check:** every owner sentence maps to a ledger item; no item was invented by the lead; every owner question is an item until answered; new decisions are in `docs/decisions.md`; `docs/roadmap.md` exists, its creation is assigned, or (read-only mandate) it is reported missing; the project's `AGENTS.md` points to both.
 
 ## 2. Check the place is free
 
@@ -59,7 +61,19 @@ Exclusive ownership, before assigning any folder:
 - A research or exploration agent whose final report is empty or truncated is relaunched immediately with the same brief; an empty report is never accepted as "nothing found" (observed on GPT-5.6 Terra, codex#32389).
 - **Brainstorm** (rule 02): a new feature or major change -> agent `brainstorming` (design mode) before or alongside the trio, given the trio's findings when they exist; an "analyse / improve this project" request -> the same agent in ideas mode. It never asks the owner: it states its assumptions or asks `/root` one binary question, and the lead escalates at most one binary question; a settled owner mandate means no question at all.
 
-**Check:** the analysis reports (and, for a new feature, the design doc approved by the lead, or by the owner when escalated or already settled by the mandate) are in hand before any task is cut.
+**Project skill bootstrap**: when `<project root>/.agents/skills/project-<name>/SKILL.md` does not exist (`<name>` = the project root folder name, kebab-case), the lead hands the `explore-codebase` report of this Analyze (an `apex-quick` or no-Analyze mandate -> the lead launches `explore-codebase` for it first) to the `skill-creator` agent, in the same mandate, to create the initial project skill once, full layout below. Codex discovers `.agents/skills/<name>/SKILL.md` in every folder from the working directory up to the repository root, with no registration and no trust step, so every later session and sub-agent loads it instead of re-exploring; an existing project is covered the first time the lead works in it under a write mandate. A read-only mandate (audit / analyse / explain / check, WRITE: none — owner's verb rule, step 1) creates nothing: report the missing project skill and create it at the next write mandate. When the skill exists, every brief names it so agents read it before exploring. Layout (`skill-creator` "Project skill mode" owns it):
+
+```
+<project root>/.agents/skills/project-<name>/
+  SKILL.md                    frontmatter name + "Use when working in the <name> project" description; what it does (2 lines), stack (1 line), key commands, table need -> references/ file
+  references/architecture.md  modules, data flow, where things live
+  references/stack.md         versions, key libs, technical choices
+  references/commands.md      install, dev, test, build, deploy
+  references/conventions.md   naming, file structure, style
+  references/pitfalls.md      known traps and how to avoid them (history stays in LESSON.md)
+```
+
+**Check:** the analysis reports (and, for a new feature, the design doc approved by the lead, or by the owner when escalated or already settled by the mandate) are in hand before any task is cut; the project skill exists, its bootstrap is launched, or (read-only mandate) it is reported missing.
 
 ## 4. Decompose — one task = one verifiable deliverable
 
@@ -172,13 +186,15 @@ Poll every running executor at a fixed cadence (`wait_agent` with a timeout, `li
 
 Mandate complete, or the owner asks for the commit cycle (any wording, any language; quote the owner's words in the invocation; relays per step 1 "Relayed message") -> launch the `commit` agent in full mode: it pushes the working branch, opens the PR, waits for CI, merges (never squash), tags, and releases — announced in the report, with no further owner step. The step 10 full gate still runs first, and the commit agent's real-run gate needs the proof of a complete end-to-end run in the real tool (docs-only branches exempt). Never push a protected branch (`main`, `master`, `develop`, `production`), never force-push or reset without the owner.
 
+**Roadmap + project skill, before the release**: at the commit cycle, after the WIP commits are verified and before the release PR, the lead launches the `skill-creator` agent once with the mandate's diff (`git diff <base>...HEAD`): it updates in place only the affected `references/` file(s) of the single project skill `<project root>/.agents/skills/project-<name>/` (layout in step 3; never a second project skill, never a duplicated section) and, in the same run, `docs/roadmap.md` (finished items to Done, new items to Next). The lead writes neither file (it executes nothing). Once per mandate, not per WIP commit; the lead opens both diffs (step 9 Verify) and runs `sniper` on them (rule 02 code-quality route; `skill-creator` never runs it) before dispatching the full-mode `commit` agent; both land in the same PR as the code and ship with the release. No skill yet -> full creation from the `explore-codebase` report (step 3 bootstrap).
+
 Reply in the owner's language, also right after a sub-agent's report. Line 1 is the answer (done / not done / blocked). Line 2 is the ledger, compact — `Open: …; Waiting: …; Closed: … (proof)` — listing every `open` or `waiting` item, not only the latest message, plus the items closed this turn, each with its proof pointer. Then at most 10 lines in total: proof, not verified, WIP commits made, merge/release announced, one recommendation and the next step, no option menu when one choice is clearly better. Deliverables sit at a path the owner sees (visible folder, sent file, link), never only inside a hidden directory.
 
 **Suggestions**: the agents' REPORT "Suggestions" field, and an ideas-mode `brainstorming` pass when the mandate analysed or improved a project, feed the report's grounded suggestions, the top ones in the final reply one line each as `Suggestion: <idea> → gain: <concrete benefit>` (grounding: rule 08 "Executing the Brief"); proposed, never built without the owner's go.
 
 **Learn:** copy every owner correction verbatim into every current and future mandate, including respawns. Within the same turn, delegate one line encoding it into the skill or agent that failed, in the source repository; never sync to a deployed or marketplace path unless the owner asked. An owner verdict that contradicts a measurement wins and is propagated to every brief already dispatched.
 
-**Check:** line 1 answers the question asked; line 2 names every ledger item still `open` or `waiting`; each agent's final report carries its "Suggestions" field (or "none"); every deliverable path is outside a dot-folder; each correction is grep-able in the failing skill or agent before the turn ends.
+**Check:** line 1 answers the question asked; line 2 names every ledger item still `open` or `waiting`; each agent's final report carries its "Suggestions" field (or "none"); every deliverable path is outside a dot-folder (the project skill under `.agents/skills/` is the owner-chosen exception); `docs/roadmap.md` and the project skill were updated before the release; each correction is grep-able in the failing skill or agent before the turn ends.
 
 ## Exit Contract
 
