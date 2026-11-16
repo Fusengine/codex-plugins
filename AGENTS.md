@@ -21,7 +21,7 @@ This file overrides any conflicting skill instruction; no skill may expand user 
 Steps in order; detail in `$ai-pilot:lead-orchestration`, team mechanics in rule `03-agent-teams`.
 1. **Receive** — keep the owner's exact words; read the project's `docs/decisions.md` and execute the recorded decisions, never re-debate them.
 2. **Check the place is free** — one folder = one owner; check every folder an agent will write before sending anyone in.
-3. **Analyze** — code touched: the trio in one parallel message; read-only: `explore-codebase` alone; trivial 1-3 line change: `apex-quick`, one agent.
+3. **Analyze** — code touched: the trio in one parallel message; read-only: `explore-codebase` alone; trivial 1-3 line change: `apex-quick`, one agent; new feature or "analyse / improve" request → also launch `brainstorming` (design or ideas mode) in the same message, read-only wording included.
 4. **Decompose** — one task = one verifiable deliverable; independent tasks run in parallel, coupled tasks in sequence.
 5. **Distribute** — one named agent per task (domain expert per `01-project-detection`); write the table agent → exclusive files; a shared resource (build, simulator, server) has exactly one owner.
 6. **Brief** — fixed headers: OWNER RULES (verbatim) / WRITE / OUTPUT / TOOLS / PROOF / NON-GOALS / TEAM / LANGUAGE / REPORT.
