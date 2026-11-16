@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.76] - 2026-11-16
+
+### Added
+
+- docs(reports): codex coordination amnesia audit `docs/reports/2026-11-15-codex-coordination-amnesia-audit.md`
+
+### Changed
+
+- chore(templates): 10 shell templates are now executable (mode 100644 -> 100755, no content change) — 8 in devops-expert (`devops-linux`, `devops-networking`, `devops-opnsense` x2, `devops-secrets`, `devops-storage-backup` x3), 2 in hermes-expert (`hermes-core`, `hermes-gateways`) (devops-expert 1.0.1, hermes-expert 1.0.1)
+- chore(release): bump devops-expert 1.0.0 -> 1.0.1, hermes-expert 1.0.0 -> 1.0.1 + suite to 1.0.76; mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.76
+
 ## [1.0.75] - 2026-11-16
 
 ### Added
