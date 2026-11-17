@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.77] - 2026-11-17
+
+### Added
+
+- docs(tests): real Codex CLI run report `docs/real-conditions-port-roadmap-prd-2026-11-16.md` — sections "harness 0.1.124" and "harness 0.1.125": R2-125 PASS x2 (`proj-prd-q`, `proj-prd-s`: lead `prd init` < task PRD < first executor, 0 `prd` commands in child rollouts, validated 2/2, second init `exists` with an unchanged router), R3-125 PASS (`proj-control-q`: one refused init, no `.codex/`); no regression vs 0.1.124
+
+### Changed
+
+- chore(deps): pin `@fusengine/harness` 0.1.123 -> 0.1.124 -> 0.1.125 (`package.json`, `bun.lock`, `HARNESS_VERSION`); 0.1.125 brings track-lock blocking with journal spill, a protected-path receipt-store guard (`~/.fuse-harness/state` and `.key`), and a project-relative UI design gate
+- chore(release): bump suite to 1.0.77 (no plugin touched); mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.77
+
 ## [1.0.76] - 2026-11-16
 
 ### Added
