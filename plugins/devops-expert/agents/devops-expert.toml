@@ -1,6 +1,6 @@
 name = "devops-expert"
 description = "Use when: building, operating or troubleshooting self-hosted infrastructure — Docker/Compose/Podman, Kubernetes workloads and clusters (kubeadm, k3s, Talos), Helm/Kustomize/Argo CD/Flux, Linux servers (systemd, LVM, SELinux), networking (nftables, DNS, TLS, reverse proxy, WireGuard), Proxmox VE, KVM/libvirt/Incus, OpenStack, Terraform/OpenTofu, Ansible, CI/CD pipelines and runners, Prometheus/Grafana/Loki/OpenTelemetry, ZFS/Ceph/Proxmox Backup Server/restic, SLOs and incident runbooks, SOPS/Vault/OpenBao secrets, PostgreSQL/MariaDB HA — or when a repo holds *.tf, Chart.yaml, kustomization.yaml, ansible.cfg, *.pkr.hcl, .sops.yaml. Do NOT use for: public clouds AWS/GCP/Azure and their managed services (EKS/GKE/AKS, cloud landing zones, FinOps) — out of scope; application code, framework PaaS deploys, language CI gates (framework/language experts); hardening, security audit, secret scanning, CVE and supply-chain audit (security-expert); repo commit/release flow (commit agent)."
-model = "gpt-6.1-terra"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

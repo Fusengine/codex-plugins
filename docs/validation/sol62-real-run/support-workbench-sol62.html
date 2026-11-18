@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:">
+  <link rel="icon" href="data:,">
+  <title>Boîte de réception · Fusengine</title>
+  <script>
+    const hashAxes = () => location.hash.slice(1).toLowerCase().split("-");
+    const colorPreference = matchMedia("(prefers-color-scheme: dark)");
+    const inferredTheme = () => colorPreference.matches ? "dark" : "light";
+    document.documentElement.dataset.theme = hashAxes().find(axis => axis === "light" || axis === "dark") || inferredTheme();
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --ground: oklch(0.95729 0.00743 260.73);
+      --rail: oklch(0.98501 0.00697 268.55);
+      --surface: oklch(0.997 0.001 265);
+      --raised: oklch(0.998 0.001 265);
+      --well: oklch(0.965 0.009 265);
+      --ink: oklch(0.21411 0.02074 267.68);
+      --muted: oklch(0.47046 0.05877 257.67);
+      --accent: oklch(0.35089 0.24314 264.05);
+      --on-accent: oklch(0.998 0.001 265);
+      --selection: oklch(0.93966 0.02599 276.40);
+      --line: oklch(0.878 0.017 263);
+      --control-line: oklch(0.62574 0.03115 256.53);
+      --board-shadow: 0 26px 46px -34px oklch(0.27 0.07 265 / .42), 0 5px 14px oklch(0.28 0.04 265 / .06);
+      --lens-shadow: 0 24px 36px -20px oklch(0.26 0.075 265 / .34), 0 3px 11px oklch(0.26 0.05 265 / .09);
+      --rim: oklch(0.999 0.001 265 / .72);
+      --font-display: "Public Sans Variable", "Public Sans", system-ui, sans-serif;
+      --font-body: "Manrope Variable", "Manrope", system-ui, sans-serif;
+      --small: 0.75rem;
+      --body: 0.9375rem;
+      --lead: 1.1875rem;
+      --subhead: 1.5rem;
+      --title: 1.875rem;
+      --display: 2.375rem;
+      --metric: 3rem;
+      --radius-control: 8px;
+      --radius-well: 12px;
+      --radius-panel: 16px;
+      --target: 40px;
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --ground: oklch(0.16560 0.01269 277.51);
+      --rail: oklch(0.19402 0.01620 279.20);
+      --surface: oklch(0.222 0.018 274);
+      --raised: oklch(0.264 0.026 272);
+      --well: oklch(0.204 0.019 273);
+      --ink: oklch(0.96601 0.00624 255.48);
+      --muted: oklch(0.83572 0.02967 259.59);
+      --accent: oklch(0.73151 0.13912 274.33);
+      --on-accent: oklch(0.16560 0.01269 277.51);
+      --selection: oklch(0.29704 0.05784 270.34);
+      --line: oklch(0.37423 0.04116 262.30);
+      --control-line: oklch(0.615 0.04699 262.06);
+      --board-shadow: 0 26px 46px -30px oklch(0.11 0.015 275 / .84), 0 5px 16px oklch(0.11 0.015 275 / .25);
+      --lens-shadow: 0 24px 39px -18px oklch(0.11 0.015 275 / .92), 0 3px 12px oklch(0.11 0.015 275 / .37);
+      --rim: oklch(0.83 0.035 271 / .15);
+    }
+
+    /* Shell and shared controls */
+    *, *::before, *::after { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin: 0; font: var(--body)/1.5 var(--font-body); color: var(--ink); background: var(--ground); }
+    h1, h2, h3, p, ul, dl, dd, blockquote { margin: 0; }
+    h1, h2, h3 { font-family: var(--font-display); }
+    ul { padding: 0; list-style: none; }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .visually-hidden, .skip:not(:focus) {
+      position: absolute; inline-size: 1px; block-size: 1px; padding: 0; overflow: hidden;
+      clip-path: inset(50%); white-space: nowrap;
+    }
+    .skip:focus { position: fixed; z-index: 5; top: 12px; left: 12px; padding: 12px 16px; background: var(--raised); }
+    .shell { min-height: 100svh; display: grid; grid-template-columns: 224px minmax(0, 1fr); }
+    .rail {
+      position: sticky; top: 0; min-width: 0; min-height: min(600px, 100svh); height: 100svh;
+      display: flex; flex-direction: column; padding: 32px 16px 20px; border-right: 1px solid var(--line);
+      background: var(--rail);
+    }
+    .identity, .profile { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .identity { padding-inline: 8px; margin-bottom: 48px; }
+    .identity strong, .profile strong { display: block; font-weight: 730; line-height: 1.3; }
+    .identity small, .profile small { display: block; color: var(--muted); font-size: var(--small); }
+    .mark {
+      display: grid; place-items: center; flex: 0 0 40px; height: 40px;
+      background: var(--accent); color: var(--on-accent); border-radius: 10px;
+      box-shadow: inset 0 1px 0 var(--rim), 0 5px 11px -6px var(--accent);
+    }
+    .mark::before {
+      content: ""; width: 18px; height: 18px; border: 2px solid currentColor;
+      border-radius: 50% 50% 5px 5px; clip-path: polygon(0 0,100% 0,100% 100%,66% 100%,66% 80%,34% 80%,34% 100%,0 100%);
+    }
+    .control {
+      --control-bg: var(--well);
+      --control-ink: var(--ink);
+      --control-stroke: var(--control-line);
+      --strong-control-stroke: color-mix(in oklch, var(--control-line) 90%, var(--ink));
+      min-height: var(--target); border: 1px solid var(--control-stroke);
+      border-radius: var(--radius-control); background: var(--control-bg); color: var(--control-ink);
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 6px 12px; font-weight: 680; text-align: left;
+    }
+    .control:hover { --control-bg: var(--selection); --control-stroke: var(--strong-control-stroke); }
+    .rail-nav { display: grid; gap: 4px; }
+    .rail-nav .control {
+      --control-stroke: transparent; --control-bg: transparent; justify-content: flex-start;
+      gap: 6px; padding-inline: 8px; font-size: .875rem;
+    }
+    .nav-label { white-space: nowrap; }
+    .rail-nav .control:hover { --control-bg: var(--well); --control-stroke: transparent; }
+    .rail-nav [aria-current="page"] {
+      --control-bg: var(--selection); --control-ink: var(--accent);
+      box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--accent) 22%, transparent);
+    }
+    .rail-nav .nav-count { margin-left: auto; font-size: var(--small); font-variant-numeric: tabular-nums; }
+    .rail-bottom { margin-top: auto; display: grid; gap: 16px; }
+    .theme-button { justify-content: flex-start; }
+    .theme-button[aria-pressed="true"] {
+      --control-bg: var(--selection); --control-ink: var(--accent); --control-stroke: var(--strong-control-stroke);
+    }
+    .theme-indicator { margin-left: auto; width: 26px; height: 14px; border: 1px solid var(--control-line); border-radius: 12px; display: flex; align-items: center; padding: 2px; }
+    .theme-indicator::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+    .theme-button[aria-pressed="true"] .theme-indicator { justify-content: flex-end; }
+    .theme-button[aria-pressed="true"] .theme-indicator::after { background: var(--accent); }
+    .profile { border-top: 1px solid var(--line); padding: 16px 4px 0; }
+    .icon { position: relative; display: inline-block; width: 16px; height: 16px; flex: 0 0 16px; }
+    .icon-grid::before, .icon-grid::after { content: ""; position: absolute; inset: 2px; background: currentColor; }
+    .icon-grid::before { clip-path: polygon(0 0,43% 0,43% 43%,0 43%,0 0,57% 57%,100% 57%,100% 100%,57% 100%,57% 57%); }
+    .icon-grid::after { clip-path: polygon(57% 0,100% 0,100% 43%,57% 43%,57% 0,0 57%,43% 57%,43% 100%,0 100%,0 57%); }
+    .icon-tray::before { content: ""; position: absolute; inset: 3px 1px 2px; border: 1.5px solid currentColor; border-radius: 3px; }
+    .icon-tray::after { content: ""; position: absolute; inset: 8px 5px 4px; border-top: 1.5px solid currentColor; }
+    .icon-moon::before { content: ""; position: absolute; inset: 1px 2px 2px 1px; border-radius: 50%; box-shadow: -4px 2px 0 -1px currentColor; transform: translateX(3px); }
+    .icon-search::before { content: ""; position: absolute; inset: 1px 4px 4px 1px; border: 1.5px solid currentColor; border-radius: 50%; }
+    .icon-search::after { content: ""; position: absolute; width: 6px; height: 1.5px; background: currentColor; transform: rotate(45deg); left: 10px; top: 12px; }
+
+    /* Working plane and Ticket Lens */
+    main { padding: 48px clamp(24px, 3.55vw, 64px) 48px; width: 100%; max-width: 1500px; margin: 0 auto; }
+    .page-title { margin-bottom: 24px; }
+    .page-title h1 { font-size: var(--display); font-weight: 760; line-height: 1.1; letter-spacing: -.042em; }
+    .page-title p { margin-top: 8px; color: var(--muted); max-width: 70ch; }
+    .board {
+      display: grid; grid-template-columns: minmax(0, 1.22fr) minmax(0, 1fr); align-items: start;
+      column-gap: 24px; background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--radius-panel); box-shadow: inset 0 1px 0 var(--rim), var(--board-shadow);
+      padding: 24px; min-height: 480px;
+    }
+    .queue { min-width: 0; }
+    .tools {
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 8px;
+      background: var(--well); border: 1px solid var(--line);
+      border-radius: var(--radius-well); margin-bottom: 24px;
+    }
+    .filters { display: flex; flex: 0 0 auto; gap: 4px; flex-wrap: wrap; }
+    .filter { --control-bg: transparent; --control-stroke: transparent; font-size: var(--small); }
+    .filter[aria-pressed="true"] {
+      --control-bg: var(--raised); --control-ink: var(--accent); --control-stroke: var(--control-line);
+      box-shadow: 0 3px 7px -4px var(--muted);
+    }
+    .search { display: flex; align-items: center; gap: 8px; flex: 1 1 150px; min-width: 0; color: var(--muted); }
+    .search input {
+      width: 100%; min-width: 0; min-height: var(--target); padding: 7px 8px;
+      background: var(--surface); border: 1px solid var(--control-line); border-radius: var(--radius-control);
+      color: var(--ink);
+    }
+    .search input::placeholder { color: var(--muted); opacity: 1; }
+    .list-heading, .group-heading, .person { display: flex; align-items: center; gap: 8px; }
+    .list-heading { justify-content: space-between; margin-bottom: 12px; }
+    .list-heading h2 { font-size: var(--lead); font-weight: 740; letter-spacing: -.03em; }
+    .list-heading output, .group-heading small { color: var(--muted); font-size: var(--small); font-variant-numeric: tabular-nums; }
+    .request-list { display: grid; gap: 4px; }
+    .request {
+      position: relative; display: grid; width: 100%; min-height: 64px;
+      grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px;
+      border: 1px solid transparent; border-bottom-color: var(--line); padding: 8px 12px;
+      background: transparent; border-radius: var(--radius-control); text-align: left;
+    }
+    .request:hover { background: var(--well); }
+    .request[aria-pressed="true"] {
+      border-color: color-mix(in oklch, var(--accent) 30%, transparent);
+      background: var(--selection); box-shadow: inset 0 1px 0 var(--rim);
+    }
+    .request[data-connected]::after {
+      content: ""; position: absolute; left: 100%; top: calc(50% - 1px);
+      width: 26px; height: 2px; background: var(--accent); z-index: 1;
+    }
+    .avatar {
+      flex: 0 0 auto; display: grid; place-items: center; width: 34px; height: 34px;
+      border-radius: 9px; background: var(--well); border: 1px solid var(--line);
+      color: var(--muted); font-size: var(--small); font-weight: 760;
+    }
+    .request[aria-pressed="true"] .avatar, .person .avatar { color: var(--accent); }
+    .request strong { display: block; font-weight: 725; line-height: 1.28; overflow-wrap: anywhere; }
+    .request small { display: block; margin-top: 3px; font-size: var(--small); color: var(--muted); overflow-wrap: anywhere; }
+    .request .chevron { width: 8px; height: 8px; border-right: 1.5px solid; border-top: 1.5px solid; transform: rotate(45deg); color: var(--muted); }
+    .request[aria-pressed="true"] .chevron { color: var(--accent); }
+    .queue-empty { background: var(--well); border-radius: var(--radius-well); padding: 24px; margin-top: 16px; }
+    .queue-empty p { color: var(--muted); margin: 6px 0 12px; }
+
+    .lens {
+      align-self: start; position: relative; min-width: 0; padding: 24px;
+      margin: 10px -6px 4px 0; border: 1px solid var(--line); border-radius: var(--radius-panel);
+      background: var(--raised); box-shadow: inset 0 1px 0 var(--rim), var(--lens-shadow);
+    }
+    .lens[data-unlinked] { border-top-color: var(--accent); }
+    .lens-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+    .lens-kicker { color: var(--muted); font-size: var(--small); font-weight: 730; }
+    .status {
+      display: inline-flex; align-items: center; gap: 6px; min-height: 25px; padding: 2px 8px;
+      border: 1px solid var(--line); border-radius: var(--radius-control); background: var(--well);
+      color: var(--muted); font-size: var(--small); font-weight: 720;
+    }
+    .status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .status[data-open="true"] { color: var(--accent); background: var(--selection); }
+    .lens h2 { font-size: var(--title); line-height: 1.1; letter-spacing: -.042em; overflow-wrap: anywhere; }
+    .lens .person { margin-top: 16px; gap: 12px; }
+    .person strong { display: block; font-weight: 730; }
+    .person small { color: var(--muted); display: block; font-size: var(--small); }
+    .message {
+      background: var(--well); border: 1px solid var(--line); border-radius: var(--radius-well);
+      margin-top: 24px; padding: 16px;
+    }
+    .message p { margin-bottom: 4px; color: var(--muted); font-size: var(--small); font-weight: 700; }
+    .message blockquote { max-width: 68ch; overflow-wrap: anywhere; }
+    .lens-meta {
+      display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;
+      margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line);
+    }
+    .lens-meta dt { color: var(--muted); font-size: var(--small); }
+    .lens-meta dd { font-weight: 700; }
+    .lens-return { display: none; }
+    .lens-empty p { margin-top: 8px; color: var(--muted); }
+
+    /* Overview uses the same inspection plane but a different entry point. */
+    .workload {
+      display: grid; grid-template-columns: minmax(0, 1fr) repeat(2, minmax(148px, .45fr));
+      align-items: center; gap: 12px; background: var(--well); border: 1px solid var(--line);
+      border-radius: var(--radius-well); padding: 12px; margin-bottom: 20px;
+    }
+    .workload h2 { font-size: var(--subhead); line-height: 1.1; letter-spacing: -.045em; }
+    .workload-copy { padding: 8px 12px; }
+    .metric {
+      --control-bg: var(--surface);
+      display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-self: stretch;
+      gap: 8px; min-width: 0; padding: 6px 12px; box-shadow: inset 0 1px 0 var(--rim);
+    }
+    .metric--open {
+      --control-bg: var(--selection); --control-ink: var(--accent); --control-stroke: var(--strong-control-stroke);
+    }
+    .metric--open:hover {
+      --control-bg: color-mix(in oklch, var(--selection) 88%, var(--accent)); --control-stroke: var(--accent);
+    }
+    .metric strong {
+      font: 740 var(--metric)/1 var(--font-display); letter-spacing: -.07em;
+      font-variant-numeric: tabular-nums;
+    }
+    .metric span { min-width: 0; overflow-wrap: anywhere; line-height: 1.25; }
+    .metric .shortcut-arrow { align-self: start; font-size: var(--small); }
+    .group + .group { margin-top: 16px; }
+    .group-heading { margin-bottom: 4px; min-height: 32px; }
+    .group-heading .avatar { width: 26px; height: 26px; }
+    .group-heading h3 { font-size: var(--body); font-weight: 730; }
+    .group-heading small { margin-left: auto; }
+    #overview-list .request { min-height: 42px; grid-template-columns: minmax(0, 1fr) auto; }
+    #overview-list .request .avatar, #overview-list .owner-group .request small { display: none; }
+    #overview-list .resolved-group { margin-top: 24px; padding-top: 12px; border-top: 1px solid var(--line); }
+    #overview-list .resolved-group .request { min-height: 52px; }
+
+    @media (max-width: 1140px) {
+      .board { column-gap: 16px; padding: 16px; }
+      .request[data-connected]::after { width: 18px; }
+      .lens { padding: 20px; margin-right: 0; }
+    }
+    @media (max-width: 980px) {
+      .shell { grid-template-columns: 70px minmax(0, 1fr); }
+      .rail { padding-inline: 12px; align-items: center; }
+      .identity { padding: 0; }
+      .rail-nav, .rail-bottom { width: 100%; }
+      .rail-nav .control, .theme-button { justify-content: center; padding-inline: 0; }
+      .rail-name, .nav-label, .rail-nav .nav-count, .theme-label, .theme-indicator, .profile-copy { display: none; }
+      .profile { justify-content: center; padding-inline: 0; }
+    }
+    @media (max-width: 690px) {
+      :root { --target: 44px; }
+      .shell { display: block; }
+      .rail {
+        position: static; width: auto; height: auto; min-height: 0; padding: 12px 16px;
+        display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center;
+        border-right: 0; border-bottom: 1px solid var(--line);
+      }
+      .identity { grid-column: 1; margin: 0; }
+      .rail-name, .nav-label, .rail-nav .nav-count, .theme-label { display: inline; }
+      .rail-nav { grid-row: 2; grid-column: 1 / -1; display: flex; flex-wrap: wrap; }
+      .rail-nav .control { padding-inline: 8px; }
+      .theme-button { padding-inline: 10px; }
+      .rail-bottom { grid-row: 1; grid-column: 2; }
+      .profile { display: none; }
+      main { padding: 24px 12px 32px; }
+      .page-title { padding-inline: 4px; margin-bottom: 16px; }
+      .page-title h1 { font-size: var(--title); }
+      .board { display: block; padding: 12px; min-height: 0; }
+      .tools { margin-bottom: 16px; }
+      .request[data-connected]::after { display: none; }
+      .lens { margin-top: 16px; padding: 16px; border-top: 2px solid var(--accent); }
+      .lens h2 { font-size: var(--subhead); }
+      .lens-return { display: inline-flex; margin-top: 16px; }
+      .workload { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+      .workload-copy { grid-column: 1 / -1; padding: 4px 4px 8px; }
+      #overview-list .request { min-height: 44px; }
+    }
+    @media (forced-colors: active) {
+      .request[aria-pressed="true"], .rail-nav [aria-current="page"], .filter[aria-pressed="true"] { outline: 2px solid Highlight; outline-offset: -2px; }
+      .icon-grid::before, .icon-grid::after, .theme-indicator::after { forced-color-adjust: none; background: ButtonText; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#workspace">Aller au contenu</a>
+  <div class="shell">
+    <aside class="rail" aria-label="Espace support Fusengine">
+      <div class="identity">
+        <span class="mark" aria-hidden="true"></span>
+        <div class="rail-name"><strong>Fusengine</strong><small>Espace support</small></div>
+      </div>
+      <nav class="rail-nav" aria-label="Vues de l’espace support" data-interactive hidden>
+        <a class="control" href="#overview" data-screen="overview" aria-label="Vue d’ensemble">
+          <span class="icon icon-grid" aria-hidden="true"></span><span class="nav-label">Vue d’ensemble</span>
+        </a>
+        <a class="control" href="#inbox" data-screen="inbox" aria-label="Boîte de réception">
+          <span class="icon icon-tray" aria-hidden="true"></span><span class="nav-label">Boîte de réception</span>
+          <span class="nav-count" id="nav-count" aria-hidden="true"></span>
+        </a>
+      </nav>
+      <div class="rail-bottom">
+        <button class="control theme-button" type="button" id="theme-toggle" aria-label="Mode sombre" aria-pressed="false" data-interactive hidden>
+          <span class="icon icon-moon" aria-hidden="true"></span><span class="theme-label">Mode sombre</span><span class="theme-indicator" aria-hidden="true"></span>
+        </button>
+        <div class="profile"><span class="avatar" aria-hidden="true">SL</span><span class="profile-copy"><strong>Sophie Laurent</strong><small>Équipe support</small></span></div>
+      </div>
+    </aside>
+
+    <main id="workspace" tabindex="-1">
+      <header class="page-title">
+        <h1 id="page-title" tabindex="-1">Boîte de réception</h1>
+        <p id="page-summary">Demandes de support de votre équipe.</p>
+      </header>
+
+      <section class="workload" id="workload" aria-labelledby="workload-title" hidden>
+        <div class="workload-copy"><h2 id="workload-title">Charge de l’équipe</h2></div>
+        <button class="control metric metric--open" type="button" data-inbox-filter="open">
+          <strong id="open-total"></strong><span>Ouvertes</span><span class="shortcut-arrow" aria-hidden="true">↗</span>
+        </button>
+        <button class="control metric" type="button" data-inbox-filter="resolved">
+          <strong id="resolved-total"></strong><span>Résolues</span><span class="shortcut-arrow" aria-hidden="true">↗</span>
+        </button>
+      </section>
+
+      <div class="board" data-interactive hidden>
+        <div class="queue">
+          <section id="inbox-view" aria-labelledby="inbox-title">
+            <div class="tools">
+              <div class="filters" role="group" aria-label="Filtrer les demandes par statut">
+                <button class="control filter" type="button" data-filter="open" aria-pressed="true">Ouvertes</button>
+                <button class="control filter" type="button" data-filter="resolved" aria-pressed="false">Résolues</button>
+                <button class="control filter" type="button" data-filter="all" aria-pressed="false">Toutes</button>
+              </div>
+              <label class="search">
+                <span class="icon icon-search" aria-hidden="true"></span>
+                <span class="visually-hidden">Rechercher une demande</span>
+                <input type="search" id="search" placeholder="Rechercher une demande" autocomplete="off">
+              </label>
+            </div>
+            <div class="list-heading"><h2 id="inbox-title">Demandes ouvertes</h2><output id="inbox-count" aria-live="polite"></output></div>
+            <ul class="request-list" id="inbox-list"></ul>
+            <div class="queue-empty" id="queue-empty" hidden>
+              <strong>Aucune demande trouvée</strong>
+              <p>Essayez un autre terme ou effacez la recherche.</p>
+              <button class="control" type="button" id="clear-search">Effacer la recherche</button>
+            </div>
+          </section>
+          <section id="overview-view" aria-labelledby="overview-title" hidden>
+            <div class="list-heading"><h2 id="overview-title">Demandes par responsable</h2></div>
+            <div id="overview-list"></div>
+          </section>
+        </div>
+
+        <aside class="lens" id="ticket-lens" aria-labelledby="ticket-title" tabindex="-1">
+          <div id="ticket-content">
+            <header class="lens-top"><p class="lens-kicker">Demande sélectionnée</p><span class="status" id="ticket-status"></span></header>
+            <h2 id="ticket-title">Accès à mon espace</h2>
+            <div class="person">
+              <span class="avatar" id="ticket-initials" aria-hidden="true"></span>
+              <div><strong id="ticket-sender"></strong><small id="ticket-org"></small></div>
+            </div>
+            <div class="message" id="ticket-message"><p>Message reçu</p><blockquote id="ticket-excerpt"></blockquote></div>
+            <dl class="lens-meta" id="ticket-owner-field"><dt>Responsable</dt><dd id="ticket-owner"></dd></dl>
+            <button class="control lens-return" id="lens-return" type="button">↑ Revenir à la sélection</button>
+          </div>
+          <div class="lens-empty" id="lens-empty" hidden>
+            <h2 id="empty-ticket-title">Demande sélectionnée</h2><p>Les détails s’afficheront ici quand une demande sera disponible.</p>
+          </div>
+        </aside>
+      </div>
+
+      <noscript>
+        <section class="queue-empty" aria-labelledby="offline-title">
+          <h2 id="offline-title">Demandes ouvertes</h2>
+          <p>Activez JavaScript pour filtrer les demandes, les consulter et changer de vue.</p>
+          <ul>
+            <li>Accès à mon espace · Camille Martin · Atelier Studio</li>
+            <li>Mise à jour de facturation · Léa Morel · Maison Alba</li>
+            <li>Accès à un outil interne · Léa Morel · Équipe interne</li>
+            <li>Invitation de mon équipe · Hugo Perrin · Studio Horizon</li>
+          </ul>
+        </section>
+      </noscript>
+    </main>
+  </div>
+  <script>
+    const requests = [
+      { id: "access", title: "Accès à mon espace", sender: "Camille Martin", org: "Atelier Studio", initials: "CM", owner: "Sophie Laurent", message: "Le message indique que mon accès a expiré." },
+      { id: "billing", title: "Mise à jour de facturation", sender: "Léa Morel", org: "Maison Alba", initials: "LM", owner: "Sophie Laurent", message: "Est-ce possible de modifier nos informations ?" },
+      { id: "internal", title: "Accès à un outil interne", sender: "Léa Morel", org: "Équipe interne", initials: "LM", owner: "Thomas Bernard", message: "Puis-je obtenir l’accès pour mon nouveau projet ?" },
+      { id: "invite", title: "Invitation de mon équipe", sender: "Hugo Perrin", org: "Studio Horizon", initials: "HP", owner: "Sophie Laurent", message: "Je souhaite inviter deux collègues." },
+      { id: "widget", title: "Question sur le widget", sender: "Noah Petit", org: "Collectif Nord", initials: "NP" },
+      { id: "subscription", title: "Modification de mon abonnement", sender: "Sarah Dubois", org: "Maison Rivage", initials: "SD" }
+    ];
+    const openRequests = requests.filter(request => request.owner);
+    const resolvedRequests = requests.filter(request => !request.owner);
+    const assignees = [
+      { name: "Sophie Laurent", initials: "SL" },
+      { name: "Thomas Bernard", initials: "TB" }
+    ];
+    const pageCopy = {
+      inbox: ["Boîte de réception", "Demandes de support de votre équipe."],
+      overview: ["Vue d’ensemble", "Retrouvez les demandes ouvertes par responsable et les demandes résolues."]
+    };
+    const filterCopy = { open: "Demandes ouvertes", resolved: "Demandes résolues", all: "Toutes les demandes" };
+    const selectedForView = { inbox: null, overview: null };
+    const element = id => document.getElementById(id);
+    const themeToggle = element("theme-toggle");
+    const search = element("search");
+    const lens = element("ticket-lens");
+    const viewLinks = [...document.querySelectorAll("[data-screen]")];
+    const filterButtons = [...document.querySelectorAll("[data-filter]")];
+    let state = { screen: "inbox", theme: inferredTheme(), filter: "open" };
+
+    function routeFromHash(fallback) {
+      const axes = hashAxes();
+      const screen = axes.find(axis => axis === "inbox" || axis === "overview") || fallback.screen;
+      const theme = axes.find(axis => axis === "light" || axis === "dark") || fallback.theme;
+      return { screen, theme, filter: fallback.filter };
+    }
+
+    function routeHash({ screen, theme }) {
+      return "#" + screen + "-" + theme;
+    }
+
+    function rememberRoute(next, replace = false) {
+      const method = replace ? "replaceState" : "pushState";
+      const url = replace ? location.href : routeHash(next);
+      history[method]({ workbench: next }, "", url);
+    }
+
+    function switchRoute(changes, focusTitle = false) {
+      const next = { ...state, ...changes };
+      if (routeHash(next) !== location.hash || next.filter !== state.filter) rememberRoute(next);
+      state = next;
+      render();
+      if (focusTitle) element("page-title").focus();
+    }
+
+    function restoreRoute() {
+      state = routeFromHash(history.state?.workbench || state);
+      rememberRoute(state, true);
+      render();
+    }
+
+    function normalize(text) {
+      return text.toLocaleLowerCase("fr").normalize("NFD").replace(/\p{Diacritic}/gu, "");
+    }
+
+    function inboxMatches() {
+      const items = state.filter === "open" ? openRequests : state.filter === "resolved" ? resolvedRequests : requests;
+      const term = normalize(search.value.trim());
+      return items.filter(request => {
+        const searchable = [request.title, request.sender, request.org, request.owner, request.message].join(" ");
+        return normalize(searchable).includes(term);
+      });
+    }
+
+    // These rows interpolate only the fixed fixtures above, never the input text.
+    function requestRow(request, selected) {
+      return '<li><button class="request" type="button" data-request="' + request.id +
+        '" aria-controls="ticket-lens" aria-pressed="' + (selected === request.id) +
+        '"><span class="avatar" aria-hidden="true">' + request.initials +
+        '</span><span><strong>' + request.title + '</strong><small>' + request.sender + ' · ' + request.org +
+        '</small></span><span class="chevron" aria-hidden="true"></span></button></li>';
+    }
+
+    function renderInbox(items, selected) {
+      element("inbox-title").textContent = filterCopy[state.filter];
+      element("inbox-count").textContent = items.length + (items.length === 1 ? " demande" : " demandes");
+      element("queue-empty").hidden = items.length !== 0;
+      filterButtons.forEach(button => button.setAttribute("aria-pressed", button.dataset.filter === state.filter));
+      element("inbox-list").innerHTML = items.map(request => requestRow(request, selected)).join("");
+    }
+
+    function renderOverview(selected) {
+      const groups = assignees.map(person => {
+        const items = openRequests.filter(request => request.owner === person.name);
+        const count = items.length + (items.length === 1 ? " demande" : " demandes");
+        return '<section class="group owner-group"><header class="group-heading"><span class="avatar" aria-hidden="true">' +
+          person.initials + '</span><h3>' + person.name + '</h3><small>' + count +
+          '</small></header><ul class="request-list">' + items.map(request => requestRow(request, selected)).join("") + '</ul></section>';
+      });
+      groups.push('<section class="group resolved-group"><header class="group-heading"><h3>Demandes résolues</h3></header><ul class="request-list">' +
+        resolvedRequests.map(request => requestRow(request, selected)).join("") + '</ul></section>');
+      element("overview-list").innerHTML = groups.join("");
+    }
+
+    function renderTicket(ticket) {
+      element("ticket-content").hidden = !ticket;
+      element("lens-empty").hidden = Boolean(ticket);
+      lens.setAttribute("aria-labelledby", ticket ? "ticket-title" : "empty-ticket-title");
+      if (!ticket) return;
+      const status = element("ticket-status");
+      status.textContent = ticket.owner ? "Ouverte" : "Résolue";
+      status.dataset.open = Boolean(ticket.owner);
+      element("ticket-title").textContent = ticket.title;
+      element("ticket-initials").textContent = ticket.initials;
+      element("ticket-sender").textContent = ticket.sender;
+      element("ticket-org").textContent = ticket.org;
+      element("ticket-message").hidden = !ticket.message;
+      element("ticket-excerpt").textContent = ticket.message || "";
+      element("ticket-owner-field").hidden = !ticket.owner;
+      element("ticket-owner").textContent = ticket.owner || "";
+    }
+
+    function updateConnector() {
+      const row = selectedRow();
+      if (!row) return lens.removeAttribute("data-unlinked");
+      const rowBox = row.getBoundingClientRect();
+      const pane = lens.getBoundingClientRect();
+      const center = rowBox.top + rowBox.height / 2;
+      const connected = rowBox.right < pane.left && center > pane.top + 12 && center < pane.bottom - 12;
+      row.toggleAttribute("data-connected", connected);
+      lens.toggleAttribute("data-unlinked", !connected);
+    }
+
+    function render() {
+      const { screen, theme } = state;
+      const isInbox = screen === "inbox";
+      const [title, summary] = pageCopy[screen];
+      document.documentElement.dataset.theme = theme;
+      document.title = title + " · Fusengine";
+      themeToggle.setAttribute("aria-pressed", theme === "dark");
+      element("page-title").textContent = title;
+      element("page-summary").textContent = summary;
+      element("inbox-view").hidden = !isInbox;
+      element("overview-view").hidden = isInbox;
+      element("workload").hidden = isInbox;
+      viewLinks.forEach(link => {
+        link.href = routeHash({ screen: link.dataset.screen, theme });
+        if (link.dataset.screen === screen) link.setAttribute("aria-current", "page");
+        else link.removeAttribute("aria-current");
+      });
+      const items = isInbox ? inboxMatches() : [...openRequests, ...resolvedRequests];
+      const ticket = items.find(request => request.id === selectedForView[screen]) || items[0];
+      const selected = ticket?.id || "";
+      if (isInbox) renderInbox(items, selected);
+      else renderOverview(selected);
+      renderTicket(ticket);
+      updateConnector();
+    }
+
+    const activeRow = id => document.querySelector('#' + state.screen + '-view [data-request="' + id + '"]');
+    const selectedRow = () => document.querySelector('#' + state.screen + '-view [data-request][aria-pressed="true"]');
+
+    function selectRequest(id) {
+      selectedForView[state.screen] = id;
+      render();
+      if (matchMedia("(max-width: 690px)").matches) {
+        lens.focus({ preventScroll: true });
+        lens.scrollIntoView({ block: "start", behavior: "instant" });
+      } else {
+        activeRow(id)?.focus({ preventScroll: true });
+      }
+    }
+
+    function linkActivated(event) {
+      return event.button === 0 && !event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey;
+    }
+
+    document.addEventListener("click", event => {
+      const view = event.target.closest("[data-screen]");
+      const metric = event.target.closest("[data-inbox-filter]");
+      const filter = event.target.closest("[data-filter]");
+      const request = event.target.closest("[data-request]");
+      if ((view || metric) && linkActivated(event)) {
+        event.preventDefault();
+        if (metric) {
+          search.value = "";
+          switchRoute({ screen: "inbox", filter: metric.dataset.inboxFilter }, true);
+        } else if (view.dataset.screen !== state.screen) {
+          switchRoute({ screen: view.dataset.screen }, true);
+        }
+      } else if (filter) {
+        state = { ...state, filter: filter.dataset.filter };
+        rememberRoute(state, true);
+        render();
+      } else if (request) {
+        selectRequest(request.dataset.request);
+      }
+    });
+    themeToggle.addEventListener("click", () => switchRoute({ theme: state.theme === "dark" ? "light" : "dark" }));
+    search.addEventListener("input", render);
+    element("clear-search").addEventListener("click", () => { search.value = ""; render(); search.focus(); });
+    element("lens-return").addEventListener("click", () => selectedRow()?.focus());
+    document.querySelector(".skip").addEventListener("click", event => { event.preventDefault(); element("workspace").focus(); });
+    addEventListener("popstate", restoreRoute);
+    addEventListener("hashchange", restoreRoute);
+    element("open-total").textContent = openRequests.length;
+    element("resolved-total").textContent = resolvedRequests.length;
+    element("nav-count").textContent = openRequests.length;
+    restoreRoute();
+    document.querySelectorAll("[data-interactive]").forEach(section => { section.hidden = false; });
+    const layoutObserver = new ResizeObserver(updateConnector);
+    layoutObserver.observe(lens);
+    layoutObserver.observe(document.querySelector(".queue"));
+  </script>
+</body>
+</html>

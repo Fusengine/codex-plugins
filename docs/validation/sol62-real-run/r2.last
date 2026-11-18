@@ -1,0 +1,5 @@
+The `design-expert` drafted and tested all four views in memory, but the design-pipeline hook blocked saving `support-workbench-sol62.html` at the requested path. The hook requires a validated `design-system.md` write, which your one-file scope does not allow. No files or Git state were changed by this run.
+
+- **Overview:** A raised Fusengine-blue panel makes open and resolved requests the focal point, with recessed counters that open the corresponding queue.
+- **Inbox:** An inset queue and an elevated conversation pane separate scanning from reading.
+- **Both themes:** Larger headings and counts establish hierarchy, while progressively lighter surfaces keep the layers distinct in dark mode.

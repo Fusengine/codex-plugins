@@ -1,0 +1,3 @@
+- **explore-codebase**: `scripts/lib/agent-adapter.ts`, `scripts/lib/agent.types.ts`, `scripts/lib/py-rules.ts`
+- **challenger**: `scripts/lib/agent-adapter.ts`, `scripts/lib/agent.types.ts`, `scripts/lib/py-rules.ts` — plausible; the directory listing returned all three.
+- **cartographer**: `scripts/lib/agent-adapter.ts`, `scripts/lib/agent.types.ts`, `scripts/lib/py-rules.ts`

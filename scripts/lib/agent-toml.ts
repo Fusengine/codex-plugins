@@ -4,87 +4,97 @@ import { identityNicknames, normalizeSkillNames } from "./agent-names.ts";
 import { skillConfigLines, tomlArray, tomlMultiline, tomlString } from "./agent-toml-format.ts";
 import type { AgentTomlOptions } from "./agent.types.ts";
 
-/** A supported Codex model and reasoning-effort pair (Terra 6.1 only since 2026-10-29). */
-type ModelProfile = {
-	model: "gpt-6.1-terra";
-	effort: "medium" | "high" | "max";
+/** Codex model ids the fleet may use. `max` and `ultra` efforts are deliberately not representable. */
+export type AgentModel = "gpt-6.2-sol" | "gpt-6.1-terra";
+
+/** Reasoning efforts the fleet may use (`max` retired fleet-wide, `ultra` excluded). */
+export type AgentEffort = "medium" | "high";
+
+/** A supported Codex model and reasoning-effort pair. */
+export type ModelProfile = {
+	model: AgentModel;
+	effort: AgentEffort;
 };
 
-const TERRA_MEDIUM: ModelProfile = { model: "gpt-6.1-terra", effort: "medium" };
-const TERRA_HIGH: ModelProfile = { model: "gpt-6.1-terra", effort: "high" };
-const TERRA_MAX: ModelProfile = { model: "gpt-6.1-terra", effort: "max" };
+/** Role-named tiers: a tier says what an agent is for, never which model it runs. */
+export type AgentTier = "DEFAULT" | "JUDGE" | "NON_CORE" | "SECURITY";
 
 /**
- * Canonical shipped-agent policy (40 agents, GPT-6.1 Terra fleet, applied
- * 2026-10-29): 32 `gpt-6.1-terra` `medium` + 5 `high` + 3 `max`, zero Sol,
- * no `ultra`. 2026-11-09: `hermes-expert` added on the new-agent default
- * (`medium`, the Claude source's `effort: medium`) when the owner approved
- * porting the Hermes plugin ("oui"), taking 30 + 5 + 3 = 38 to 31 + 5 + 3 = 39.
- * 2026-11-10: `devops-expert` added on the same default (`medium`, the Claude
- * source's `effort: medium`) when the owner approved porting the DevOps plugin
- * ("oui"), taking 31 + 5 + 3 = 39 to 32 + 5 + 3 = 40.
- *
- * Owner decision (verbatim, 2026-10-29): "That is 30 + 5 + 3 = 38 agents. No
- * agent stays on Sol. Do not use `ultra`, which adds automatic sub-agent
- * delegation and was not part of the decision."
- * Rationale (blind benchmark, 2026-10-29): Terra medium equals Sol medium on
- * code executors (27/27 hidden tests, same blind Laravel review 31/40, 1.5x
- * faster, 3x cheaper); Terra max won every visual test; Sol won no test.
- *
- * Resulting matrix: `max` (3) is `design-expert`, `challenger`,
- * `security-expert`. `high` (5) is `sniper`, `brainstorming`,
- * `prompt-engineer`, `skill-creator`, `solid-orchestrator`. `medium` (32) is
- * every other agent, including the code executors and `commit`.
- *
- * Superseded policies (GPT-5.6 tiers; the 2026-09-23 GPT-6 Sol/Luna split and
- * its benchmark; the 2026-09-27 all-`gpt-6-sol` state; the 2026-09-30
- * all-`gpt-6.1-sol` state) live only in docs/workflow/agents.md § History.
+ * The model and effort of each role tier, defined once. Owner decisions
+ * (dated, docs/decisions.md): 2026-11-18 "Sol 6.2 fleet" made the Sol 6.2
+ * model the fleet default, kept the Terra 6.1 model only for a minority of
+ * non-core tasks, and retired effort `max` in favour of `high` (`ultra` stays
+ * excluded); 2026-11-18 "Sol 6.2 matrix approved" fixed the 40-agent split:
+ * `DEFAULT` (25 agents, the code executors, `commit`, explorers, SEO), `JUDGE`
+ * (7: `sniper`, `challenger`, `brainstorming`, `prompt-engineer`,
+ * `skill-creator`, `solid-orchestrator`, `design-expert`), `NON_CORE` (7:
+ * utility agents such as `websearch` and `sniper-faster`) and `SECURITY` (1:
+ * `security-expert`, a capability exception that stays on the Terra model).
+ * Superseded policies and their rationale live only in docs/workflow/agents.md
+ * § Model Policy.
  */
-export const AGENT_MODEL_PROFILES: Record<string, ModelProfile> = {
-	"astro-expert": TERRA_MEDIUM,
-	"devops-expert": TERRA_MEDIUM,
-	"go-expert": TERRA_MEDIUM,
-	"hermes-expert": TERRA_MEDIUM,
-	"laravel-expert": TERRA_MEDIUM,
-	"nextjs-expert": TERRA_MEDIUM,
-	"php-expert": TERRA_MEDIUM,
-	"react-expert": TERRA_MEDIUM,
-	"rust-expert": TERRA_MEDIUM,
-	"shadcn-ui-expert": TERRA_MEDIUM,
-	"swift-expert": TERRA_MEDIUM,
-	"tailwindcss-expert": TERRA_MEDIUM,
-	"tanstack-start-expert": TERRA_MEDIUM,
-	"typescript-expert": TERRA_MEDIUM,
-	"sniper-faster": TERRA_MEDIUM,
-	websearch: TERRA_MEDIUM,
-	cartographer: TERRA_MEDIUM,
-	"commit-detector": TERRA_MEDIUM,
-	"seo-images": TERRA_MEDIUM,
-	"seo-sitemap": TERRA_MEDIUM,
-	brainstorming: TERRA_HIGH,
-	"solid-orchestrator": TERRA_HIGH,
-	commit: TERRA_MEDIUM,
-	"explore-codebase": TERRA_MEDIUM,
-	"research-expert": TERRA_MEDIUM,
-	"changelog-watcher": TERRA_MEDIUM,
-	"lessons-compactor": TERRA_MEDIUM,
-	"seo-expert": TERRA_MEDIUM,
-	"seo-content": TERRA_MEDIUM,
-	"seo-geo": TERRA_MEDIUM,
-	"seo-local": TERRA_MEDIUM,
-	"seo-cluster": TERRA_MEDIUM,
-	"seo-technical": TERRA_MEDIUM,
-	"seo-schema": TERRA_MEDIUM,
-	sniper: TERRA_HIGH,
-	"prompt-engineer": TERRA_HIGH,
-	challenger: TERRA_MAX,
-	"security-expert": TERRA_MAX,
-	"skill-creator": TERRA_HIGH,
-	"design-expert": TERRA_MAX,
+export const TIER_PROFILES: Record<AgentTier, ModelProfile> = {
+	DEFAULT: { model: "gpt-6.2-sol", effort: "medium" },
+	JUDGE: { model: "gpt-6.2-sol", effort: "high" },
+	NON_CORE: { model: "gpt-6.1-terra", effort: "medium" },
+	SECURITY: { model: "gpt-6.1-terra", effort: "high" },
 };
 
-/** New agents default to the standard execution profile until explicitly classified. */
-const FALLBACK_PROFILE = TERRA_MEDIUM;
+/**
+ * Shipped-agent classification (40 agents: 25 DEFAULT, 7 JUDGE, 7 NON_CORE,
+ * 1 SECURITY; owner decisions 2026-11-18, docs/decisions.md). Counts live in
+ * the contract tests too, which keep their own literal tables.
+ */
+export const AGENT_TIERS: Record<string, AgentTier> = {
+	"astro-expert": "DEFAULT",
+	commit: "DEFAULT",
+	"devops-expert": "DEFAULT",
+	"explore-codebase": "DEFAULT",
+	"go-expert": "DEFAULT",
+	"hermes-expert": "DEFAULT",
+	"laravel-expert": "DEFAULT",
+	"lessons-compactor": "DEFAULT",
+	"nextjs-expert": "DEFAULT",
+	"php-expert": "DEFAULT",
+	"react-expert": "DEFAULT",
+	"research-expert": "DEFAULT",
+	"rust-expert": "DEFAULT",
+	"seo-cluster": "DEFAULT",
+	"seo-content": "DEFAULT",
+	"seo-expert": "DEFAULT",
+	"seo-geo": "DEFAULT",
+	"seo-local": "DEFAULT",
+	"seo-schema": "DEFAULT",
+	"seo-technical": "DEFAULT",
+	"shadcn-ui-expert": "DEFAULT",
+	"swift-expert": "DEFAULT",
+	"tailwindcss-expert": "DEFAULT",
+	"tanstack-start-expert": "DEFAULT",
+	"typescript-expert": "DEFAULT",
+	sniper: "JUDGE",
+	challenger: "JUDGE",
+	brainstorming: "JUDGE",
+	"prompt-engineer": "JUDGE",
+	"skill-creator": "JUDGE",
+	"solid-orchestrator": "JUDGE",
+	"design-expert": "JUDGE",
+	"commit-detector": "NON_CORE",
+	cartographer: "NON_CORE",
+	"seo-images": "NON_CORE",
+	"seo-sitemap": "NON_CORE",
+	"sniper-faster": "NON_CORE",
+	websearch: "NON_CORE",
+	"changelog-watcher": "NON_CORE",
+	"security-expert": "SECURITY",
+};
+
+/** Per-agent {model, effort}, derived from {@link AGENT_TIERS} and {@link TIER_PROFILES}. */
+export const AGENT_MODEL_PROFILES: Record<string, ModelProfile> = Object.fromEntries(
+	Object.entries(AGENT_TIERS).map(([name, tier]) => [name, TIER_PROFILES[tier]]),
+);
+
+/** New agents default to the DEFAULT tier until explicitly classified. */
+const FALLBACK_PROFILE = TIER_PROFILES.DEFAULT;
 
 const WRITE_TOOLS = new Set(["Edit", "Write", "MultiEdit", "NotebookEdit"]);
 

@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.0.78] - 2026-11-18
+
+### Added
+
+- docs: `docs/roadmap.md` (Done / In progress / Next) and the project skill `.agents/skills/project-codex-plugins/` (SKILL.md + architecture, commands, conventions, pitfalls, stack references)
+- test(agents): Sol 6.2 real-condition run artifacts in `docs/validation/sol62-real-run/` (R1 fleet load PASS 4/4 model+effort match; R2 design-expert support-workbench redo with before/after captures); report `docs/real-conditions-sol62-fleet-2026-11-18.md`
+- docs(reports): model fleet 6.2 explore / research / design / challenge / final-challenge reports under `docs/reports/model-fleet-6.2-*.md`
+
+### Changed
+
+- chore(agents): fleet moved to the Sol 6.2 tier matrix 25/7/7/1 — 25 `gpt-6.2-sol`/medium, 7 `gpt-6.2-sol`/high, 7 `gpt-6.1-terra`/medium, 1 `gpt-6.1-terra`/high; the `max` reasoning tier is retired (replaced by `high`); `agent-toml.ts` matrix, contract tests and the frozen security-agent pilot baseline updated (ai-pilot 1.2.67, astro-expert 1.0.27, design-expert 2.1.55, devops-expert 1.0.2, go-expert 1.0.24, hermes-expert 1.0.2, laravel-expert 1.2.28, lessons 1.0.13, nextjs-expert 1.1.44, php-expert 1.0.24, prompt-engineer 1.1.25, react-expert 1.0.40, rust-expert 1.0.24, security-expert 1.0.34, seo 1.0.27, shadcn-expert 1.0.37, solid 1.0.34, swift-apple-expert 1.1.42, tailwindcss 1.1.30, tanstack-start-expert 1.0.24, typescript-expert 1.0.24)
+- docs(agents): Sol 6.2 model policy documented in `docs/workflow/agents.md`, `docs/reference/creating-skills-agents.md`, the `agent-creator` skill and its templates, `docs/task-list.md`, `docs/GAP-HARNESS.md`, `docs/decisions.md`, README
+- chore(deps): exact pin `@fusengine/harness` 0.1.125 -> 0.1.126 (`package.json`, `bun.lock`, `HARNESS_VERSION`)
+- chore(release): bump 21 touched plugins (PATCH) + suite to 1.0.78; mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.78
+
 ## [1.0.77] - 2026-11-17
 
 ### Added

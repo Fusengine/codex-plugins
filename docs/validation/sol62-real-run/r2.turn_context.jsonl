@@ -1,0 +1,8 @@
+{"run":"r2","file":"rollout-2026-11-18T01-41-51-01a1ec1a-5519-7e62-82c8-a8d30b4682ce.jsonl","role":"(parent)","model":"gpt-6.2-sol","effort":"medium"}
+{"run":"r2","file":"rollout-2026-11-18T01-42-37-01a1ec1b-09d5-7471-b82c-761491289a5c.jsonl","role":"design-expert","model":"gpt-6.2-sol","effort":"high"}
+{"run":"r2b","file":"rollout-2026-11-18T01-52-36-01a1ec24-2c2a-78b2-8168-1211a318730a.jsonl","role":"(parent)","model":"gpt-6.2-sol","effort":"medium"}
+{"run":"r2b","file":"rollout-2026-11-18T01-53-24-01a1ec24-eb31-75f1-a1ae-0e1323e42dfb.jsonl","role":"design-expert","model":"gpt-6.2-sol","effort":"high"}
+{"run":"r2c","file":"rollout-2026-11-18T01-56-12-01a1ec27-7865-7092-9815-b112f6347f79.jsonl","role":"(parent)","model":"gpt-6.2-sol","effort":"medium"}
+{"run":"r2c","file":"rollout-2026-11-18T01-56-58-01a1ec28-2c52-70f1-abe1-0bbc3be9873c.jsonl","role":"design-expert","model":"gpt-6.2-sol","effort":"high","turn_contexts":2}
+{"run":"r2c","file":"rollout-2026-11-18T02-13-53-01a1ec37-abca-7841-ac4a-b86c5476c934.jsonl","role":"challenger","model":"gpt-6.2-sol","effort":"high"}
+{"run":"r2c","file":"rollout-2026-11-18T02-15-54-01a1ec39-833a-7892-a5fa-2cd15c2c0112.jsonl","role":"sniper","model":"gpt-6.2-sol","effort":"high"}

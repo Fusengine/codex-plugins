@@ -28,7 +28,7 @@ Hooks live in the plugin's `hooks/hooks.json`, never in the agent TOML — see
 ```toml
 name = "sniper"
 description = "Elite code error detection and correction. Use after ANY code modification. Do NOT use for: new features, read-only analysis."
-model = "gpt-6.1-terra"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 nickname_candidates = ["Sniper", "Code Sniper", "Sniper Agent"]
@@ -54,8 +54,8 @@ Real reference: `plugins/typescript-expert/agents/typescript-expert.toml`.
 | `name` | Yes | kebab-case, unique across the ecosystem, referenced by `spawn_agent`. Blank/missing drops the whole file at Codex startup (one-line warning only — the agent silently never becomes spawnable). |
 | `description` | Yes | Keep the "Use when… / Do NOT use for…" routing pattern — it drives agent selection. |
 | `developer_instructions` | Yes | Triple-quoted (`'''…'''`) string holding the full agent brief. No truncation of source substance. |
-| `model` | Recommended | Explicit tier id only: `gpt-6.1-terra` for every shipped agent, per Model Selection below. Never a bare `gpt-6`/`gpt-6.1` alias. `gpt-6.1-luna` is not available on this account. |
-| `model_reasoning_effort` | Recommended | `medium` by default; `high` or `max` only for the agents named in Model Selection below; never `ultra`. |
+| `model` | Recommended | Full model id only: `gpt-6.2-sol` by default, `gpt-6.1-terra` only for the agents named in Model Selection below. Never a bare alias. |
+| `model_reasoning_effort` | Recommended | `medium` by default; `high` only for the agents named in Model Selection below; never `max` or `ultra`. |
 | `sandbox_mode` | Recommended | One of `read-only`, `workspace-write`, `danger-full-access`. See `sandbox_mode` Guidance below. |
 | `nickname_candidates` | Optional | Array of display names, identity evidence when spawning. See rules below. |
 | `mcp_servers` | Optional | MCP servers this agent may reach; declare only servers configured for Codex. |
@@ -69,29 +69,20 @@ that — never add `color`, a `tools` list, or a `hooks` table here.
 
 ## Model Selection
 
-**Current, since 2026-10-29** (owner decision). Every shipped agent runs
-on `gpt-6.1-terra` (30 + 5 + 3 = 38); no agent stays on Sol, and
-`gpt-6.1-luna` is not available on this account.
+Four role tiers (25 + 7 + 7 + 1 = 40), mirroring the Model Tier Matrix in
+`SKILL.md`:
 
-| `model` / effort | When to use |
-|-------------------|-------------|
-| `gpt-6.1-terra` / `medium` | Every other agent (30), incl. code executors and `commit` — the default for any new agent |
-| `gpt-6.1-terra` / `high` | Heavy judgment: `sniper`, `brainstorming`, `prompt-engineer`, `skill-creator`, `solid-orchestrator` |
-| `gpt-6.1-terra` / `max` | Visual and security/adversarial gates: `design-expert`, `challenger`, `security-expert` |
+| Tier | `model` / effort | Agents |
+|------|-------------------|--------|
+| `DEFAULT` (25) | `gpt-6.2-sol` / `medium` | Every agent not listed below, incl. code executors and `commit` — the default for any new agent |
+| `JUDGE` (7) | `gpt-6.2-sol` / `high` | `sniper`, `challenger`, `brainstorming`, `prompt-engineer`, `skill-creator`, `solid-orchestrator`, `design-expert` |
+| `NON_CORE` (7) | `gpt-6.1-terra` / `medium` | `commit-detector`, `cartographer`, `seo-images`, `seo-sitemap`, `sniper-faster`, `websearch`, `changelog-watcher` |
+| `SECURITY` (1) | `gpt-6.1-terra` / `high` | `security-expert` |
 
-`ultra` is never used (it adds automatic sub-agent delegation and was not
-part of the decision); any other model or effort needs a new owner
-decision. No verified Terra price is recorded. The authoritative policy lives in
-`docs/reference/creating-skills-agents.md` (model policy section) — this
-table mirrors it, don't let the two drift.
-
-### History
-
-Superseded policies (the 2026-09-30 all-`gpt-6.1-sol` fleet, the
-2026-09-27 all-GPT-6-Sol fleet, the 2026-09-23
-GPT-6 Sol/Luna split and its measurements, and the GPT-5.6 Sol/Terra/Luna
-tiers) live only in
-[`docs/workflow/agents.md` § Model
+Never `max` or `ultra` effort, never a model other than `gpt-6.2-sol` /
+`gpt-6.1-terra`, never a bare alias; any other model or effort needs a new
+owner decision. Rationale, decision dates and every superseded policy live
+only in [`docs/workflow/agents.md` § Model
 Policy](../../../../../docs/workflow/agents.md#model-policy) — not
 reproduced here, to avoid the copies drifting.
 
