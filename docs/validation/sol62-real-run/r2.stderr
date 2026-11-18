@@ -1,0 +1,869 @@
+Reading additional input from stdin...
+2026-11-18T00:43:27.227751Z ERROR codex_core::tools::router: error=Command blocked by PreToolUse hook: [BLOCKED] Bash write to code file
+heredoc redirected into a file — Use Edit/Write tools instead
+Next:
+  1. Use the Write/Edit tool instead. Command: node - <<'NODE'
+const {chromium}=require('/Users/brunoazoulay/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const base='file:///Users/brunoazoulay/.codex/plugins/cache/fusengine-codex/design-expert/2.1.54/skills/design-web/references/refs-design/';
+(async()=>{const browser=await chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true}); try { const ctx=await browser.newContext({viewport:{width:1040,height:680}}); await ctx.route(/^https?:/,r=>r.abort()); await Promise.all(['reve','linear'].map(async name=>{ const p=await ctx.newPage(); await p.goto(base+name+'-recode/index.html'); const sections=await p.evaluate(()=>[...document.querySelectorAll('section')].filter(x=>x.offsetHeight).map(x=>[Math.round(x.getBoundingClientRect().top),x.offsetHeight,x.querySelector('h2')?.textContent]).slice(0,14)); const y=name==='reve'?Math.round((sections.find(x=>x[2]?.includes('story'))||sections[3]||[800])[0]):Math.round((sections[1]||[800])[0]); await p.evaluate(y=>window.scrollTo(0,y+160),y); await p.waitForTimeout(200); const img=await p.screenshot({type:'jpeg',quality:58}); process.stdout.write(JSON.stringify({name,sections,img:img.toString('base64')})+'\n');})); } finally {await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1});
+NODE
+2026-11-18T00:50:18.394851Z ERROR codex_core::tools::router: error=Command blocked by PreToolUse hook: [BLOCKED] Design pipeline
+BLOCKED: cannot write '/Users/brunoazoulay/Labo/docker-lab/dev.local/Dev/AI/Harness/codex-plugins/docs/validation/sol62-real-run/support-workbench-sol62.html' before the design-system pipeline is complete (phase 1/3, design-system.md not validated, design-system.md not found on disk). RECOVERY: 1) Read identity templates from skills/design-system/ 2) Read design-inspiration.md 3) Read the refs-design corpus with the Read tool 4) Capture real sector sites with any fuse-browser screenshot tool (browser_screenshot, browser_shots_batch, browser_site_shots) 5) Write a valid design-system.md 6) Then write .html/.css
+Next:
+  1. Follow the design pipeline phases (0→identity, 1→inspiration, 2→screenshots, 3→design-system, 4→generate) in order. Command: *** Begin Patch
+*** Add File: /Users/brunoazoulay/Labo/docker-lab/dev.local/Dev/AI/Harness/codex-plugins/docs/validation/sol62-real-run/support-workbench-sol62.html
++<!doctype html>
++<html lang="fr" data-theme="light">
++<head>
++  <meta charset="utf-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <meta name="color-scheme" content="light dark">
++  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; font-src data:; img-src data:">
++  <title>Boîte de réception · Fusengine</title>
++  <style>
++    /* Semantic Fusengine colors: docs/mockups/design-system.md and src/styles.css. */
++    :root {
++      color-scheme: light;
++      --brand: oklch(35.09% 0.2431 264.1);
++      --signal: oklch(73.15% 0.1391 274.3);
++      --ground: oklch(95.73% 0.0074 260.7);
++      --card: oklch(100% 0 0);
++      --ink: oklch(21.41% 0.0207 267.7);
++      --muted: oklch(47.05% 0.0588 257.7);
++      --accent: var(--brand);
++      --accent-ink: var(--card);
++      --rail: oklch(98.49% 0.0071 269);
++      --line: color-mix(in oklch, var(--muted) 21%, var(--card));
++      --edge: color-mix(in oklch, var(--muted) 34%, var(--card));
++      --well: color-mix(in oklch, var(--ground) 67%, var(--card));
++      --lift: var(--card);
++      --selection: color-mix(in oklch, var(--signal) 19%, var(--card));
++      --focus: oklch(46% 0.21 267);
++      --shadow: oklch(22% 0.040 264);
++      --rest-shadow: 0 2px 4px oklch(from var(--shadow) l c h / .045), 0 16px 32px -20px oklch(from var(--shadow) l c h / .25);
++      --raised-shadow: 0 3px 5px oklch(from var(--shadow) l c h / .08), 0 20px 46px -17px oklch(from var(--shadow) l c h / .32);
++      --inset-highlight: oklch(100% 0 0 / .82);
++      --font: "Public Sans", "Avenir Next", system-ui, sans-serif;
++      --text-font: "Manrope", "Avenir Next", system-ui, sans-serif;
++      --radius: 16px;
++    }
++
++    :root[data-theme="dark"] {
++      color-scheme: dark;
++      --ground: oklch(16.58% 0.0121 279.5);
++      --card: oklch(19.37% 0.0160 281.6);
++      --ink: oklch(96.60% 0.0058 255.8);
++      --muted: oklch(83.52% 0.0291 258.2);
++      --accent: var(--signal);
++      --accent-ink: var(--ground);
++      --rail: var(--card);
++      --line: oklch(37.38% 0.0396 261.5);
++      --edge: oklch(50.43% 0.0439 261.3);
++      --well: color-mix(in oklch, var(--card) 59%, var(--ground));
++      --lift: color-mix(in oklch, var(--card) 90%, var(--signal));
++      --selection: color-mix(in oklch, var(--signal) 20%, var(--card));
++      --focus: var(--signal);
++      --shadow: oklch(8% 0.019 276);
++      --rest-shadow: 0 3px 8px oklch(from var(--shadow) l c h / .45), 0 16px 34px -24px oklch(from var(--shadow) l c h / .8);
++      --raised-shadow: 0 6px 10px oklch(from var(--shadow) l c h / .55), 0 30px 50px -24px oklch(from var(--shadow) l c h / .94);
++      --inset-highlight: oklch(86% 0.026 272 / .12);
++    }
++
++    *, *::before, *::after { box-sizing: border-box; }
++    [hidden] { display: none !important; }
++    body { margin: 0; color: var(--ink); background: var(--ground); font: 500 .875rem/1.55 var(--text-font); }
++    h1, h2, h3, p, figure, ul, ol { margin: 0; }
++    h1, h2, h3, .nav-brand, .metric-value { font-family: var(--font); }
++    h1 { font-size: clamp(2rem, 3.45vw, 3.25rem); line-height: 1.08; letter-spacing: -.055em; font-weight: 770; }
++    h2 { font-size: 1.375rem; line-height: 1.15; letter-spacing: -.035em; font-weight: 740; }
++    h3 { font-size: 1rem; line-height: 1.35; letter-spacing: -.015em; }
++    button, input, textarea { color: inherit; font: inherit; }
++    a { color: inherit; text-decoration: none; }
++    button { border: 0; background: none; cursor: pointer; }
++    :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
++    [tabindex="-1"]:focus { outline: none; }
++    .icon { width: 1.125rem; height: 1.125rem; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
++    .symbols, .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
++    .skip { position: fixed; z-index: 10; inset: 8px auto auto 8px; transform: translateY(-150%); }
++    .skip:focus { transform: none; }
++    .muted, .meta { color: var(--muted); }
++    .meta { font-size: .75rem; }
++    .small { font-size: .75rem; font-weight: 675; }
++    .numeric { font-variant-numeric: tabular-nums; }
++    .list { list-style: none; padding: 0; }
++
++    .shell { display: grid; grid-template-columns: 220px minmax(0, 1fr); min-height: 100svh; }
++    .rail {
++      position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; z-index: 4;
++      align-self: start; padding: 32px 16px 18px; background: var(--rail); border-right: 1px solid var(--line);
++    }
++    .nav-brand { display: flex; gap: 12px; align-items: center; margin: 0 8px 46px; }
++    .mark {
++      display: grid; place-items: center; flex: 0 0 42px; height: 42px; border-radius: 12px;
++      color: oklch(99% 0.004 265); background: var(--brand);
++      box-shadow: inset 0 1px oklch(100% 0 0 / .22), 0 5px 12px oklch(from var(--brand) l c h / .27);
++    }
++    .mark .icon { width: 22px; height: 22px; }
++    .nav-brand strong { display: block; font-size: 1.125rem; font-weight: 770; letter-spacing: -.045em; line-height: 1.1; }
++    .nav-brand small { display: block; margin-top: 4px; font: 620 .75rem/1.35 var(--text-font); color: var(--muted); }
++    .nav-label { margin: 0 12px 8px; }
++    .nav-link, .theme-toggle {
++      display: flex; width: 100%; align-items: center; gap: 10px; min-height: 44px; padding: 0 11px; border-radius: 9px;
++      color: var(--muted); font-weight: 720; text-align: left; white-space: nowrap;
++    }
++    .nav-link + .nav-link { margin-top: 4px; }
++    .nav-link:hover, .theme-toggle:hover { background: var(--well); color: var(--ink); }
++    .nav-link[aria-current="page"] {
++      color: var(--accent); background: var(--selection);
++      box-shadow: inset 0 1px var(--inset-highlight), inset 0 0 0 1px color-mix(in oklch, var(--accent) 15%, transparent), var(--rest-shadow);
++    }
++    .nav-count { margin-inline-start: auto; font-size: .75rem; font-variant-numeric: tabular-nums; }
++    .rail-footer { margin-top: auto; padding-top: 20px; }
++    .theme-toggle { border: 1px solid var(--line); justify-content: space-between; background: var(--well); }
++    .theme-toggle .theme-name { margin-inline-start: auto; color: var(--ink); font-size: .75rem; }
++    .theme-light, .theme-dark { display: none; }
++    [data-theme="light"] .theme-light, [data-theme="dark"] .theme-dark { display: block; }
++    .profile { display: flex; align-items: center; gap: 10px; margin-top: 16px; padding: 16px 3px 0; border-top: 1px solid var(--line); }
++    .profile strong { display: block; font-size: .8125rem; }
++    .profile small { display: block; }
++    .nav-toggle, .nav-close, .nav-scrim { display: none !important; }
++
++    main {
++      min-width: 0;
++      background: radial-gradient(ellipse at 84% 0%, color-mix(in oklch, var(--signal) 10%, transparent), transparent 43%), var(--ground);
++    }
++    .workspace { max-width: 1296px; margin-inline: auto; padding: 46px clamp(26px, 4vw, 64px) 48px; }
++    .screen-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
++    .heading-copy { min-width: 0; }
++    .heading-copy p { font-size: .9375rem; margin-top: 8px; }
++    .control {
++      display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
++      padding: 0 14px; border: 1px solid transparent; border-radius: 9px;
++      font-family: var(--font); font-size: .8125rem; font-weight: 710; line-height: 1.25; text-align: center;
++    }
++    .control:hover { text-decoration: none; }
++    .control:disabled { opacity: .58; cursor: default; }
++    .action { color: var(--accent-ink); background: var(--accent); box-shadow: inset 0 1px oklch(100% 0 0 / .21), var(--rest-shadow); }
++    .action:not(:disabled):hover { background: color-mix(in oklch, var(--accent) 89%, var(--accent-ink)); }
++    .secondary { background: var(--card); border-color: var(--edge); box-shadow: inset 0 1px var(--inset-highlight), var(--rest-shadow); }
++    .secondary:hover { background: var(--well); }
++    .text-control { color: var(--accent); }
++    .text-control:hover { background: var(--selection); }
++    .icon-control { width: 44px; padding: 0; flex: 0 0 44px; }
++    .surface {
++      min-width: 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
++      box-shadow: inset 0 1px var(--inset-highlight), var(--rest-shadow);
++    }
++    .avatar {
++      display: inline-grid; place-items: center; flex: 0 0 var(--avatar-size, 34px); width: var(--avatar-size, 34px);
++      height: var(--avatar-size, 34px); border: 1px solid color-mix(in oklch, var(--accent) 15%, transparent); border-radius: 10px;
++      background: var(--selection); color: var(--accent); font: 755 .6875rem/1 var(--font);
++    }
++    .avatar.staff { color: var(--ink); background: var(--well); border-color: var(--line); }
++    .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex: 0 0 7px; }
++
++    /* The routing register: a bright enamel face, recessed readouts, and a physical lip. */
++    .register {
++      --face-ink: oklch(98.5% 0.007 270);
++      --face-muted: oklch(89% 0.043 271);
++      --face-shine: color-mix(in oklch, var(--signal) 37%, var(--brand));
++      --face-base: color-mix(in oklch, var(--brand) 76%, oklch(19% 0.054 270));
++      --face-edge: oklch(86% 0.046 269 / .27);
++      color: var(--face-ink);
++      border: 1px solid var(--face-edge);
++      background: radial-gradient(ellipse at 84% -24%, var(--face-shine), transparent 66%), linear-gradient(132deg, var(--brand), var(--face-base) 70%);
++      box-shadow: inset 0 1px oklch(100% 0 0 / .22), inset 0 -3px oklch(19% 0.061 272 / .45);
++    }
++    [data-theme="dark"] .register {
++      --face-shine: color-mix(in oklch, var(--signal) 28%, var(--brand));
++      --face-base: color-mix(in oklch, var(--brand) 62%, var(--ground));
++    }
++    .register :focus-visible { outline-color: var(--face-ink); }
++    .routing {
++      display: grid; grid-template-columns: .94fr 1.06fr; align-items: center; gap: 28px;
++      min-height: 244px; padding: 29px 32px; border-radius: 20px;
++      box-shadow: inset 0 1px oklch(100% 0 0 / .25), inset 0 -4px oklch(19% 0.061 272 / .49),
++                  0 8px 0 -3px color-mix(in oklch, var(--brand) 44%, var(--ground)), var(--raised-shadow);
++    }
++    .routing-copy h2 { margin: 12px 0 7px; font-size: clamp(1.5rem, 2.7vw, 2.375rem); line-height: 1.07; letter-spacing: -.051em; }
++    .routing-copy p { max-width: 33ch; color: var(--face-muted); }
++    .register-symbol {
++      display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--face-edge);
++      border-radius: 10px; background: oklch(100% 0 0 / .085); box-shadow: inset 0 1px oklch(100% 0 0 / .1);
++    }
++    .register-symbol .icon { width: 19px; height: 19px; }
++    .readouts {
++      display: grid; grid-template-columns: 1fr 1fr; gap: 5px; align-self: stretch; padding: 5px; border: 1px solid var(--face-edge);
++      background: oklch(12% 0.068 271 / .69); box-shadow: inset 0 3px 9px oklch(10% 0.046 275 / .65), 0 1px oklch(100% 0 0 / .16);
++      border-radius: 15px;
++    }
++    .readout {
++      display: grid; align-content: space-between; min-width: 0; gap: 10px; padding: 14px 17px 16px;
++      border: 1px solid oklch(88% 0.045 274 / .17); border-radius: 10px;
++      background: linear-gradient(160deg, oklch(82% 0.07 270 / .19), oklch(65% 0.09 270 / .07));
++    }
++    .readout:hover { background-color: oklch(82% 0.07 270 / .19); }
++    .readout-top { display: flex; justify-content: space-between; align-items: center; color: var(--face-muted); }
++    .metric-value { font-size: clamp(2.75rem, 5.3vw, 4.75rem); font-weight: 645; line-height: .95; letter-spacing: -.08em; }
++    .readout-label { margin-top: 5px; font-size: .8125rem; font-weight: 730; color: var(--face-muted); }
++    .readout:nth-child(2) .metric-value { color: var(--face-muted); }
++
++    .overview-grid { display: grid; grid-template-columns: 1.56fr 1fr; gap: 20px; margin-top: 27px; align-items: start; }
++    .panel-header { padding: 19px 19px 13px; display: flex; justify-content: space-between; gap: 8px; align-items: center; }
++    .panel-header .control { margin-block: -8px; margin-inline-end: -6px; }
++    .overview-list { margin: 0 12px 12px; }
++    .overview-row {
++      display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 11px;
++      width: 100%; min-height: 58px; padding: 8px; border-radius: 9px; text-align: left;
++    }
++    .overview-list li + li { border-top: 1px solid var(--line); }
++    .overview-row:hover { background: var(--well); }
++    .overview-row strong, .queue-row strong { display: block; font-family: var(--font); font-size: .875rem; font-weight: 720; line-height: 1.3; }
++    .overview-row small { display: block; margin-top: 3px; }
++    .row-arrow { color: var(--muted); }
++    .side-stack { display: grid; gap: 16px; }
++    .owners { padding: 0 19px 16px; display: grid; gap: 13px; }
++    .owner-row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; }
++    .owner-name { font-size: .8125rem; font-weight: 745; }
++    .owner-track { height: 5px; margin-top: 5px; border-radius: 8px; background: var(--well); box-shadow: inset 0 1px color-mix(in oklch, var(--muted) 15%, transparent); }
++    .owner-fill { display: block; height: 100%; border-radius: inherit; background: var(--accent); }
++    .owner-row:nth-child(2) .owner-fill { background: color-mix(in oklch, var(--accent) 73%, var(--muted)); }
++    .owner-count { width: 18px; text-align: right; font: 720 .875rem/1 var(--font); }
++    .closed .overview-row { min-height: 49px; grid-template-columns: minmax(0, 1fr) auto; }
++    .closed .overview-row .avatar { display: none; }
++
++    .desk { display: grid; grid-template-columns: minmax(280px, .89fr) minmax(0, 1.32fr); align-items: start; gap: 22px; }
++    .queue { background: var(--well); }
++    .queue-top { padding: 18px 15px 12px; }
++    .queue-top h2 { margin: 0 3px 11px; }
++    .filters { display: flex; gap: 3px; margin-bottom: 12px; padding: 3px; border: 1px solid var(--line); border-radius: 10px; background: var(--ground); }
++    .filter { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; gap: 5px; min-height: 44px; padding: 0 5px; border-radius: 7px; font-size: .75rem; white-space: nowrap; color: var(--muted); font-weight: 720; }
++    .filter:hover { color: var(--ink); }
++    .filter[aria-pressed="true"] { color: var(--accent); background: var(--lift); box-shadow: 0 1px 3px oklch(from var(--shadow) l c h / .16), inset 0 0 0 1px var(--line); }
++    .search { display: flex; align-items: center; gap: 9px; padding: 0 11px; border: 1px solid var(--edge); border-radius: 9px; color: var(--muted); background: var(--card); }
++    .search:focus-within { outline: 2px solid var(--focus); outline-offset: 2px; }
++    .search input { width: 100%; min-width: 0; height: 44px; padding: 0; border: none; outline: none; background: none; font-size: .8125rem; color: var(--ink); }
++    .search input::placeholder, textarea::placeholder { opacity: 1; color: var(--muted); }
++    .queue-list { display: grid; gap: 5px; padding: 0 9px 9px; }
++    .queue-row {
++      display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: start;
++      padding: 12px 10px; width: 100%; min-height: 78px; border: 1px solid transparent; border-radius: 11px; text-align: left;
++    }
++    .queue-row:hover { background: var(--card); border-color: var(--line); }
++    .queue-row[aria-pressed="true"] {
++      background: var(--lift); border-color: color-mix(in oklch, var(--accent) 23%, var(--line));
++      box-shadow: inset 0 1px var(--inset-highlight), 0 4px 9px oklch(from var(--shadow) l c h / .10);
++    }
++    .queue-row[aria-pressed="true"] .queue-arrow { color: var(--accent); }
++    .queue-row .meta { display: block; margin-top: 2px; }
++    .queue-row .snippet { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
++    .queue-arrow { align-self: center; }
++    .empty { padding: 16px; color: var(--muted); }
++
++    .folio {
++      position: relative; isolation: isolate; border-radius: 17px; background: var(--lift);
++      box-shadow: 0 9px 0 -4px color-mix(in oklch, var(--muted) 20%, var(--ground)), var(--raised-shadow);
++    }
++    .letterhead {
++      display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 12px;
++      position: relative; margin: -1px -1px 0; padding: 21px 22px 20px; border-radius: 17px 17px 0 0;
++    }
++    .letterhead h2 { font-size: clamp(1.375rem, 2.5vw, 2.125rem); letter-spacing: -.052em; margin: 8px 0 4px; overflow-wrap: anywhere; }
++    .letterhead .meta { color: var(--face-muted); }
++    .status {
++      display: inline-flex; align-items: center; gap: 7px; padding: 3px 8px; border: 1px solid var(--face-edge);
++      border-radius: 6px; color: var(--face-ink); background: oklch(100% 0 0 / .08);
++    }
++    .status .dot { color: var(--face-muted); }
++    .on-register {
++      color: var(--face-ink); border-color: oklch(92% 0.024 270 / .48);
++      background: oklch(100% 0 0 / .08); box-shadow: inset 0 1px oklch(100% 0 0 / .15);
++    }
++    .on-register:hover { background: oklch(100% 0 0 / .19); }
++    .conversation-context {
++      display: flex; align-items: center; gap: 8px; padding: 10px 22px;
++      border-bottom: 1px solid var(--line); color: var(--muted); font-size: .75rem;
++    }
++    .conversation-context strong { color: var(--ink); font-weight: 750; }
++    .conversation-context .icon { width: 15px; height: 15px; }
++    .conversation-body { padding: 14px 20px 0; }
++    .conversation-body h3 { margin: 1px 2px 11px; }
++    .thread { display: grid; gap: 12px; max-height: 330px; overflow: auto; padding: 0 2px 13px; scrollbar-color: var(--edge) transparent; }
++    .message { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: start; }
++    .message .avatar { --avatar-size: 28px; border-radius: 8px; font-size: .625rem; }
++    .message-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 1px 0 2px; line-height: 1.3; }
++    .message-meta strong { font-family: var(--font); font-size: .75rem; }
++    .message p { font-size: .8125rem; overflow-wrap: anywhere; }
++    .message.note {
++      padding: 9px 10px; border: 1px solid color-mix(in oklch, var(--accent) 17%, var(--line));
++      background: var(--selection); border-radius: 9px;
++    }
++    .note-marker { display: grid; place-items: center; width: 24px; height: 24px; color: var(--accent); }
++    .note-marker .icon { width: 15px; height: 15px; }
++    .composer { margin: 0 15px 15px; padding: 4px 10px 9px; background: var(--card); border: 1px solid var(--edge); border-radius: 11px; }
++    .composer-modes { display: flex; gap: 3px; border-bottom: 1px solid var(--line); }
++    .mode { min-height: 44px; padding: 0 8px; color: var(--muted); white-space: nowrap; }
++    .mode[aria-pressed="true"] { color: var(--accent); box-shadow: inset 0 -2px var(--accent); border-radius: 5px 5px 0 0; }
++    .composer textarea { display: block; width: 100%; min-height: 48px; resize: vertical; padding: 9px 5px; border: 0; background: transparent; font-size: .8125rem; }
++    .composer-footer { display: flex; justify-content: space-between; align-items: center; gap: 6px; padding-left: 5px; }
++    .mobile-back { display: none; }
++
++    @media (max-width: 1120px) {
++      .shell { grid-template-columns: 72px minmax(0, 1fr); }
++      .rail { padding: 27px 12px 20px; }
++      .nav-brand { margin: 0 3px 37px; }
++      .rail .rail-text, .nav-count, .nav-label { display: none; }
++      .nav-link, .theme-toggle { justify-content: center; padding: 0; }
++      .profile { justify-content: center; padding-inline: 0; }
++    }
++    @media (max-width: 840px) {
++      .workspace { padding-inline: 24px; }
++      .desk { grid-template-columns: minmax(230px, .85fr) minmax(0, 1.15fr); gap: 14px; }
++      .overview-grid { gap: 14px; }
++      .routing { padding: 24px; gap: 18px; }
++      .letterhead { grid-template-columns: 1fr; padding: 17px; }
++      .letterhead .control { justify-self: start; }
++      .conversation-context { padding-inline: 17px; }
++      .conversation-body { padding-inline: 14px; }
++    }
++    @media (max-width: 700px) {
++      .shell { display: block; }
++      .workspace { padding: 24px 16px 34px; }
++      .screen-heading { align-items: start; flex-wrap: wrap; gap: 12px; margin-bottom: 21px; }
++      .heading-copy { flex: 1 1 100%; }
++      .heading-title { display: flex; align-items: center; gap: 9px; }
++      h1 { font-size: clamp(1.65rem, 6.8vw, 2.25rem); }
++      .heading-copy p { margin-top: 7px; }
++      .nav-toggle, .nav-close { display: inline-flex !important; }
++      .rail { display: none; position: fixed; inset: 0 auto 0 0; width: min(275px, 90vw); padding: 25px 15px 18px; height: 100dvh; overflow-y: auto; }
++      .shell[data-nav-open] .rail { display: flex; }
++      .shell[data-nav-open] .nav-scrim { display: block !important; position: fixed; z-index: 3; inset: 0; background: oklch(12% 0.027 273 / .64); }
++      .rail .rail-text, .nav-count, .nav-label { display: revert; }
++      .nav-brand { margin: 0 50px 33px 2px; }
++      .nav-close { position: absolute; top: 22px; right: 12px; }
++      .nav-link, .theme-toggle { justify-content: start; padding: 0 10px; }
++      .profile { justify-content: start; }
++      .desk, .overview-grid { grid-template-columns: 1fr; gap: 16px; }
++      .routing { grid-template-columns: 1fr; min-height: 0; gap: 18px; padding: 18px; }
++      .routing-copy h2 { margin-top: 9px; }
++      .routing-copy p { max-width: none; }
++      .readout { min-height: 134px; padding: 11px 12px; gap: 7px; }
++      .readout .icon { width: 1rem; height: 1rem; }
++      .overview-grid { margin-top: 23px; }
++      .letterhead { grid-template-columns: minmax(0, 1fr) auto; }
++      .letterhead .control { justify-self: end; }
++      .thread { max-height: 410px; }
++      .mobile-back { display: inline-flex; margin: -8px 0 5px; }
++      .overview-shortcut { margin-left: 53px; }
++    }
++    @media (max-width: 360px) {
++      .workspace { padding-inline: 12px; }
++      .letterhead { grid-template-columns: 1fr; }
++      .letterhead .control { justify-self: start; }
++    }
++    @media (prefers-reduced-motion: reduce) {
++      *, *::before, *::after { scroll-behavior: auto !important; }
++    }
++  </style>
++</head>
++<body>
++  <!-- Icon paths from the project's installed Lucide package (ISC). -->
++  <svg xmlns="http://www.w3.org/2000/svg" class="symbols" aria-hidden="true">
++    <symbol id="i-headset" viewBox="0 0 24 24"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z"/><path d="M21 16v2a4 4 0 0 1-4 4h-5"/></symbol>
++    <symbol id="i-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
++    <symbol id="i-inbox" viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
++    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-15.07 1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
++    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></symbol>
++    <symbol id="i-up" viewBox="0 0 24 24"><path d="M7 7h10v10M7 17 17 7"/></symbol>
++    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7"/></symbol>
++    <symbol id="i-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
++    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
++    <symbol id="i-send" viewBox="0 0 24 24"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11zM21.854 2.147l-10.94 10.939"/></symbol>
++    <symbol id="i-lock" viewBox="0 0 24 24"><circle cx="12" cy="16" r="1"/><rect x="3" y="10" width="18" height="12" rx="2"/><path d="M7 10V7a5 5 0 0 1 10 0v3"/></symbol>
++    <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></symbol>
++    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></symbol>
++    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18m0-12 12 12"/></symbol>
++    <symbol id="i-users" viewBox="0 0 24 24"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0 .45-8.3"/></symbol>
++    <symbol id="i-back" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7m7 7H5"/></symbol>
++  </svg>
++  <a class="skip control secondary" href="#content">Aller au contenu</a>
++  <div class="shell">
++    <div class="nav-scrim" aria-hidden="true"></div>
++    <aside id="navigation" class="rail" aria-label="Espace support">
++      <div class="nav-brand">
++        <div class="mark"><svg class="icon" aria-hidden="true"><use href="#i-headset"/></svg></div>
++        <div class="rail-text"><strong>Fusengine</strong><small>Espace support</small></div>
++      </div>
++      <button type="button" class="nav-close control secondary icon-control" aria-label="Fermer la navigation">
++        <svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>
++      </button>
++      <nav aria-label="Navigation principale">
++        <p class="nav-label meta small">Espace de travail</p>
++        <a class="nav-link" data-route="overview" href="#overview-light" title="Vue d’ensemble" aria-label="Vue d’ensemble">
++          <svg class="icon" aria-hidden="true"><use href="#i-dashboard"/></svg><span class="rail-text">Vue d’ensemble</span>
++        </a>
++        <a class="nav-link" data-route="inbox" href="#inbox-light" title="Boîte de réception" aria-label="Boîte de réception" aria-current="page">
++          <svg class="icon" aria-hidden="true"><use href="#i-inbox"/></svg><span class="rail-text">Boîte de réception</span><span class="nav-count" id="nav-count" aria-hidden="true">4</span>
++        </a>
++      </nav>
++      <div class="rail-footer">
++        <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Activer le thème sombre" title="Activer le thème sombre" aria-pressed="false">
++          <svg class="icon theme-light" aria-hidden="true"><use href="#i-sun"/></svg>
++          <svg class="icon theme-dark" aria-hidden="true"><use href="#i-moon"/></svg>
++          <span class="rail-text">Apparence</span><span class="rail-text theme-name" id="theme-name">Clair</span>
++        </button>
++        <div class="profile">
++          <span class="avatar staff" aria-hidden="true">SL</span>
++          <div class="rail-text"><strong>Sophie Laurent</strong><small class="meta">Maquette interactive</small></div>
++        </div>
++      </div>
++    </aside>
++
++    <main id="content" tabindex="-1">
++      <div class="workspace">
++        <section id="inbox" aria-labelledby="inbox-title">
++          <header class="screen-heading">
++            <div class="heading-copy">
++              <div class="heading-title">
++                <button type="button" class="nav-toggle control secondary icon-control" aria-label="Ouvrir la navigation" aria-controls="navigation" aria-expanded="false">
++                  <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
++                </button>
++                <h1 id="inbox-title" tabindex="-1">Boîte de réception</h1>
++              </div>
++              <p class="muted" id="inbox-summary">4 demandes ouvertes</p>
++            </div>
++          </header>
++          <noscript><p>Demandes ouvertes : Accès à mon espace, Mise à jour de facturation, Accès à un outil interne et Invitation de mon équipe. Activez JavaScript pour ouvrir une demande ou changer d’affichage.</p></noscript>
++          <div class="desk" id="desk" hidden>
++            <section class="surface queue" aria-labelledby="queue-title">
++              <div class="queue-top">
++                <h2 id="queue-title" tabindex="-1">Demandes</h2>
++                <div class="filters" aria-label="Filtrer les demandes" role="group">
++                  <button type="button" class="filter" data-filter="open" aria-pressed="true">Ouvertes <span id="filter-open" class="numeric">4</span></button>
++                  <button type="button" class="filter" data-filter="resolved" aria-pressed="false">Résolues <span id="filter-resolved" class="numeric">2</span></button>
++                  <button type="button" class="filter" data-filter="all" aria-pressed="false">Toutes</button>
++                </div>
++                <label class="search">
++                  <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
++                  <span class="sr-only">Rechercher une demande</span>
++                  <input type="search" id="search" placeholder="Rechercher une demande" autocomplete="off">
++                </label>
++              </div>
++              <ul class="queue-list list" id="queue-list" aria-label="Résultats"></ul>
++              <p id="queue-empty" class="empty" hidden></p>
++            </section>
++            <div id="reading">
++              <button type="button" class="control text-control mobile-back" id="back-queue">
++                <svg class="icon" aria-hidden="true"><use href="#i-back"/></svg> Retour aux demandes
++              </button>
++              <article class="surface folio" id="folio" aria-labelledby="case-title">
++                <header class="register letterhead">
++                  <div>
++                    <span class="status small" id="case-status"></span>
++                    <h2 id="case-title" tabindex="-1"></h2>
++                    <p class="meta" id="case-contact"></p>
++                  </div>
++                  <button type="button" class="control on-register" id="case-action"></button>
++                </header>
++                <p class="conversation-context">
++                  <svg class="icon" aria-hidden="true"><use href="#i-users"/></svg>
++                  Responsable <strong id="case-owner"></strong>
++                </p>
++                <div class="conversation-body">
++                  <h3>Conversation</h3>
++                  <ol class="thread list" id="thread" aria-label="Messages"></ol>
++                </div>
++                <form class="composer" id="composer">
++                  <div class="composer-modes" role="group" aria-label="Type de message">
++                    <button type="button" class="control mode" data-mode="reply" aria-pressed="true">Réponse</button>
++                    <button type="button" class="control mode" data-mode="note" aria-pressed="false">
++                      <svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg> Note interne
++                    </button>
++                  </div>
++                  <label for="message" class="sr-only" id="message-label">Écrire une réponse</label>
++                  <textarea id="message" rows="2" placeholder="Écrire une réponse…" required></textarea>
++                  <div class="composer-footer">
++                    <span class="meta" id="composer-audience">Visible par le demandeur</span>
++                    <button type="submit" id="send-message" class="control action">
++                      Envoyer <svg class="icon" aria-hidden="true"><use href="#i-send"/></svg>
++                    </button>
++                  </div>
++                </form>
++              </article>
++            </div>
++          </div>
++        </section>
++
++        <section id="overview" aria-labelledby="overview-title" hidden>
++          <header class="screen-heading">
++            <div class="heading-copy">
++              <div class="heading-title">
++                <button type="button" class="nav-toggle control secondary icon-control" aria-label="Ouvrir la navigation" aria-controls="navigation" aria-expanded="false">
++                  <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
++                </button>
++                <h1 id="overview-title" tabindex="-1">Vue d’ensemble</h1>
++              </div>
++              <p class="muted">Suivi des demandes de l’équipe support</p>
++            </div>
++            <a class="control secondary overview-shortcut" data-route="inbox" href="#inbox-light">
++              Ouvrir la boîte <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
++            </a>
++          </header>
++          <section class="register routing" aria-labelledby="routing-title">
++            <div class="routing-copy">
++              <span class="register-symbol"><svg class="icon" aria-hidden="true"><use href="#i-inbox"/></svg></span>
++              <h2 id="routing-title">Charge de support</h2>
++              <p id="routing-summary">6 demandes réparties entre 2 responsables.</p>
++            </div>
++            <div class="readouts">
++              <a class="readout" data-route="inbox" data-open-filter="open" href="#inbox-light">
++                <span class="readout-top"><svg class="icon" aria-hidden="true"><use href="#i-inbox"/></svg><svg class="icon" aria-hidden="true"><use href="#i-up"/></svg></span>
++                <span><strong class="metric-value numeric" id="metric-open">4</strong><span class="readout-label"> ouvertes</span></span>
++              </a>
++              <a class="readout" data-route="inbox" data-open-filter="resolved" href="#inbox-light">
++                <span class="readout-top"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><svg class="icon" aria-hidden="true"><use href="#i-up"/></svg></span>
++                <span><strong class="metric-value numeric" id="metric-resolved">2</strong><span class="readout-label"> résolues</span></span>
++              </a>
++            </div>
++          </section>
++          <div class="overview-grid">
++            <section class="surface" aria-labelledby="to-do-title">
++              <header class="panel-header">
++                <h2 id="to-do-title">À traiter</h2>
++                <a class="control text-control" data-route="inbox" data-open-filter="open" href="#inbox-light">Voir la file <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
++              </header>
++              <ul class="overview-list list" id="open-requests"></ul>
++            </section>
++            <div class="side-stack">
++              <section class="surface" aria-labelledby="owners-title">
++                <header class="panel-header"><h2 id="owners-title">Par responsable</h2></header>
++                <ul class="owners list" id="owners"></ul>
++              </section>
++              <section class="surface closed" aria-labelledby="recent-title">
++                <header class="panel-header"><h2 id="recent-title">Résolues</h2></header>
++                <ul class="overview-list list" id="closed-requests"></ul>
++              </section>
++            </div>
++          </div>
++        </section>
++        <p class="sr-only" id="announcement" role="status"></p>
++      </div>
++    </main>
++  </div>
++
++  <script>
++    // Local fixture: docs/concept-support/index.html. Nothing leaves this tab.
++    const sophie = 'Sophie Laurent';
++    const thomas = 'Thomas Bernard';
++    const records = [
++      {
++        id: 'access', subject: 'Accès à mon espace', name: 'Camille Martin', organization: 'Atelier Studio', owner: sophie,
++        preview: 'Le message indique que mon accès a expiré.',
++        thread: [
++          { author: 'Camille Martin', at: '10:24', body: 'Bonjour, je n’arrive plus à accéder à mon espace depuis ce matin. Pourriez-vous m’aider ?' },
++          { author: sophie, at: '10:31', body: 'Bonjour Camille, bien sûr ! Pouvez-vous me préciser le message qui s’affiche lorsque vous essayez de vous connecter ?' },
++          { author: sophie, at: '10:36', body: 'Vérifier le renouvellement de l’accès avant de répondre.', note: true },
++          { author: 'Camille Martin', at: '10:42', body: 'Merci ! Le message indique que mon accès a expiré.' }
++        ]
++      },
++      { id: 'billing', subject: 'Mise à jour de facturation', name: 'Léa Morel', organization: 'Maison Alba', owner: sophie, preview: 'Est-ce possible de modifier nos informations ?', at: '09:18' },
++      { id: 'internal', subject: 'Accès à un outil interne', name: 'Léa Morel', organization: 'Équipe interne', owner: thomas, preview: 'Puis-je obtenir l’accès pour mon nouveau projet ?' },
++      { id: 'invite', subject: 'Invitation de mon équipe', name: 'Hugo Perrin', organization: 'Studio Horizon', owner: sophie, preview: 'Je souhaite inviter deux collègues.' },
++      { id: 'widget', subject: 'Question sur le widget', name: 'Noah Petit', organization: 'Collectif Nord', owner: sophie, preview: 'Question sur son installation', resolved: true },
++      { id: 'subscription', subject: 'Modification de mon abonnement', name: 'Sarah Dubois', organization: 'Maison Rivage', preview: 'Merci pour votre aide !', resolved: true }
++    ].map(record => ({
++      ...record,
++      thread: record.thread ?? [{ author: record.name, at: record.at, body: record.preview }]
++    }));
++
++    const get = id => document.getElementById(id);
++    const root = document.documentElement;
++    const shell = document.querySelector('.shell');
++    const mobile = matchMedia('(max-width: 700px)');
++    const preference = matchMedia('(prefers-color-scheme: dark)');
++    const filters = [...document.querySelectorAll('[data-filter]')];
++    const modes = [...document.querySelectorAll('[data-mode]')];
++    const routes = [...document.querySelectorAll('[data-route]')];
++    const drafts = new Map();
++    const names = { inbox: 'Boîte de réception', overview: 'Vue d’ensemble' };
++    const state = { screen: '', theme: '', filter: 'open', query: '', selected: 'access', mode: 'reply' };
++    let navTrigger;
++
++    const initials = name => name.split(' ').slice(0, 2).map(word => word[0]).join('');
++    const normalize = value => value.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLocaleLowerCase('fr');
++    const svg = name => '<svg class="icon" aria-hidden="true"><use href="#i-' + name + '"/></svg>';
++    const plain = value => String(value).replace(/[&<>"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[character]));
++    const setText = (id, value) => { get(id).textContent = value; };
++    const announce = value => setText('announcement', value);
++    const avatar = (name, staff = false) => '<span class="avatar' + (staff ? ' staff' : '') + '" aria-hidden="true">' + plain(initials(name)) + '</span>';
++    const openCount = value => value + (value === 1 ? ' demande ouverte' : ' demandes ouvertes');
++
++    function visibleRecords() {
++      const query = normalize(state.query.trim());
++      return records.filter(record => {
++        const status = record.resolved ? 'resolved' : 'open';
++        const fields = [record.subject, record.name, record.organization, record.preview, record.owner ?? ''];
++        return (state.filter === 'all' || status === state.filter) && normalize(fields.join(' ')).includes(query);
++      });
++    }
++
++    function renderCounts() {
++      const open = records.filter(record => !record.resolved).length;
++      const closed = records.length - open;
++      const assigned = new Set(records.map(record => record.owner).filter(Boolean)).size;
++      setText('nav-count', open);
++      setText('inbox-summary', openCount(open));
++      setText('filter-open', open);
++      setText('filter-resolved', closed);
++      setText('metric-open', open);
++      setText('metric-resolved', closed);
++      setText('routing-summary', records.length + ' demandes réparties entre ' + assigned + ' responsables.');
++    }
++
++    function overviewRow(record) {
++      return '<li><button type="button" class="overview-row" data-case="' + record.id + '">' +
++        avatar(record.name) + '<span><strong>' + plain(record.subject) + '</strong><small class="meta">' +
++        plain(record.name + ' · ' + record.organization) + '</small></span><span class="row-arrow">' + svg('up') + '</span></button></li>';
++    }
++
++    function renderOverview() {
++      const open = records.filter(record => !record.resolved);
++      const closed = records.filter(record => record.resolved);
++      get('open-requests').innerHTML = open.map(overviewRow).join('') || '<li class="empty">Aucune demande à traiter.</li>';
++      get('closed-requests').innerHTML = closed.map(overviewRow).join('') || '<li class="empty">Aucune demande résolue.</li>';
++      get('owners').innerHTML = [sophie, thomas].map(owner => {
++        const count = open.filter(record => record.owner === owner).length;
++        const percent = open.length ? 100 * count / open.length : 0;
++        return '<li class="owner-row">' + avatar(owner, true) +
++          '<div><span class="owner-name">' + plain(owner) + '</span><div class="owner-track" aria-hidden="true"><span class="owner-fill" style="width:' +
++          percent + '%"></span></div></div><span class="owner-count numeric" aria-label="' + openCount(count) + '">' + count + '</span></li>';
++      }).join('');
++    }
++
++    function queueRow(record) {
++      const selected = record.id === state.selected;
++      return '<li><button type="button" class="queue-row" data-case="' + record.id + '" aria-pressed="' + selected + '" aria-controls="folio">' +
++        avatar(record.name) + '<span><strong>' + plain(record.subject) + '</strong><small class="meta">' + plain(record.name + ' · ' + record.organization) +
++        '</small><small class="meta snippet">' + plain(record.preview) + '</small></span><span class="queue-arrow">' + svg('chevron') + '</span></button></li>';
++    }
++
++    function renderQueue() {
++      const visible = visibleRecords();
++      if (!visible.some(record => record.id === state.selected)) state.selected = visible[0]?.id ?? '';
++      get('queue-list').innerHTML = visible.map(queueRow).join('');
++      const empty = get('queue-empty');
++      empty.hidden = visible.length > 0;
++      empty.textContent = state.query.trim() ? 'Aucune demande ne correspond à cette recherche.' : 'Aucune demande dans cette file.';
++      announce(visible.length + (visible.length === 1 ? ' demande affichée.' : ' demandes affichées.'));
++      for (const button of filters) button.setAttribute('aria-pressed', String(button.dataset.filter === state.filter));
++      renderCase();
++    }
++
++    function renderThread(record) {
++      get('thread').innerHTML = record.thread.map(message => {
++        const staff = message.author !== record.name;
++        const marker = message.note ? '<span class="note-marker">' + svg('lock') + '</span>' : avatar(message.author, staff);
++        const label = message.note ? 'Note interne · ' + message.author : message.author;
++        const time = message.at ? '<span class="meta numeric">' + plain(message.at) + '</span>' : '';
++        return '<li class="message' + (message.note ? ' note' : '') + '">' + marker + '<div><div class="message-meta"><strong>' +
++          plain(label) + '</strong>' + time + '</div><p>' + plain(message.body) + '</p></div></li>';
++      }).join('');
++    }
++
++    function updateComposer(record) {
++      const note = state.mode === 'note';
++      const prompt = note ? 'Ajouter une note interne' : 'Écrire une réponse';
++      for (const button of modes) button.setAttribute('aria-pressed', String(button.dataset.mode === state.mode));
++      get('message').value = drafts.get(record.id + '/' + state.mode) ?? '';
++      get('message').placeholder = prompt + '…';
++      setText('message-label', prompt);
++      setText('composer-audience', note ? 'Visible par l’équipe uniquement' : 'Visible par le demandeur');
++      get('send-message').innerHTML = (note ? 'Ajouter' : 'Envoyer') + ' ' + svg(note ? 'lock' : 'send');
++    }
++
++    function renderCase() {
++      const record = records.find(item => item.id === state.selected);
++      get('reading').hidden = !record;
++      if (!record) return;
++      setText('case-title', record.subject);
++      setText('case-contact', record.name + ' · ' + record.organization);
++      setText('case-owner', record.owner ?? 'Non renseigné');
++      get('case-status').innerHTML = '<span class="dot" aria-hidden="true"></span>' + (record.resolved ? 'Résolue' : 'Ouverte');
++      get('case-action').innerHTML = svg(record.resolved ? 'inbox' : 'check') + (record.resolved ? 'Rouvrir' : 'Résoudre');
++      get('composer').hidden = Boolean(record.resolved);
++      renderThread(record);
++      get('thread').scrollTop = 0;
++      updateComposer(record);
++    }
++
++    function locationState() {
++      const tokens = location.hash.slice(1).toLowerCase().split('-');
++      return {
++        screen: tokens.includes('overview') ? 'overview' : 'inbox',
++        theme: tokens.includes('dark') ? 'dark' : tokens.includes('light') ? 'light' : preference.matches ? 'dark' : 'light'
++      };
++    }
++
++    function syncRoute({ focus = false, refresh = false } = {}) {
++      const next = locationState();
++      const screenChanged = state.screen !== next.screen;
++      Object.assign(state, next);
++      root.dataset.theme = state.theme;
++      get('inbox').hidden = state.screen !== 'inbox';
++      get('overview').hidden = state.screen !== 'overview';
++      document.title = names[state.screen] + ' · Fusengine';
++      for (const link of routes) {
++        link.hash = link.dataset.route + '-' + state.theme;
++        if (link.classList.contains('nav-link')) {
++          if (link.dataset.route === state.screen) link.setAttribute('aria-current', 'page');
++          else link.removeAttribute('aria-current');
++        }
++      }
++      const dark = state.theme === 'dark';
++      const action = dark ? 'Activer le thème clair' : 'Activer le thème sombre';
++      get('theme-toggle').title = action;
++      get('theme-toggle').setAttribute('aria-label', action);
++      get('theme-toggle').setAttribute('aria-pressed', String(dark));
++      setText('theme-name', dark ? 'Sombre' : 'Clair');
++      if (screenChanged || refresh) {
++        if (state.screen === 'overview') renderOverview();
++        else renderQueue();
++      }
++      if (screenChanged) window.scrollTo(0, 0);
++      if (focus) get(state.screen + '-title').focus({ preventScroll: true });
++    }
++
++    function navigate(screen, theme, options = {}) {
++      const hash = '#' + screen + '-' + theme;
++      if (location.hash !== hash) history.pushState(null, '', hash);
++      syncRoute(options);
++    }
++
++    function showCaseScroll() {
++      get('case-title').focus({ preventScroll: true });
++      get('reading').scrollIntoView({ block: 'start' });
++    }
++
++    function openCase(id, fromOverview = false) {
++      const record = records.find(item => item.id === id);
++      if (!record) return;
++      state.selected = record.id;
++      state.mode = 'reply';
++      if (fromOverview) {
++        state.query = '';
++        get('search').value = '';
++        state.filter = record.resolved ? 'resolved' : 'open';
++        navigate('inbox', state.theme, { focus: !mobile.matches, refresh: true });
++      } else {
++        renderQueue();
++        if (!mobile.matches) get('queue-list').querySelector('[aria-pressed="true"]')?.focus({ preventScroll: true });
++      }
++      if (mobile.matches) showCaseScroll();
++    }
++
++    function setNav(open, restore = true) {
++      shell.toggleAttribute('data-nav-open', open);
++      get('content').inert = open;
++      for (const trigger of document.querySelectorAll('.nav-toggle')) trigger.setAttribute('aria-expanded', String(open));
++      if (open) document.querySelector('.nav-close').focus();
++      else if (restore) navTrigger?.focus({ preventScroll: true });
++    }
++
++    document.addEventListener('click', event => {
++      const route = event.target.closest('[data-route]');
++      if (route && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
++        event.preventDefault();
++        setNav(false, false);
++        if (route.dataset.openFilter) {
++          state.filter = route.dataset.openFilter;
++          state.query = '';
++          get('search').value = '';
++        }
++        navigate(route.dataset.route, state.theme, { focus: true, refresh: Boolean(route.dataset.openFilter) });
++        return;
++      }
++
++      const item = event.target.closest('[data-case]');
++      if (item) openCase(item.dataset.case, state.screen === 'overview');
++
++      const filter = event.target.closest('[data-filter]');
++      if (filter) {
++        state.filter = filter.dataset.filter;
++        renderQueue();
++      }
++
++      const mode = event.target.closest('[data-mode]');
++      if (mode) {
++        state.mode = mode.dataset.mode;
++        updateComposer(records.find(record => record.id === state.selected));
++      }
++
++      const trigger = event.target.closest('.nav-toggle');
++      if (trigger) {
++        navTrigger = trigger;
++        setNav(true);
++      }
++      if (event.target.closest('.nav-close, .nav-scrim')) setNav(false);
++    });
++
++    document.addEventListener('keydown', event => {
++      if (!shell.hasAttribute('data-nav-open')) return;
++      if (event.key === 'Escape') setNav(false);
++      if (event.key === 'Tab') {
++        const buttons = [...get('navigation').querySelectorAll('a,button')];
++        const last = buttons[buttons.length - 1];
++        if (event.shiftKey && document.activeElement === buttons[0]) { event.preventDefault(); last.focus(); }
++        if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); buttons[0].focus(); }
++      }
++    });
++    mobile.addEventListener('change', () => {
++      if (!mobile.matches && shell.hasAttribute('data-nav-open')) setNav(false, false);
++    });
++
++    get('theme-toggle').addEventListener('click', () => navigate(state.screen, state.theme === 'dark' ? 'light' : 'dark'));
++    get('search').addEventListener('input', event => {
++      state.query = event.target.value;
++      renderQueue();
++    });
++    get('back-queue').addEventListener('click', () => {
++      const selected = get('queue-list').querySelector('[aria-pressed="true"]');
++      (selected ?? get('queue-title')).focus({ preventScroll: true });
++      get('queue-title').scrollIntoView({ block: 'start' });
++    });
++    get('case-action').addEventListener('click', () => {
++      const record = records.find(item => item.id === state.selected);
++      record.resolved = !record.resolved;
++      state.filter = record.resolved ? 'resolved' : 'open';
++      renderCounts();
++      renderQueue();
++      get('case-title').focus({ preventScroll: true });
++      announce(record.resolved ? 'Demande résolue.' : 'Demande rouverte.');
++    });
++    get('message').addEventListener('input', event => {
++      drafts.set(state.selected + '/' + state.mode, event.target.value);
++    });
++    get('composer').addEventListener('submit', event => {
++      event.preventDefault();
++      const body = get('message').value.trim();
++      const record = records.find(item => item.id === state.selected);
++      if (!record || record.resolved || !body) return;
++      const note = state.mode === 'note';
++      record.thread.push({ author: sophie, body, note });
++      drafts.delete(state.selected + '/' + state.mode);
++      renderThread(record);
++      updateComposer(record);
++      get('thread').scrollTop = get('thread').scrollHeight;
++      get('message').focus({ preventScroll: true });
++      announce(note ? 'Note interne ajoutée à la maquette.' : 'Réponse ajoutée à la maquette.');
++    });
++
++    window.addEventListener('hashchange', () => syncRoute());
++    window.addEventListener('popstate', () => syncRoute());
++    preference.addEventListener('change', () => syncRoute());
++    renderCounts();
++    get('desk').hidden = false;
++    syncRoute();
++  </script>
++</body>
++</html>
+*** End Patch

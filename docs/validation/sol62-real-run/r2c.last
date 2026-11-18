@@ -1,0 +1,7 @@
+`design-expert` redid the Inbox and Overview in light and dark. The [design system](/Users/brunoazoulay/Labo/docker-lab/dev.local/Dev/AI/Harness/codex-plugins/docs/validation/sol62-real-run/workdir/design-system.md) passed validation before the [standalone HTML mockup](/Users/brunoazoulay/Labo/docker-lab/dev.local/Dev/AI/Harness/codex-plugins/docs/validation/sol62-real-run/workdir/support-workbench-sol62.html) was written.
+
+- **Depth:** Layered work surfaces and a raised detail pane use soft shadows in light mode and brighter surfaces with highlighted edges in dark mode.
+- **Signature:** The Ticket Lens visually links the selected request to its detail pane without hiding the queue.
+- **Hierarchy:** 38px screen titles, 30px ticket titles, and 15px body text distinguish the view, the selected request, and its details.
+
+All four views were visually reviewed. The screen and theme switches, standalone and combined URL hashes, and browser history passed offline Chromium checks with zero external requests. Source files were unchanged; no Git writes. QA captures remain in the scratch folder because the cleanup hook blocked deletion.

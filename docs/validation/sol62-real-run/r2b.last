@@ -1,0 +1,7 @@
+The `design-expert` reviewed both before captures and stopped at the design gate. The gate ignored the authorized output folder and looked first for [design-system.md at the root of support-app](/Users/brunoazoulay/Labo/docker-lab/dev.local/Projets/Fusengine/App/support-app/design-system.md). Neither `design-system.md` nor `support-workbench-sol62.html` was created, and `support-app` was left untouched.
+
+**Planned design decisions**
+
+- **Inbox:** Recess the queue and raise the conversation pane so scanning and reading feel distinct.
+- **Overview:** Make a six-cell request map the focal point, showing the four open and two resolved demo requests.
+- **Both themes:** Keep the Fusengine palette and sidebar-07, with stronger type hierarchy and clear separation between the canvas, work surface, and raised panels.

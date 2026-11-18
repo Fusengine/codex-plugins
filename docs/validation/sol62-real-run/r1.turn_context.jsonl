@@ -1,0 +1,4 @@
+{"file":"rollout-2026-11-18T01-39-48-01a1ec18-7391-75f2-9c63-ec3a77c2cce7.jsonl","role":"(parent)","model":"gpt-6.2-sol","effort":"medium"}
+{"file":"rollout-2026-11-18T01-40-16-01a1ec18-e20c-71e1-a0f7-1b980ddb5f23.jsonl","role":"explore-codebase","model":"gpt-6.2-sol","effort":"medium"}
+{"file":"rollout-2026-11-18T01-40-24-01a1ec19-010a-7990-a882-640adaf8eb64.jsonl","role":"challenger","model":"gpt-6.2-sol","effort":"high"}
+{"file":"rollout-2026-11-18T01-40-31-01a1ec19-1db6-7b31-99cd-ca0d59ced237.jsonl","role":"cartographer","model":"gpt-6.1-terra","effort":"medium"}
