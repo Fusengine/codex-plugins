@@ -8,7 +8,8 @@ Traps and how to avoid them. Incident history stays in `MEMORY/LESSON.md`.
 | Raw `cp`/`rsync` of `plugins/*/agents/*.toml` into `~/.codex/agents` | Installed TOMLs carry a managed header and absolute skill paths; use the materializer (`sync:agents`) only |
 | A hook entry added only in `hooks.json` is silently inactive or fails validate | Edit three places: plugin `hooks.json`, `EVENTS` in `scripts/lib/hooks-validation.ts`, route in `scripts/lib/harness-hook-routes.json`; then `bun run validate` + `bun test`. A new entry is a new trust key: untrusted until the hooks-trust prompt runs |
 | A key accepted by Codex is rejected by our validator (e.g. `additionalContextLimit`) | Check both sides: Codex source and our allowlists (`HANDLER_KEYS`, `EVENTS`). Proof = `bun run validate`, never a generic JSON parse |
-| `^X` harness spec resolves a newer `0.1.x` and breaks the installed == target check | Pin exact `"X.Y.Z"`. `bun run update-harness` without a version writes `^latest` today — pass the version explicitly or fix the spec |
+| `^X` harness spec resolves a newer `0.1.x` and breaks the installed == target check | Pin exact `"X.Y.Z"`; `update-harness` and `harness:auto-update` always write an exact pin and rewrite a `^X` spec. Never hand-edit a caret back in |
+| Writing the harness runtime into `~/.codex` on a no-op exit 0 ("already X") taken as "audited" | Gate every runtime write on proof that THIS run audited, validated and tested the version, never on an exit code. `harness:auto-update` follows this: worktree run first, swap only after a green run |
 | `HARNESS_VERSION` bumped without installing (or the reverse) | It is compared by strict equality with the installed harness; bump both together via `update-harness` |
 | Agent count or tier change breaks contract tests on titles/JSDoc | Update `agent-toml.test.ts` and `agent-tier-matrix.test.ts` including test titles and the dated policy JSDoc above `export const AGENT_TIERS` (must cite `docs/decisions.md` and the decision date) |
 | Replacing `security-expert.toml` content | It is pilot-locked against `baseline.toml`: merge source content, never replace |
@@ -16,6 +17,7 @@ Traps and how to avoid them. Incident history stays in `MEMORY/LESSON.md`.
 | Editing `portage/` | Gitignored Claude snapshot; `plugins/` is the source of truth |
 | `migratePlugin` on a new expert plugin fails on manifest, unresolved skill refs and missing hook routes | Hand-port manifest/agent/hooks from a sibling (e.g. `go-expert`), strip the extra blank line after frontmatter, diff bodies vs source |
 | Commit agent assumes `.claude-plugin/` | This repo uses `.codex-plugin/plugin.json` + `.agents/plugins/marketplace.json`; say so in the commit brief |
+| Commit agent stops on untracked run artifacts absent from the brief | List every untracked path with `git status --porcelain --untracked-files=all` in the commit brief, each marked include or exclude |
 | Managed-block writer duplicates `[hooks.state.*]` / `[mcp_servers.*]` tables and Codex refuses to start | Dedupe by table header, never trust marker pairs; test on a real broken file and assert idempotence |
 | `process.exit` inside `try`/`catch` skips `finally` | Capture the exit code, let `finally` run, exit once after the block |
 | Line-number citations into `lead-orchestration/SKILL.md` drift after an insertion | Recompute the citing lines in `agent-creator` references by grepping content, same mandate |

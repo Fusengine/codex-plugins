@@ -34,6 +34,63 @@ probe run first — before rewriting the `HARNESS_VERSION` tripwire in
 `harness-hook-policy.ts` — never by hand, and never on a failed audit. See
 `plugins/ai-pilot/commands/update-harness.md`.
 
+#### Automatic daily update (launchd)
+
+The pin in `package.json` is always an exact `X.Y.Z` (never a caret). A macOS
+LaunchAgent, `com.fusengine.harness-auto-update`, runs
+`scripts/harness-auto-update.ts` every day at 09:00 (no extra software: launchd
+and bun only). The job maintains `~/.codex` and **never touches your working
+repo**:
+
+1. If `~/.codex` already holds the latest release: log "up to date", stop (and
+   note when the repo pin trails: "repo pin X behind ~/.codex Y — bump at next
+   commit cycle"; bump it yourself at your next commit cycle).
+2. Otherwise take a PID lock (`~/Library/Caches/fusengine-harness-auto-update.lock`,
+   stale if the PID is dead or the lock is older than 24 h) so launchd and manual
+   runs never overlap. Then clean leftovers of a killed run: in the codex home
+   only `.harness-staging-<stamp>` and `node_modules.old-<stamp>` (if the live
+   `node_modules` is missing, the newest parked one is restored instead), and in
+   the system temp dir only this job's own `harness-auto-update-*` worktree dirs
+   (plus `git worktree prune`).
+3. Check out `HEAD` into a throwaway `git worktree` under the system temp dir and
+   there run `bun install`, `bun run update-harness <latest>` (audit of all 11
+   scopes, `validate`, `bun test`; any failure rolls back `package.json`,
+   `bun.lock` and `HARNESS_VERSION` in that worktree), then the job's **own**
+   `validate`, `bun test` and scope audit, so every codex-home write is audited,
+   validated and tested by this very run, even when `update-harness` reports
+   "already" (HEAD already pinned, codex home lagging). The worktree is always
+   removed.
+4. Only if everything passed: stage the new runtime in a side directory
+   (`<codexHome>/.harness-staging-*`) and verify it; then, right before the swap,
+   back up `<codexHome>/package.json` and `<codexHome>/bun.lock` as
+   `<codexHome>/package.json.bak-<YYYY-MM-DDTHHMMSS>` (and `bun.lock.bak-…`); swap
+   into `node_modules` by two directory renames and verify again. Any failure
+   restores `node_modules`, `package.json` and `bun.lock` and re-runs `bun install`
+   in the codex home, then logs FAILED. On success only the last 3 backup pairs
+   are kept.
+
+Residual window: between the two renames (microseconds) `node_modules/@fusengine/harness`
+does not exist; an already-running Codex is never waited on or stopped.
+
+Paths: by default the codex home is `~/.codex`, the log `~/Library/Logs/…` and the
+lock `~/Library/Caches/…`. With a custom `CODEX_HOME` (e.g. a test run) the log
+(`<codexHome>/fusengine-harness-auto-update.log`) and the lock
+(`<codexHome>/.fusengine-harness-auto-update.lock`) live inside that directory, so
+a test can never write the real log or contend for the real lock. Log messages
+print the resolved codex-home path.
+
+- Template: `scripts/launchd/com.fusengine.harness-auto-update.plist`; installed
+  copy: `~/Library/LaunchAgents/com.fusengine.harness-auto-update.plist`.
+- Schedule: 09:00 daily. If the Mac is asleep at 09:00 launchd runs the job at
+  the next wake; if it is powered off the run is skipped (`man launchd.plist`,
+  `StartCalendarInterval`); the next day's 09:00 run catches up since the check
+  compares against the latest release.
+- Log (append-only, ISO timestamps): `~/Library/Logs/fusengine-harness-auto-update.log`.
+- Manual run: `bun run harness:auto-update` (`--dry-run` prints the decision and
+  writes nothing).
+- Disable: `launchctl bootout gui/$(id -u)/com.fusengine.harness-auto-update`
+  (re-enable with `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.fusengine.harness-auto-update.plist`).
+
 ### Harness 0.1.79 Runtime Limits
 
 Harness-only wiring guarantees that the handler enters Harness; it does not

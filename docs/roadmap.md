@@ -4,6 +4,8 @@ Read with `docs/decisions.md` at the start of every mandate. Done = shipped or a
 
 ## Done
 
+- 1.0.79 (pending release) — Harness auto-update with exact pin (owner « oui met le but estq ue ca ce mette a jours tous seul », « lance la tache », `docs/decisions.md` 2026-11-18). `update-harness` always writes an exact pin `X.Y.Z` and rewrites a `^X` spec. Daily launchd job `com.fusengine.harness-auto-update` at 09:00 (`scripts/launchd/com.fusengine.harness-auto-update.plist`, `bun run harness:auto-update`): audits, validates and tests `<latest>` in a temporary `git worktree` of HEAD, and only then swaps the harness atomically into `~/.codex`; 3 backups kept, rollback on failure, 24 h stale-lock limit, log `~/Library/Logs/fusengine-harness-auto-update.log`.
+- v1.0.78 — Sol 6.2 fleet + harness 0.1.126 commit cycle, merged as PR #64, tag `v1.0.78` (items below).
 - 2026-11-18 — Sol 6.2 fleet reorganisation (owner « okay sol 6.2 est sorti on vas reorganisé tous propremet repense », `docs/decisions.md`). 40 agent TOMLs regenerated from `scripts/lib/agent-toml.ts`: `DEFAULT` `gpt-6.2-sol`/medium (25), `JUDGE` `gpt-6.2-sol`/high (7), `NON_CORE` `gpt-6.1-terra`/medium (7), `SECURITY` `gpt-6.1-terra`/high (1, `security-expert`). Effort `max` retired fleet-wide, `ultra` never used. Policy: `docs/workflow/agents.md` § Model Policy.
 - 2026-11-18 — Fleet synced to `~/.codex/agents` through `bun run sync:agents` (backups in `docs/validation/sol62-sync-backup-2026-11-18/`); coordinator moved to `gpt-6.2-sol`/medium in `~/.codex/config.toml` (applied by the owner).
 - 2026-11-18 — Real-condition run passed: R1 fleet load 4/4 model+effort match; R2c `design-expert` (sol/high) redid the support-workbench mockup (`docs/real-conditions-sol62-fleet-2026-11-18.md`).
@@ -20,10 +22,14 @@ Read with `docs/decisions.md` at the start of every mandate. Done = shipped or a
 
 ## In progress
 
-- Commit cycle for the Sol 6.2 fleet + harness 0.1.126 (owner « Cycle complet »): branch `chore/sol-6-2-fleet`, WIP commits, push, PR, CI, merge (never squash), tag, release. Not committed by decision: the two backup folders, `docs/validation/sol62-real-run/workdir/` and the raw `*.jsonl` rollouts.
+- 1.0.79 commit cycle (continuation of owner « Cycle complet »): harness auto-update + exact pin; WIP commits, push, PR, CI, merge (never squash), tag, release.
 
 ## Next
 
 - Harness design-pipeline gate should accept an explicit output folder: in R2/R2b it demanded `design-system.md` at the cwd root of a read-only project and stopped `design-expert` (`docs/real-conditions-sol62-fleet-2026-11-18.md`, Deviations 1 and Not verified).
-- `scripts/update-harness.ts` should write an exact pin by default and treat a `^X` spec as needing a rewrite: today a run without an explicit version calls `bumpHarnessSpec(root, target, { exact: explicit })`, which writes `^<latest>` (`scripts/lib/install/harness-update.ts`); pins are exact by project lesson 2026-09-02.
 - Redone support-workbench mockup lost content vs the "before": 5 of 7 sidebar nav items (Tickets, Messages, Clients, Équipe et rôles, Canaux), the message preview in each list row, and the System option of the Clair/Sombre/Système theme control (now a single dark-mode toggle) (`docs/validation/sol62-real-run/before-inbox-light.png` vs `after-inbox-light.png`).
+- Harness auto-update: audit the staged runtime before the swap — the transitive deps of the promoted binary are not audited today.
+- Harness auto-update: make the plist template portable — `scripts/launchd/com.fusengine.harness-auto-update.plist` hard-codes `/Users/<owner>` paths (bun, script, working dir, log).
+- Harness auto-update: timestamp every log line — launchd `StandardOutPath` and `StandardErrorPath` write raw stdout/stderr into the same log file.
+- Harness auto-update: clean orphan `harness-audit-*` temp dirs.
+- Commit agent post-commit step: support the Codex layout (`.codex-plugin/plugin.json` + `.agents/plugins/marketplace.json`) instead of `.claude-plugin/` only.
