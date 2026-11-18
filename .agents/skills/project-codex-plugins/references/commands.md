@@ -33,7 +33,15 @@ Run `bun run validate` as the full gate: its hook check runs `validateHarnessHoo
 |---|---|
 | `bun run update-harness -- --check` | Report installed / declared / audited / latest / `~/.codex` versions, exit 1 if not up to date; writes nothing |
 | `bun run update-harness -- <X.Y.Z>` | Exact pin to `X.Y.Z`, reinstall, audit all scopes, advance `HARNESS_VERSION` |
-| `bun run update-harness` | Same with the latest version — writes a caret spec today (see `pitfalls.md`) |
+| `bun run update-harness` | Same with the latest version; always writes an exact pin and rewrites a `^X` spec |
+| `bun run harness:auto-update` | `scripts/harness-auto-update.ts`: never touches the working repo; audits, validates and tests `<latest>` in a temporary `git worktree` of HEAD, then swaps the harness atomically into `~/.codex` (3 backups, rollback on failure, PID lock, stale after 24 h) |
+| `bun run harness:auto-update -- --dry-run` | Prints the decision only: no log, no lock, no worktree, no write |
+
+### Daily launchd job
+
+- LaunchAgent `com.fusengine.harness-auto-update`, template `scripts/launchd/com.fusengine.harness-auto-update.plist`: runs `harness-auto-update.ts` daily at 09:00 (next wake if asleep), `RunAtLoad` false.
+- Log: `~/Library/Logs/fusengine-harness-auto-update.log` (lock under `~/Library/Caches`). The job logs when the repo pin is behind `~/.codex`; the repo pin is bumped at the next commit cycle.
+- Disable: `launchctl bootout gui/$(id -u)/com.fusengine.harness-auto-update`.
 
 ## Writes outside the repo (owner mandate only)
 

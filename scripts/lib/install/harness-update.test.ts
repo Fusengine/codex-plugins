@@ -20,35 +20,25 @@ describe("bumpHarnessSpec", () => {
 		);
 	}
 
-	test("caret mode (exact: false) writes a ^X.Y.Z range, byte-for-byte elsewhere", () => {
+	test("writes a bare X.Y.Z pin (never a caret), byte-for-byte elsewhere", () => {
 		const root = tempRoot();
 		const original = pkgWith("^0.1.90");
 		writeFileSync(join(root, "package.json"), original);
 
-		bumpHarnessSpec(root, "0.1.99", { exact: false });
+		bumpHarnessSpec(root, "0.1.99");
 		const lines = readFileSync(join(root, "package.json"), "utf8").split("\n");
 
-		expect(lines[3]).toBe('\t\t"@fusengine/harness": "^0.1.99",');
+		expect(lines[3]).toBe('\t\t"@fusengine/harness": "0.1.99",');
 		expect(lines[2]).toBe(original.split("\n")[2]);
 		expect(lines[4]).toBe(original.split("\n")[4]);
 		expect(lines.length).toBe(original.split("\n").length);
 	});
 
-	test("exact mode (exact: true) writes a bare X.Y.Z pin, no caret", () => {
-		const root = tempRoot();
-		writeFileSync(join(root, "package.json"), pkgWith("^0.1.90"));
-
-		bumpHarnessSpec(root, "0.1.99", { exact: true });
-		const lines = readFileSync(join(root, "package.json"), "utf8").split("\n");
-
-		expect(lines[3]).toBe('\t\t"@fusengine/harness": "0.1.99",');
-	});
-
-	test("exact mode overwrites a previously-exact pin", () => {
+	test("overwrites a previously-exact pin", () => {
 		const root = tempRoot();
 		writeFileSync(join(root, "package.json"), pkgWith("0.1.90"));
 
-		bumpHarnessSpec(root, "0.1.99", { exact: true });
+		bumpHarnessSpec(root, "0.1.99");
 		const lines = readFileSync(join(root, "package.json"), "utf8").split("\n");
 
 		expect(lines[3]).toBe('\t\t"@fusengine/harness": "0.1.99",');
@@ -57,7 +47,7 @@ describe("bumpHarnessSpec", () => {
 	test("throws when no @fusengine/harness line exists", () => {
 		const root = tempRoot();
 		writeFileSync(join(root, "package.json"), '{\n\t"dependencies": {}\n}\n');
-		expect(() => bumpHarnessSpec(root, "0.1.99", { exact: false })).toThrow();
+		expect(() => bumpHarnessSpec(root, "0.1.99")).toThrow();
 	});
 });
 

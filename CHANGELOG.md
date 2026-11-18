@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.0.79] - 2026-11-18
+
+### Added
+
+- feat(harness): daily macOS LaunchAgent `com.fusengine.harness-auto-update` (09:00, runs at next wake if asleep; `scripts/launchd/com.fusengine.harness-auto-update.plist`, `bun run harness:auto-update`, `--dry-run` writes nothing) — audits, validates and tests the latest `@fusengine/harness` in a temporary `git worktree` of HEAD (the working repo is never touched), then atomically swaps the runtime into `~/.codex` only if that run is green; 3 timestamped backups kept, rollback on failure, 24 h PID lock against overlapping runs, orphan worktree cleanup; log `~/Library/Logs/fusengine-harness-auto-update.log`. Disable with `launchctl bootout gui/$(id -u)/com.fusengine.harness-auto-update`
+- docs(harness): auto-update job documented in `docs/reference/hooks.md`, `plugins/ai-pilot/commands/update-harness.md`, `docs/decisions.md`, `docs/roadmap.md` and the project skill references
+
+### Fixed
+
+- fix(harness): `update-harness` always writes an exact `@fusengine/harness` pin (`"X.Y.Z"`, no operator) and rewrites an existing `^X` spec, so `~/.codex` never follows npm unaudited
+
+### Changed
+
+- chore(release): bump ai-pilot 1.2.68 (PATCH) + suite to 1.0.79; mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.79
+
 ## [1.0.78] - 2026-11-18
 
 ### Added
