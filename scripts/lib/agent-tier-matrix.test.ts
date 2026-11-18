@@ -9,9 +9,9 @@
  * Four checks, all against LITERAL tables written in this file (never derived
  * from `agent-toml.ts`, so a changed tier value or an extra allowed model in
  * the source turns a test red): (a) every `plugins/*\/agents/*.toml` on disk
- * sums to the exact 25 default / 7 judge / 7 non-core / 1 security counts
- * (40 agents) with no agent outside those four buckets, zero `max` and zero
- * `ultra` (Sol 6.2 fleet, owner decisions 2026-11-18 in docs/decisions.md;
+ * sums to the exact 25 default / 6 judge / 1 design (`max`, the only
+ * one, owner decision 2026-11-19) / 7 non-core / 1 security counts (40 agents)
+ * with no agent outside those buckets and zero `ultra` (Sol 6.2 fleet, owner decisions 2026-11-18 in docs/decisions.md;
  * earlier policies are in docs/workflow/agents.md § History); (b)
  * `agent-toml.ts`'s `TIER_PROFILES` equals the literal {model, effort} per
  * tier, and its `AGENT_MODEL_PROFILES` map matches what is actually shipped
@@ -33,13 +33,16 @@ const DEFAULT_NAMES = [
 	"seo-cluster", "seo-content", "seo-expert", "seo-geo", "seo-local", "seo-schema", "seo-technical",
 	"shadcn-ui-expert", "swift-expert", "tailwindcss-expert", "tanstack-start-expert", "typescript-expert",
 ];
-const JUDGE_NAMES = ["sniper", "challenger", "brainstorming", "prompt-engineer", "skill-creator", "solid-orchestrator", "design-expert"];
+const JUDGE_NAMES = ["sniper", "challenger", "brainstorming", "prompt-engineer", "skill-creator", "solid-orchestrator"];
+/** The ONLY agent allowed `max` effort (named exception, owner decision 2026-11-19, docs/decisions.md). */
+const DESIGN_NAMES = ["design-expert"];
 const NON_CORE_NAMES = ["commit-detector", "cartographer", "seo-images", "seo-sitemap", "sniper-faster", "websearch", "changelog-watcher"];
 const SECURITY_NAMES = ["security-expert"];
 /** Literal tier → profile table, deliberately duplicated from the source's `TIER_PROFILES`. */
 const EXPECTED_TIER_PROFILES = {
 	DEFAULT: { model: "gpt-6.2-sol", effort: "medium" },
 	JUDGE: { model: "gpt-6.2-sol", effort: "high" },
+	DESIGN: { model: "gpt-6.2-sol", effort: "max" },
 	NON_CORE: { model: "gpt-6.1-terra", effort: "medium" },
 	SECURITY: { model: "gpt-6.1-terra", effort: "high" },
 };
@@ -87,9 +90,9 @@ function baselineV1_0_50(): Record<string, ShippedProfile> {
 	);
 }
 
-test("shipped agent TOMLs match the exact 25/7/7/1 Sol 6.2 tier matrix", () => {
+test("shipped agent TOMLs match the exact 25/6/1/7/1 Sol 6.2 tier matrix", () => {
 	const profiles = shippedProfiles();
-	const byTier: Record<string, string[]> = { "gpt-6.2-sol|medium": [], "gpt-6.2-sol|high": [], "gpt-6.1-terra|medium": [], "gpt-6.1-terra|high": [] };
+	const byTier: Record<string, string[]> = { "gpt-6.2-sol|medium": [], "gpt-6.2-sol|high": [], "gpt-6.2-sol|max": [], "gpt-6.1-terra|medium": [], "gpt-6.1-terra|high": [] };
 	const outsideMatrix: string[] = [];
 	for (const [name, profile] of profiles) {
 		const key = `${profile.model}|${profile.effort}`;
@@ -100,20 +103,24 @@ test("shipped agent TOMLs match the exact 25/7/7/1 Sol 6.2 tier matrix", () => {
 	expect(profiles.size).toBe(40);
 	expect(byTier["gpt-6.2-sol|medium"]!.sort()).toEqual([...DEFAULT_NAMES].sort());
 	expect(byTier["gpt-6.2-sol|high"]!.sort()).toEqual([...JUDGE_NAMES].sort());
+	expect(byTier["gpt-6.2-sol|max"]!.sort()).toEqual([...DESIGN_NAMES].sort());
 	expect(byTier["gpt-6.1-terra|medium"]!.sort()).toEqual([...NON_CORE_NAMES].sort());
 	expect(byTier["gpt-6.1-terra|high"]!.sort()).toEqual([...SECURITY_NAMES].sort());
 	expect(DEFAULT_NAMES).toHaveLength(25);
-	expect(JUDGE_NAMES).toHaveLength(7);
+	expect(JUDGE_NAMES).toHaveLength(6);
+	expect(DESIGN_NAMES).toHaveLength(1);
 	expect(NON_CORE_NAMES).toHaveLength(7);
 	expect(SECURITY_NAMES).toHaveLength(1);
 	expect(outsideMatrix).toEqual([]);
-	expect([...profiles.values()].filter((profile) => profile.effort === "ultra" || profile.effort === "max")).toEqual([]);
+	expect([...profiles.values()].filter((profile) => profile.effort === "ultra")).toEqual([]);
+	// `max` is a named exception: design-expert only, no other agent.
+	expect([...profiles].filter(([, profile]) => profile.effort === "max").map(([name]) => name)).toEqual(DESIGN_NAMES);
 });
 
 test("agent-toml.ts TIER_PROFILES equals the literal tier table (no extra model or effort)", () => {
 	expect<Record<string, ShippedProfile>>(TIER_PROFILES).toEqual(EXPECTED_TIER_PROFILES);
 	expect(new Set(Object.values(TIER_PROFILES).map((profile) => profile.model))).toEqual(new Set(["gpt-6.2-sol", "gpt-6.1-terra"]));
-	expect(new Set(Object.values(TIER_PROFILES).map((profile) => profile.effort))).toEqual(new Set(["medium", "high"]));
+	expect(new Set(Object.values(TIER_PROFILES).map((profile) => profile.effort))).toEqual(new Set(["medium", "high", "max"]));
 });
 
 test("every agent-toml.ts profile matches its shipped TOML on disk (0 mismatches)", () => {

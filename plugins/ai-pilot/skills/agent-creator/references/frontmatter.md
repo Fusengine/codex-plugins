@@ -55,7 +55,7 @@ Real reference: `plugins/typescript-expert/agents/typescript-expert.toml`.
 | `description` | Yes | Keep the "Use when… / Do NOT use for…" routing pattern — it drives agent selection. |
 | `developer_instructions` | Yes | Triple-quoted (`'''…'''`) string holding the full agent brief. No truncation of source substance. |
 | `model` | Recommended | Full model id only: `gpt-6.2-sol` by default, `gpt-6.1-terra` only for the agents named in Model Selection below. Never a bare alias. |
-| `model_reasoning_effort` | Recommended | `medium` by default; `high` only for the agents named in Model Selection below; never `max` or `ultra`. |
+| `model_reasoning_effort` | Recommended | `medium` by default; `high` only for the agents named in Model Selection below; `max` only for `design-expert`; never `ultra`. |
 | `sandbox_mode` | Recommended | One of `read-only`, `workspace-write`, `danger-full-access`. See `sandbox_mode` Guidance below. |
 | `nickname_candidates` | Optional | Array of display names, identity evidence when spawning. See rules below. |
 | `mcp_servers` | Optional | MCP servers this agent may reach; declare only servers configured for Codex. |
@@ -75,11 +75,12 @@ Four role tiers (25 + 7 + 7 + 1 = 40), mirroring the Model Tier Matrix in
 | Tier | `model` / effort | Agents |
 |------|-------------------|--------|
 | `DEFAULT` (25) | `gpt-6.2-sol` / `medium` | Every agent not listed below, incl. code executors and `commit` — the default for any new agent |
-| `JUDGE` (7) | `gpt-6.2-sol` / `high` | `sniper`, `challenger`, `brainstorming`, `prompt-engineer`, `skill-creator`, `solid-orchestrator`, `design-expert` |
+| `JUDGE` (6) | `gpt-6.2-sol` / `high` | `sniper`, `challenger`, `brainstorming`, `prompt-engineer`, `skill-creator`, `solid-orchestrator` |
+| `DESIGN` (1) | `gpt-6.2-sol` / `max` | `design-expert` (only `max` agent, named exception, 2026-11-19) |
 | `NON_CORE` (7) | `gpt-6.1-terra` / `medium` | `commit-detector`, `cartographer`, `seo-images`, `seo-sitemap`, `sniper-faster`, `websearch`, `changelog-watcher` |
 | `SECURITY` (1) | `gpt-6.1-terra` / `high` | `security-expert` |
 
-Never `max` or `ultra` effort, never a model other than `gpt-6.2-sol` /
+Never `ultra` effort, never `max` except for `design-expert`, never a model other than `gpt-6.2-sol` /
 `gpt-6.1-terra`, never a bare alias; any other model or effort needs a new
 owner decision. Rationale, decision dates and every superseded policy live
 only in [`docs/workflow/agents.md` § Model

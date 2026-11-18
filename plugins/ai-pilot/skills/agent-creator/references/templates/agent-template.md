@@ -136,7 +136,7 @@ Compact view — the exhaustive rules live in `../frontmatter.md` (valid `model`
 | `description` | yes | Keep the `Use when… / Do NOT use for…` routing pattern — it drives selection. |
 | `developer_instructions` | yes | Triple-single-quoted (`'''…'''`); full brief, no truncation of substance. |
 | `model` | recommended | Full model id: `gpt-6.2-sol` by default, `gpt-6.1-terra` only for the non-core and security tiers (Model Tier Matrix in `SKILL.md`) — never a bare alias. |
-| `model_reasoning_effort` | recommended | `medium` by default; `high` for the judge and security tiers (Model Tier Matrix in `SKILL.md`); never `max` or `ultra`. |
+| `model_reasoning_effort` | recommended | `medium` by default; `high` for the judge and security tiers (Model Tier Matrix in `SKILL.md`); `max` only for `design-expert`; never `ultra`. |
 | `sandbox_mode` | recommended | `read-only` (audit/explore/research/challenger), `workspace-write` (edits), `danger-full-access` (rare). |
 | `nickname_candidates` | optional | See constraints below — a bad value silently drops the whole agent. |
 | `mcp_servers` | optional | Declare only servers configured for Codex; shipped agents currently omit it and describe MCP usage in prose instead (see Gemini Design note). |

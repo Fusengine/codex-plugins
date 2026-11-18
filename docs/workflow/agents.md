@@ -15,8 +15,10 @@ words: « okay sol 6.2 est sorti on vas reorganisé tous propremet repense » ·
 tache et le max on oubli on remplace par high » · « vas y ».
 `gpt-6.2-sol` is the fleet default; `gpt-6.1-terra` is kept only for a
 minority of non-core tasks plus one capability exception. Efforts are
-`medium` and `high` only: `max` is retired fleet-wide (replaced by `high`)
-and `ultra` is never used (it adds automatic sub-agent delegation; only the
+`medium` and `high` only, with ONE named exception: `design-expert` runs at
+`max` (2026-11-19, owner « Oui, en max », after « sol max a été plus rapide »
+and « high c'est horrible »; `docs/decisions.md`). `max` stays retired for
+the other 39 agents (replaced by `high`) and `ultra` is never used (it adds automatic sub-agent delegation; only the
 lead spawns agents). The coordinator (the owner's own Codex session) is not
 a shipped agent TOML and stays outside this policy; it moves to
 `gpt-6.2-sol` / `medium` (`docs/decisions.md` 2026-11-18, « oui passe en
@@ -25,7 +27,8 @@ medium »).
 | Tier (code) | Model / effort | Count | Agents |
 |---|---|---|---|
 | `DEFAULT` | `gpt-6.2-sol` / `medium` | 25 | `astro-expert`, `commit`, `devops-expert`, `explore-codebase`, `go-expert`, `hermes-expert`, `laravel-expert`, `lessons-compactor`, `nextjs-expert`, `php-expert`, `react-expert`, `research-expert`, `rust-expert`, `seo-cluster`, `seo-content`, `seo-expert`, `seo-geo`, `seo-local`, `seo-schema`, `seo-technical`, `shadcn-ui-expert`, `swift-expert`, `tailwindcss-expert`, `tanstack-start-expert`, `typescript-expert` |
-| `JUDGE` | `gpt-6.2-sol` / `high` | 7 | `sniper`, `challenger`, `brainstorming`, `prompt-engineer`, `skill-creator`, `solid-orchestrator`, `design-expert` |
+| `JUDGE` | `gpt-6.2-sol` / `high` | 6 | `sniper`, `challenger`, `brainstorming`, `prompt-engineer`, `skill-creator`, `solid-orchestrator` |
+| `DESIGN` | `gpt-6.2-sol` / `max` | 1 | `design-expert` (named `max` exception, 2026-11-19; no other agent uses `max`) |
 | `NON_CORE` | `gpt-6.1-terra` / `medium` | 7 | `commit-detector`, `cartographer`, `seo-images`, `seo-sitemap`, `sniper-faster`, `websearch`, `changelog-watcher` |
 | `SECURITY` | `gpt-6.1-terra` / `high` | 1 | `security-expert` (capability exception, not a cost choice) |
 
@@ -74,7 +77,8 @@ Rationale (every number below is sourced):
   a lower Cyber Utility score
   (https://deploymentsafety.openai.com/gpt-6-2-astra-sol).
 - **`max` → `high`.** The former `max` agents (`design-expert`,
-  `challenger`, `security-expert`) now run at `high`.
+  `challenger`, `security-expert`) moved to `high` on 2026-11-18;
+  `design-expert` alone returned to `max` on 2026-11-19 (named exception).
 
 Real-condition check after the switch (`docs/decisions.md`): `design-expert`
 on Sol 6.2 redoes the `support-workbench` mockup; before/after captures are
@@ -234,7 +238,7 @@ Tier and model/effort per agent, per the [Model Policy](#model-policy)
 | `cartographer` | `cartographer` | `NON_CORE` | `gpt-6.1-terra` / `medium` |
 | `changelog-watcher` | `changelog-watcher` | `NON_CORE` | `gpt-6.1-terra` / `medium` |
 | `commit-pro` | `commit-detector` | `NON_CORE` | `gpt-6.1-terra` / `medium` |
-| `design-expert` | `design-expert` | `JUDGE` | `gpt-6.2-sol` / `high` |
+| `design-expert` | `design-expert` | `DESIGN` | `gpt-6.2-sol` / `max` |
 | `devops-expert` | `devops-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
 | `go-expert` | `go-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
 | `hermes-expert` | `hermes-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |

@@ -12,13 +12,15 @@ const DEFAULT_TIER = [
 	"seo-cluster", "seo-content", "seo-expert", "seo-geo", "seo-local", "seo-schema", "seo-technical",
 	"shadcn-ui-expert", "swift-expert", "tailwindcss-expert", "tanstack-start-expert", "typescript-expert",
 ];
-const JUDGE_TIER = ["sniper", "challenger", "brainstorming", "prompt-engineer", "skill-creator", "solid-orchestrator", "design-expert"];
+const JUDGE_TIER = ["sniper", "challenger", "brainstorming", "prompt-engineer", "skill-creator", "solid-orchestrator"];
+const DESIGN_TIER = ["design-expert"];
 const NON_CORE_TIER = ["commit-detector", "cartographer", "seo-images", "seo-sitemap", "sniper-faster", "websearch", "changelog-watcher"];
 const SECURITY_TIER = ["security-expert"];
 
 const EXPECTED_PROFILES: Record<string, readonly [string, string]> = Object.fromEntries([
 	...DEFAULT_TIER.map((name) => [name, ["gpt-6.2-sol", "medium"]]),
 	...JUDGE_TIER.map((name) => [name, ["gpt-6.2-sol", "high"]]),
+	...DESIGN_TIER.map((name) => [name, ["gpt-6.2-sol", "max"]]),
 	...NON_CORE_TIER.map((name) => [name, ["gpt-6.1-terra", "medium"]]),
 	...SECURITY_TIER.map((name) => [name, ["gpt-6.1-terra", "high"]]),
 ]);
@@ -31,7 +33,7 @@ function agentSource(name: string, model?: string): string {
 
 test("selects name-specific profiles over Claude source model tiers", () => {
 	const scenarios = [
-		{ name: "design-expert", input: "sonnet", expectedModel: "gpt-6.2-sol", expectedEffort: "high" },
+		{ name: "design-expert", input: "sonnet", expectedModel: "gpt-6.2-sol", expectedEffort: "max" },
 		{ name: "challenger", input: "opus", expectedModel: "gpt-6.2-sol", expectedEffort: "high" },
 		{ name: "sniper", input: "opus", expectedModel: "gpt-6.2-sol", expectedEffort: "high" },
 		{ name: "security-expert", input: "opus", expectedModel: "gpt-6.1-terra", expectedEffort: "high" },
@@ -63,7 +65,7 @@ function shippedAgentConfigs(): Map<string, Record<string, unknown>> {
 	return configs;
 }
 
-test("ships the exact 40-agent (25 default / 7 judge / 7 non-core / 1 security) model and reasoning-effort matrix", () => {
+test("ships the exact 40-agent (25 default / 6 judge / 1 design / 7 non-core / 1 security) model and reasoning-effort matrix", () => {
 	const configs = shippedAgentConfigs();
 
 	expect(configs.size).toBe(40);
@@ -75,13 +77,15 @@ test("ships the exact 40-agent (25 default / 7 judge / 7 non-core / 1 security) 
 
 	expect(DEFAULT_TIER).toHaveLength(25);
 	expect(new Set(DEFAULT_TIER).size).toBe(25);
-	expect(JUDGE_TIER).toHaveLength(7);
+	expect(JUDGE_TIER).toHaveLength(6);
+	expect(DESIGN_TIER).toHaveLength(1);
 	expect(NON_CORE_TIER).toHaveLength(7);
 	expect(SECURITY_TIER).toHaveLength(1);
 	expect([...configs.values()].filter((config) => !["gpt-6.2-sol", "gpt-6.1-terra"].includes(String(config.model)))).toEqual([]);
-	expect([...configs.values()].filter((config) => !["medium", "high"].includes(String(config.model_reasoning_effort)))).toEqual([]);
+	expect([...configs.values()].filter((config) => !["medium", "high", "max"].includes(String(config.model_reasoning_effort)))).toEqual([]);
 	expect([...configs.values()].filter((config) => String(config.model_reasoning_effort) === "ultra")).toEqual([]);
-	expect([...configs.values()].filter((config) => String(config.model_reasoning_effort) === "max")).toEqual([]);
+	// `max` is a named exception (owner decision 2026-11-19): design-expert only.
+	expect([...configs].filter(([, config]) => String(config.model_reasoning_effort) === "max").map(([name]) => name)).toEqual(DESIGN_TIER);
 });
 
 test("every shipped agent survives Codex agent role validation", () => {
