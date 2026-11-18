@@ -34,20 +34,23 @@ probe run first — before rewriting the `HARNESS_VERSION` tripwire in
 `harness-hook-policy.ts` — never by hand, and never on a failed audit. See
 `plugins/ai-pilot/commands/update-harness.md`.
 
-#### Automatic daily update (launchd)
+#### Automatic update (inside the commands you already run)
 
-The pin in `package.json` is always an exact `X.Y.Z` (never a caret). A macOS
-LaunchAgent, `com.fusengine.harness-auto-update`, runs
-`scripts/harness-auto-update.ts` every day at 09:00 (no extra software: launchd
-and bun only). The job maintains `~/.codex` and **never touches your working
-repo**:
+The pin in `package.json` is always an exact `X.Y.Z` (never a caret). The audited
+update (`scripts/harness-auto-update.ts` flow) runs best-effort at the end of
+`bun run sync:agents` and the installer (`./setup.sh`); nothing runs in the background and
+nothing extra is installed. It maintains `~/.codex` and **never touches your
+working repo**. Set `FUSE_HARNESS_AUTO_UPDATE=0` (or `false` / `off`) to skip it. If
+the registry is unreachable or the audit/validate/tests fail, the command logs one
+warning line (naming the resolved codex home) and carries on with its normal work:
+the sync or install never fails because of the update.
 
 1. If `~/.codex` already holds the latest release: log "up to date", stop (and
    note when the repo pin trails: "repo pin X behind ~/.codex Y — bump at next
    commit cycle"; bump it yourself at your next commit cycle).
 2. Otherwise take a PID lock (`~/Library/Caches/fusengine-harness-auto-update.lock`,
-   stale if the PID is dead or the lock is older than 24 h) so launchd and manual
-   runs never overlap. Then clean leftovers of a killed run: in the codex home
+   stale if the PID is dead or the lock is older than 24 h) so two runs (sync,
+   install, manual) never overlap. Then clean leftovers of a killed run: in the codex home
    only `.harness-staging-<stamp>` and `node_modules.old-<stamp>` (if the live
    `node_modules` is missing, the newest parked one is restored instead), and in
    the system temp dir only this job's own `harness-auto-update-*` worktree dirs
@@ -79,17 +82,18 @@ lock `~/Library/Caches/…`. With a custom `CODEX_HOME` (e.g. a test run) the lo
 a test can never write the real log or contend for the real lock. Log messages
 print the resolved codex-home path.
 
-- Template: `scripts/launchd/com.fusengine.harness-auto-update.plist`; installed
-  copy: `~/Library/LaunchAgents/com.fusengine.harness-auto-update.plist`.
-- Schedule: 09:00 daily. If the Mac is asleep at 09:00 launchd runs the job at
-  the next wake; if it is powered off the run is skipped (`man launchd.plist`,
-  `StartCalendarInterval`); the next day's 09:00 run catches up since the check
-  compares against the latest release.
+- Trigger: end of `bun run sync:agents` and of the installer (`./setup.sh`). The check compares
+  `~/.codex` against the latest release, so the next run catches up on anything
+  missed.
 - Log (append-only, ISO timestamps): `~/Library/Logs/fusengine-harness-auto-update.log`.
 - Manual run: `bun run harness:auto-update` (`--dry-run` prints the decision and
   writes nothing).
-- Disable: `launchctl bootout gui/$(id -u)/com.fusengine.harness-auto-update`
-  (re-enable with `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.fusengine.harness-auto-update.plist`).
+- Skip: `FUSE_HARNESS_AUTO_UPDATE=0` in the environment of the command.
+- Registry lookup (`bun pm view`) is bounded to 15 s (`FUSE_HARNESS_REGISTRY_TIMEOUT_SEC`
+  to change it); on timeout the command logs one warning and carries on.
+- Lock held by another run: one warning ("auto-update skipped: another run holds the lock").
+- The installer keeps a valid `~/.codex` harness runtime that is newer than the repo pin
+  (one info line) instead of reinstalling the pin and then climbing back.
 
 ### Harness 0.1.79 Runtime Limits
 

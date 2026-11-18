@@ -37,17 +37,16 @@ Run `bun run validate` as the full gate: its hook check runs `validateHarnessHoo
 | `bun run harness:auto-update` | `scripts/harness-auto-update.ts`: never touches the working repo; audits, validates and tests `<latest>` in a temporary `git worktree` of HEAD, then swaps the harness atomically into `~/.codex` (3 backups, rollback on failure, PID lock, stale after 24 h) |
 | `bun run harness:auto-update -- --dry-run` | Prints the decision only: no log, no lock, no worktree, no write |
 
-### Daily launchd job
+### Automatic update (no background job)
 
-- LaunchAgent `com.fusengine.harness-auto-update`, template `scripts/launchd/com.fusengine.harness-auto-update.plist`: runs `harness-auto-update.ts` daily at 09:00 (next wake if asleep), `RunAtLoad` false.
-- Log: `~/Library/Logs/fusengine-harness-auto-update.log` (lock under `~/Library/Caches`). The job logs when the repo pin is behind `~/.codex`; the repo pin is bumped at the next commit cycle.
-- Disable: `launchctl bootout gui/$(id -u)/com.fusengine.harness-auto-update`.
+- The same audited flow runs best-effort at the end of `bun run sync:agents` and the installer (`./setup.sh`); a failure (registry unreachable, audit/test failure) logs one warning and the command carries on. Skip with `FUSE_HARNESS_AUTO_UPDATE=0`.
+- Log: `~/Library/Logs/fusengine-harness-auto-update.log` (lock under `~/Library/Caches`). It logs when the repo pin is behind `~/.codex`; the repo pin is bumped at the next commit cycle.
 
 ## Writes outside the repo (owner mandate only)
 
 | Command | Effect |
 |---|---|
-| `bun run sync:agents` | Materializes `~/.codex/agents/*.toml` and `~/.codex/prompts` symlinks. Never as a "regen" step; back up both folders first |
+| `bun run sync:agents` | Materializes `~/.codex/agents/*.toml` and `~/.codex/prompts` symlinks, then runs the best-effort harness auto-update. Never as a "regen" step; back up both folders first |
 
 ## Release
 
