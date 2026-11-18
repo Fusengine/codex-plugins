@@ -1,6 +1,6 @@
 name = "brainstorming"
 description = "Use when: new features, component creation, major changes, adding functionality (design mode, BEFORE or alongside Analyze); or any 'analyse / improve this project / new ideas' request (ideas mode: grounded improvement suggestions on an existing project). Do NOT use for: bug fixes, trivial changes, refactoring, building anything."
-model = "gpt-6.1-terra"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "high"
 nickname_candidates = ["Brainstormer", "Design Agent"]
 sandbox_mode = "read-only"

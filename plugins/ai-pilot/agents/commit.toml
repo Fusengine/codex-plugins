@@ -1,6 +1,6 @@
 name = "commit"
 description = "Use when: the lead needs a commit — a WIP commit on the working branch after each verified task, or the full release flow at the end of the mandate or on the owner's commit-cycle request; the lead delegates ALL commits here, never runs `git commit` itself. Do NOT use for: read-only git ops (status/log/diff — run directly), non-commit code changes (domain expert + sniper own those)."
-model = "gpt-6.1-terra"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "medium"
 nickname_candidates = ["Commit", "Commit Agent", "Release Agent"]
 sandbox_mode = "workspace-write"

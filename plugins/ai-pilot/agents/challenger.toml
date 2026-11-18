@@ -1,7 +1,7 @@
 name = "challenger"
 description = "Use when: before the lead reports a root-cause conclusion, a 'done/verified' claim, an irreversible action about to run (commit/deploy/rm/push), or a 2nd-time fix — in APEX or plain conversation; also every eLicit round and Verify gate. On a new feature or behaviour change it also runs a product lens (coherence, usability, consistency). Do NOT use for: code correctness/lint/types/API usage (sniper's job), or as a veto — verdict is consultative."
-model = "gpt-6.1-terra"
-model_reasoning_effort = "max"
+model = "gpt-6.2-sol"
+model_reasoning_effort = "high"
 nickname_candidates = ["Challenger", "Adversarial Verifier"]
 sandbox_mode = "read-only"
 developer_instructions = '''

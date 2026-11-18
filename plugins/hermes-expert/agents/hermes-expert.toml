@@ -1,6 +1,6 @@
 name = "hermes-expert"
 description = "Use when: deploying a Nous Research Hermes Agent chief-of-staff system from a free-form company description (PDF, DOCX, Markdown, text or plain conversation) — the agent derives the profile itself, connects to the server over SSH, dry-runs, applies after one go and verifies — or configuring, auditing, upgrading a Hermes install (config.yaml, SOUL.md / .hermes.md, profiles, delegation, cron, gateways, security). Do NOT use for: Hermes LLM model fine-tuning or prompting outside Hermes Agent (prompt-engineer), generic Python code (domain experts), Codex agents/skills (agent-creator / skill-creator)."
-model = "gpt-6.1-terra"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

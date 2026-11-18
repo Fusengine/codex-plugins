@@ -2,7 +2,7 @@
 
 ## Status and decision boundary
 
-This document froze the evaluation contract before candidate runs and now records the resulting bounded comparison. It does not authorize a model change, installation, deployment, or mutation by either evaluated agent. The pre-candidate `security-expert.toml` baseline is preserved in `security-agent-pilot/baseline.toml`, byte-for-byte except its `model` line, updated from `gpt-5.6-sol` to `gpt-6-sol` on 2026-09-23 for the GPT-6 tier switch (owner decision), then to `gpt-6.1-sol` on 2026-09-30 (owner decision: "okay passe les tous en v 6.1"); the recorded runs and scorecards predate those updates and keep the original snapshot hash `1df21743…e22a`.
+This document froze the evaluation contract before candidate runs and now records the resulting bounded comparison. It does not authorize a model change, installation, deployment, or mutation by either evaluated agent. The pre-candidate `security-expert.toml` baseline is preserved in `security-agent-pilot/baseline.toml`, byte-for-byte except its `model` line, updated from `gpt-5.6-sol` to `gpt-6-sol` on 2026-09-23 for the GPT-6 tier switch (owner decision), then to `gpt-6.1-sol` on 2026-09-30 (owner decision: "okay passe les tous en v 6.1"), then to `gpt-6.1-terra` on 2026-11-18 (owner decision, Sol 6.2 matrix: `security-expert` stays on Terra 6.1 / `high`, see `docs/decisions.md`); the recorded runs and scorecards predate those updates and keep the original snapshot hash `1df21743…e22a`.
 
 The pilot compares the baseline and candidate on the same four prompts, runtime version, model, reasoning effort, tool availability, repository snapshot, and timeout. Only the exact `developer_instructions` override may differ. Each repetition starts a fresh `codex exec --ephemeral --json` session with `gpt-5.6-sol` / `high`; the four cases run as one fixed batch. Alternate variants by repetition to reduce order effects. Do not add `--ignore-user-config`, because that is outside the approved runner contract.
 
@@ -60,7 +60,7 @@ Baseline agent snapshot:
 
 - Source: `plugins/security-expert/agents/security-expert.toml`
 - Captured snapshot: `docs/validation/security-agent-pilot/baseline.toml`
-- SHA-256: `bc027447a5e2b40482a22d070887288457858c335e96d6cae2c8a6bf3879975f`
+- SHA-256: `249960a9367561feee16a82f0049d599d9213fd6fe779ae8d59c9eb65b126d13`
 - Capture condition: read-only source inspection on 2026-09-06; the source TOML was not modified by this lot.
 
 ## Source and interpretation limits

@@ -1,7 +1,7 @@
 name = "security-expert"
 description = "Use when: security audit requested (whole repository or a change vs its merge base), scanning for OWASP Top 10, CVE research, dependency audit, secrets detection, auth hardening, agent-configuration review (.claude/, .mcp.json, hooks, plugins, skills). Do NOT use for: fixing the audited code (the caller dispatches the domain expert + sniper with this agent's findings), general code quality (use sniper), feature implementation."
 model = "gpt-6.1-terra"
-model_reasoning_effort = "max"
+model_reasoning_effort = "high"
 nickname_candidates = ["Security Expert", "Security Auditor"]
 sandbox_mode = "read-only"
 developer_instructions = '''
