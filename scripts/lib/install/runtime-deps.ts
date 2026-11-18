@@ -14,6 +14,8 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import * as p from "@clack/prompts";
 import { installPluginDeps } from "./fs-helpers";
+import { installedHarnessVersion } from "./harness-update";
+import { compareVersionsDesc } from "./plugin-file-discovery";
 
 /** Pinned `@fusengine/harness` range from the repo root manifest (single source of truth). */
 export function harnessRange(projectRoot: string): string {
@@ -23,8 +25,33 @@ export function harnessRange(projectRoot: string): string {
   return range;
 }
 
-/** Install `@fusengine/harness` into `$CODEX_HOME/node_modules`; hard-fail if it's absent afterwards. */
+/**
+ * A valid harness runtime (binary present) under `codexHome` that is NEWER than the repo pin
+ * (e.g. left there by the audited auto-update while the repo pin lags), else `null`.
+ */
+export function newerInstalledRuntime(projectRoot: string, codexHome: string): { installed: string; pin: string } | null {
+  const bin = join(codexHome, "node_modules", "@fusengine", "harness", "dist", "cli", "bin.mjs");
+  if (!existsSync(bin)) return null;
+  let installed: string;
+  try {
+    installed = installedHarnessVersion(codexHome);
+  } catch {
+    return null;
+  }
+  const pin = harnessRange(projectRoot).replace(/^[\^~]/, "");
+  return compareVersionsDesc(installed, pin) < 0 ? { installed, pin } : null;
+}
+
+/**
+ * Install `@fusengine/harness` into `$CODEX_HOME/node_modules`; hard-fail if it's absent afterwards.
+ * Keeps (no downgrade, no reinstall) a valid runtime already newer than the repo pin.
+ */
 export async function installRuntimeDeps(projectRoot: string, codexHome: string): Promise<void> {
+  const newer = newerInstalledRuntime(projectRoot, codexHome);
+  if (newer) {
+    p.log.info(`runtime kept: ${codexHome} holds harness ${newer.installed}, newer than the repo pin ${newer.pin} — no downgrade`);
+    return;
+  }
   const manifest = {
     name: "codex-home-runtime",
     private: true,

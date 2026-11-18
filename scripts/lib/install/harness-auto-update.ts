@@ -1,7 +1,7 @@
 /**
  * harness-auto-update.ts — pure, testable helpers for `scripts/harness-auto-update.ts`
- * (the daily launchd job that keeps the `~/.codex` runtime on the latest audited
- * `@fusengine/harness`). Companions: harness-auto-update-lock.ts (PID lock),
+ * (the audited update that keeps the `~/.codex` runtime on the latest
+ * `@fusengine/harness`, triggered from sync:agents / install). Companions: harness-auto-update-lock.ts (PID lock),
  * harness-auto-update-worktree.ts (isolated worktree), harness-runtime-promote.ts
  * (staged, rollback-safe ~/.codex install).
  */
