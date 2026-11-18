@@ -1,6 +1,6 @@
 /**
- * harness-auto-update-lock.ts — PID lockfile so the launchd job and a manual
- * `bun run harness:auto-update` never overlap. A lock whose PID is dead (or
+ * harness-auto-update-lock.ts — PID lockfile so two auto-update runs (sync, install,
+ * manual `bun run harness:auto-update`) never overlap. A lock whose PID is dead (or
  * whose content is not a PID) is stale and is taken over.
  */
 import { linkSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";

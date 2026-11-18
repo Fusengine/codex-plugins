@@ -21,6 +21,7 @@
 import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { HarnessScope } from "../harness-hook.types";
+import { runPmView } from "./harness-registry";
 
 /** Result of auditing one Harness scope against the installed binary. */
 export interface ScopeAuditResult {
@@ -78,15 +79,6 @@ export function restoreSnapshot(root: string, snapshot: HarnessSnapshot): void {
  */
 export function needsUpdate(installed: string, audited: string, declared: string, target: string): boolean {
 	return !(installed === target && audited === target && declared === target);
-}
-
-function runPmView(): string {
-	const proc = Bun.spawnSync(["bun", "pm", "view", "@fusengine/harness", "version"], {
-		stdout: "pipe",
-		stderr: "pipe",
-	});
-	if (!proc.success) throw new Error(`bun pm view @fusengine/harness failed: ${proc.stderr.toString().trim()}`);
-	return proc.stdout.toString("utf8");
 }
 
 const RELEASE_VERSION_RE = /^\d+\.\d+\.\d+$/;
