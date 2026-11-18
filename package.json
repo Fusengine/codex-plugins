@@ -10,7 +10,8 @@
 		"sync:agents": "bun run scripts/sync-agents.ts",
 		"validate": "bun run scripts/validate.ts",
 		"conformance:fix": "bun run scripts/final-conformance.ts",
-		"update-harness": "bun run scripts/update-harness.ts"
+		"update-harness": "bun run scripts/update-harness.ts",
+		"harness:auto-update": "bun run scripts/harness-auto-update.ts"
 	},
 	"devDependencies": {
 		"@iarna/toml": "^2.2.5",
