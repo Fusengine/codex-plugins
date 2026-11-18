@@ -37,7 +37,7 @@ After creation, run `bun test scripts/lib/agent-toml.test.ts` then **sniper** fo
 ## Critical Rules
 
 1. **Unique kebab-case `name`** - matches the filename, is what `spawn_agent` targets
-2. **Complete TOML** - `name`; `description` with a `Use when… / Do NOT use for…` routing pattern; `model` as an explicit tier from the Model Tier Matrix below (never the bare `gpt-6` alias) with a matching `model_reasoning_effort`; `sandbox_mode`; `nickname_candidates` ASCII-only, non-empty, no duplicates (Codex silently drops the whole agent otherwise — it never becomes spawnable); `developer_instructions` covering every section in [required-sections.md](references/required-sections.md), including the "Inherited rules (from AGENTS.md)" block
+2. **Complete TOML** - `name`; `description` with a `Use when… / Do NOT use for…` routing pattern; `model` as an explicit tier from the Model Tier Matrix below (full model id, never a bare alias) with a matching `model_reasoning_effort`; `sandbox_mode`; `nickname_candidates` ASCII-only, non-empty, no duplicates (Codex silently drops the whole agent otherwise — it never becomes spawnable); `developer_instructions` covering every section in [required-sections.md](references/required-sections.md), including the "Inherited rules (from AGENTS.md)" block
 3. **Hooks belong to the plugin, not the agent** - `plugins/<plugin>/hooks/hooks.json`; there is no hooks field on a Codex agent
 4. **Validate** - `bun test scripts/lib/agent-toml.test.ts` (checks the model matrix and `agentRoleViolations`), then **sniper**
 5. **Internal delegation** - every `developer_instructions` describes delegation as `spawn_agent` calls by name; never a generic agent when a domain expert exists
@@ -89,21 +89,18 @@ plugins/<plugin-name>/
 
 ## Model Tier Matrix
 
-Choose the tier explicitly — never a bare `gpt-6`/`gpt-6.1` alias. Full rationale: `docs/reference/creating-skills-agents.md` (model policy section).
+Choose the tier explicitly — always the full model id, never a bare alias. Four role tiers (25 + 7 + 7 + 1 = 40); `gpt-6.2-sol` is the fleet default, `gpt-6.1-terra` is kept only for non-core tasks and the security exception:
 
-**Current, since 2026-10-29** (owner decision, after a blind benchmark where Terra matched or beat Sol on every test). Every shipped agent runs on `gpt-6.1-terra` (30 + 5 + 3 = 38); no agent stays on Sol, and `gpt-6.1-luna` is not available on this account.
+| Tier | Model / effort | Agents |
+|------|----------------|--------|
+| `DEFAULT` (25) | `gpt-6.2-sol` / `medium` | Every agent not listed below (code executors, `research-expert`, `explore-codebase`, `commit`, `lessons-compactor`, SEO analysis agents) — the default for any new agent |
+| `JUDGE` (7) | `gpt-6.2-sol` / `high` | `sniper`, `challenger`, `brainstorming`, `prompt-engineer`, `skill-creator`, `solid-orchestrator`, `design-expert` |
+| `NON_CORE` (7) | `gpt-6.1-terra` / `medium` | `commit-detector`, `cartographer`, `seo-images`, `seo-sitemap`, `sniper-faster`, `websearch`, `changelog-watcher` |
+| `SECURITY` (1) | `gpt-6.1-terra` / `high` | `security-expert` |
 
-| Profile | Use for | Reasoning effort |
-|---------|---------|-------------------|
-| `gpt-6.1-terra` | Code executors, research, exploration, release, SEO and every other agent (30) — the default for any new agent | `medium` |
-| `gpt-6.1-terra` | Heavy-judgment roles: `sniper`, `brainstorming`, `prompt-engineer`, `skill-creator`, `solid-orchestrator` (5) | `high` |
-| `gpt-6.1-terra` | Visual and security/adversarial gates: `design-expert`, `challenger`, `security-expert` (3) | `max` |
+Never `max` or `ultra` effort, and never a model other than `gpt-6.2-sol` / `gpt-6.1-terra`; any other model or effort needs a new owner decision. Owner correction rule: the owner's direct observation of a model's output outranks an older benchmark — a model/effort change the owner decided is applied without a new benchmark gate, and residual risks go to the real-condition run.
 
-`ultra` is never used: it adds automatic sub-agent delegation and was not part of the decision. Any other model or effort needs a new owner decision. No verified Terra price is recorded.
-
-### History
-
-Superseded policies (the 2026-09-30 all-`gpt-6.1-sol` fleet, the 2026-09-27 all-GPT-6-Sol fleet, the 2026-09-23 GPT-6 Sol/Luna split and its measurements, and the GPT-5.6 Sol/Terra/Luna tiers) live only in [`docs/workflow/agents.md` § Model Policy](../../../../docs/workflow/agents.md#model-policy) — not reproduced here, to avoid the copies drifting.
+Rationale, decision dates and every superseded policy live only in [`docs/workflow/agents.md` § Model Policy](../../../../docs/workflow/agents.md#model-policy) — not reproduced here, to avoid the copies drifting.
 
 ---
 
@@ -181,4 +178,4 @@ Use **`skill-creator`** to create skills for the agent:
 - Skip the Agent Workflow section inside `developer_instructions`
 - Put a hooks table, a tool list, or a display color on the agent TOML
 - Create an agent without its skills
-- Assign a bare `gpt-6`/`gpt-6.1` alias, any model other than `gpt-6.1-terra`, or `ultra` effort to any agent — always an explicit tier id with the effort set by the Model Tier Matrix
+- Assign a bare alias, any model other than `gpt-6.2-sol` / `gpt-6.1-terra`, or `max` / `ultra` effort to any agent — always the full model id with the effort set by the Model Tier Matrix

@@ -44,7 +44,7 @@ prompted value.
 | Key | Values | Docs |
 |---|---|---|
 | `model` | dynamic visible Codex model catalog | [config-sample](https://developers.openai.com/codex/config-sample) |
-| `model_reasoning_effort` | dynamic per selected model (Sol includes `ultra`) | same |
+| `model_reasoning_effort` | dynamic per selected model (from the live Codex catalog); shipped agents follow the [Model Policy](docs/workflow/agents.md#model-policy) | same |
 | `personality` | none, friendly, pragmatic | same |
 | `approval_policy` | untrusted, on-request (recommended — model decides when to ask), never | `on-failure` dropped (deprecated by Codex) |
 | `sandbox_mode` | read-only, workspace-write, danger-full-access | same |

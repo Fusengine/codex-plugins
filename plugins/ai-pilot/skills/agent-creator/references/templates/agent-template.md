@@ -19,7 +19,7 @@ name = "<agent-name>"
 
 description = "Use when: <trigger A>, <trigger B>. Do NOT use for: <excluded case> (route to <other-agent>)."
 
-model = "gpt-6.1-terra"
+model = "gpt-6.2-sol"
 
 model_reasoning_effort = "medium"
 
@@ -128,15 +128,15 @@ enabled = true
 
 ## Key Schema
 
-Compact view — the exhaustive rules (all valid `model`/`sandbox_mode`/`model_reasoning_effort` values, validator internals) live in `required-sections.md`; do not duplicate them here.
+Compact view — the exhaustive rules live in `../frontmatter.md` (valid `model`/`sandbox_mode`/`model_reasoning_effort` values) and `../required-sections.md` (instruction sections); do not duplicate them here.
 
 | Key | Required | Notes |
 |-----|----------|-------|
 | `name` | yes | kebab-case, unique across the ecosystem, referenced by `spawn_agent`. |
 | `description` | yes | Keep the `Use when… / Do NOT use for…` routing pattern — it drives selection. |
 | `developer_instructions` | yes | Triple-single-quoted (`'''…'''`); full brief, no truncation of substance. |
-| `model` | recommended | Explicit tier: `gpt-6.1-terra` for every agent — never a bare `gpt-6`/`gpt-6.1` alias. `gpt-6.1-luna` is not available on this account (model policy section of `docs/reference/creating-skills-agents.md`). |
-| `model_reasoning_effort` | recommended | `medium` by default; `high` for heavy-judgment roles, `max` for the visual and security/adversarial gates (named in the model policy); never `ultra`. |
+| `model` | recommended | Full model id: `gpt-6.2-sol` by default, `gpt-6.1-terra` only for the non-core and security tiers (Model Tier Matrix in `SKILL.md`) — never a bare alias. |
+| `model_reasoning_effort` | recommended | `medium` by default; `high` for the judge and security tiers (Model Tier Matrix in `SKILL.md`); never `max` or `ultra`. |
 | `sandbox_mode` | recommended | `read-only` (audit/explore/research/challenger), `workspace-write` (edits), `danger-full-access` (rare). |
 | `nickname_candidates` | optional | See constraints below — a bad value silently drops the whole agent. |
 | `mcp_servers` | optional | Declare only servers configured for Codex; shipped agents currently omit it and describe MCP usage in prose instead (see Gemini Design note). |

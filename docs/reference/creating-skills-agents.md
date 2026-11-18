@@ -20,7 +20,7 @@ Agents are **not** discovered automatically from the repo. The setup/update inst
 ```toml
 name = "sniper"
 description = "Elite code error detection and correction. Use after ANY code modification. Do NOT use for: new features, read-only analysis."
-model = "gpt-6.1-terra"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 nickname_candidates = ["Sniper", "Code Sniper", "Sniper Agent"]
@@ -42,8 +42,8 @@ enabled = true
 | `name` | yes | kebab-case, unique across the ecosystem, referenced by `spawn_agent`. |
 | `description` | yes | Keep the `Use when… / Do NOT use for…` routing pattern — it drives agent selection. |
 | `developer_instructions` | yes | Triple-quoted (`'''…'''`) string holding the full agent brief. No truncation of source substance. |
-| `model` | recommended | `gpt-6.1-terra` for every shipped agent, per the model policy below; never a bare alias. `gpt-6.1-luna` is not available on this account. |
-| `model_reasoning_effort` | recommended | `medium` by default; `high` or `max` only for the agents named in the model policy below; never `ultra`. Any other effort needs a new owner decision. |
+| `model` | recommended | The agent's tier model per the model policy below; never a bare alias. |
+| `model_reasoning_effort` | recommended | The agent's tier effort per the model policy below (`medium` or `high` only). Any other effort needs a new owner decision. |
 | `sandbox_mode` | recommended | One of `read-only`, `workspace-write`, `danger-full-access`. Use `workspace-write` for agents that edit; `read-only` for audit/explore/research/challenger agents; `danger-full-access` only when a task genuinely needs it. |
 | `nickname_candidates` | optional | Array of display names; the configured nickname is identity evidence when spawning. |
 | `mcp_servers` | optional | MCP servers this agent may reach; declare only servers configured for Codex. |
@@ -53,26 +53,20 @@ There is **no** `color`, `tools`, or `hooks` frontmatter on a Codex agent. Tool 
 
 ### Model policy
 
-**Current, since 2026-10-29** (owner decision). Every shipped agent runs on
-`gpt-6.1-terra` (30 + 5 + 3 = 38); no agent stays on Sol, and
-`gpt-6.1-luna` is not available on this account. The generator classifies
-by the Codex agent's `name`; unknown future agents default to
-`gpt-6.1-terra` / `medium`.
-
-| Codex profile | Agents | Rationale |
-|---------------|--------|-----------|
-| `gpt-6.1-terra` / `medium` | 30 — every agent not listed below, incl. the code executors and `commit` | Owner's blind benchmark: Terra medium equals Sol medium on code executors (27/27 hidden tests, same blind Laravel review 31/40), 1.5x faster, 3x cheaper. |
-| `gpt-6.1-terra` / `high` | `sniper`, `brainstorming`, `prompt-engineer`, `skill-creator`, `solid-orchestrator` | Heavy-judgment roles. |
-| `gpt-6.1-terra` / `max` | `design-expert`, `challenger`, `security-expert` | Visual and security/adversarial gates; Terra max won every visual test. |
-
-`ultra` is never used: it adds automatic sub-agent delegation and was not
-part of the decision. Never assign another model or effort without a new
-owner decision. No verified Terra price is recorded here.
+The current matrix (2026-11-18 owner decision: `gpt-6.2-sol` default,
+`gpt-6.1-terra` for a non-core minority and `security-expert`, efforts
+`medium`/`high` only), its per-agent assignment and its sourced rationale
+live only in [`docs/workflow/agents.md` § Model
+Policy](../workflow/agents.md#model-policy), not reproduced here, to avoid
+the copies drifting. The generator classifies by the Codex agent's `name`;
+unknown future agents get the `DEFAULT` tier. Never assign another model or
+effort without a new owner decision.
 
 #### History
 
-Superseded policies live only in `docs/workflow/agents.md`, not reproduced
-here, to avoid the copies drifting:
+Superseded policies live only in `docs/workflow/agents.md`:
+[all `gpt-6.1-terra` (2026-10-29, superseded
+2026-11-18)](../workflow/agents.md#history-all-gpt-61-terra-superseded-2026-11-18),
 [all `gpt-6.1-sol` (2026-09-30, superseded
 2026-10-29)](../workflow/agents.md#history-all-gpt-61-sol-superseded-2026-10-29),
 [all `gpt-6-sol` (2026-09-27, superseded

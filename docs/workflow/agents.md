@@ -4,7 +4,87 @@
 
 ## Model Policy
 
-**Current, since 2026-10-29 (owner decision).** Every shipped agent runs on
+This section is the canonical source of the shipped-agent model policy. The
+agent-creator skill carries a copy of the tier table because it ships
+standalone (without `docs/`); the code of record is
+`scripts/lib/agent-toml.ts`.
+
+**Current, since 2026-11-18 (owner decision, `docs/decisions.md`).** Owner
+words: « okay sol 6.2 est sorti on vas reorganisé tous propremet repense » ·
+« oui mais terra est pas efficace j'ai vue on doit le garder pour d'autre
+tache et le max on oubli on remplace par high » · « vas y ».
+`gpt-6.2-sol` is the fleet default; `gpt-6.1-terra` is kept only for a
+minority of non-core tasks plus one capability exception. Efforts are
+`medium` and `high` only: `max` is retired fleet-wide (replaced by `high`)
+and `ultra` is never used (it adds automatic sub-agent delegation; only the
+lead spawns agents). The coordinator (the owner's own Codex session) is not
+a shipped agent TOML and stays outside this policy; it moves to
+`gpt-6.2-sol` / `medium` (`docs/decisions.md` 2026-11-18, « oui passe en
+medium »).
+
+| Tier (code) | Model / effort | Count | Agents |
+|---|---|---|---|
+| `DEFAULT` | `gpt-6.2-sol` / `medium` | 25 | `astro-expert`, `commit`, `devops-expert`, `explore-codebase`, `go-expert`, `hermes-expert`, `laravel-expert`, `lessons-compactor`, `nextjs-expert`, `php-expert`, `react-expert`, `research-expert`, `rust-expert`, `seo-cluster`, `seo-content`, `seo-expert`, `seo-geo`, `seo-local`, `seo-schema`, `seo-technical`, `shadcn-ui-expert`, `swift-expert`, `tailwindcss-expert`, `tanstack-start-expert`, `typescript-expert` |
+| `JUDGE` | `gpt-6.2-sol` / `high` | 7 | `sniper`, `challenger`, `brainstorming`, `prompt-engineer`, `skill-creator`, `solid-orchestrator`, `design-expert` |
+| `NON_CORE` | `gpt-6.1-terra` / `medium` | 7 | `commit-detector`, `cartographer`, `seo-images`, `seo-sitemap`, `sniper-faster`, `websearch`, `changelog-watcher` |
+| `SECURITY` | `gpt-6.1-terra` / `high` | 1 | `security-expert` (capability exception, not a cost choice) |
+
+Totals: 32 Sol + 8 Terra = 40. Tier names are the tier constants in
+`scripts/lib/agent-toml.ts`. New agents default to `DEFAULT`
+(`gpt-6.2-sol` / `medium`); any other model or effort needs a new owner
+decision. `gpt-6.1-luna`, `gpt-6.2-terra` and `gpt-6.2-luna` are absent from
+this account's Codex catalog (`docs/reports/model-fleet-6.2-research.md` §5).
+
+Rationale (every number below is sourced):
+
+- **Owner observation first.** The owner saw Terra underperform in use
+  (« terra est pas efficace j'ai vue »), including a flat `design-expert`
+  mockup (support-app `support-workbench` previews). It supersedes the
+  2026-10-29 blind benchmark (History below); no benchmark gate runs before
+  applying.
+- **Independent index per effort** — Artificial Analysis Intelligence Index
+  v5.0.1, read 2026-11-18
+  (https://artificialanalysis.ai/models/gpt-6-2-sol,
+  https://artificialanalysis.ai/models/gpt-6-1-terra; per-effort rows
+  recorded in `docs/reports/model-fleet-6.2-challenge.md` §1). The low,
+  medium, high and xhigh rows were read from the AA per-effort charts, not
+  machine-verified; the max row was verified live on 2026-11-18:
+
+  | Effort | `gpt-6.2-sol` (index, min per task) | `gpt-6.1-terra` (index, min per task) |
+  |---|---|---|
+  | low | 41, 1.4 | 29, 1.2 |
+  | medium | 53, 3.1 | 38, 2.8 |
+  | high | 55, 4.2 | 42, 4.2 |
+  | xhigh | 56, 5.1 | 45, 6.5 |
+  | max | 57, 7.9 | 51, 14.3 |
+
+  Sol 6.2 scores higher at every effort for about the same time per task
+  from `medium` up. `high` keeps 55 of the 57 reached at `max`.
+- **Price** (per 1M tokens, input / cached / output; OpenAI model pages,
+  `docs/reports/model-fleet-6.2-research.md` §3): `gpt-6.2-sol` $2 / $0.10 /
+  $10; `gpt-6.1-terra` $1 / $0.05 / $5. Over 272K input tokens, input and
+  cache rates x2 and output x1.5 for the whole request. At `max`, AA cost per
+  task is $1.01 (Sol 6.2) vs $0.96 (Terra 6.1) because Sol 6.2 emits fewer
+  output tokens (60.9M vs 99.4M). AA publishes no cost per task at `medium`.
+- **`NON_CORE` on Terra.** Bounded, mechanical or speed-first roles; each of
+  these agents except `changelog-watcher` sat in at least one past low-cost
+  group (GPT-5.6 Luna max, 2026-09-23 Luna medium; History below).
+- **`SECURITY` on Terra.** Capability exception: the 6.2 system card reports
+  tightened default restrictions on higher-risk cybersecurity assistance and
+  a lower Cyber Utility score
+  (https://deploymentsafety.openai.com/gpt-6-2-astra-sol).
+- **`max` → `high`.** The former `max` agents (`design-expert`,
+  `challenger`, `security-expert`) now run at `high`.
+
+Real-condition check after the switch (`docs/decisions.md`): `design-expert`
+on Sol 6.2 redoes the `support-workbench` mockup; before/after captures are
+compared. Observed there, not gated before applying: whether Sol 6.2 obeys
+"no tools" briefs, hits capacity errors, or omits known obstacles when
+reporting (6.2 system card, alignment section).
+
+### History (all gpt-6.1-terra, superseded 2026-11-18)
+
+The 2026-10-29 owner decision. Every shipped agent runs on
 `gpt-6.1-terra` — no agent stays on Sol. `gpt-6.1-luna` is not available on
 this account; `ultra` is never used (it adds automatic sub-agent delegation
 and was not part of the decision). The coordinator (the owner's own Codex
@@ -21,6 +101,7 @@ blind benchmark, 2026-10-29): Terra medium equals Sol medium on code
 executors (27/27 hidden tests, same blind Laravel review 31/40, 1.5x faster,
 3x cheaper); Terra max won every visual test; Sol won no test (it ignored
 "no tools" instructions, cost 3-10x more, twice failed "model at capacity").
+Superseded by the 2026-11-18 Sol 6.2 matrix above.
 
 ### History (all gpt-6.1-sol, superseded 2026-10-29)
 
@@ -135,32 +216,51 @@ files under `/Users/<username>/.codex/plugins/cache/fusengine-codex/
 
 ## Inventory
 
-| Plugin | Agents |
-|--------|--------|
-| `ai-pilot` | `brainstorming`, `challenger`, `commit`, `explore-codebase`, `research-expert`, `skill-creator`, `sniper`, `sniper-faster`, `websearch` |
-| `astro-expert` | `astro-expert` |
-| `cartographer` | `cartographer` |
-| `changelog-watcher` | `changelog-watcher` |
-| `commit-pro` | `commit-detector` |
-| `design-expert` | `design-expert` |
-| `devops-expert` | `devops-expert` |
-| `go-expert` | `go-expert` |
-| `hermes-expert` | `hermes-expert` |
-| `laravel-expert` | `laravel-expert` |
-| `lessons` | `lessons-compactor` |
-| `nextjs-expert` | `nextjs-expert` |
-| `php-expert` | `php-expert` |
-| `prompt-engineer` | `prompt-engineer` |
-| `react-expert` | `react-expert` |
-| `rust-expert` | `rust-expert` |
-| `security-expert` | `security-expert` |
-| `seo` | `seo-cluster`, `seo-content`, `seo-expert`, `seo-geo`, `seo-images`, `seo-local`, `seo-schema`, `seo-sitemap`, `seo-technical` |
-| `shadcn-expert` | `shadcn-ui-expert` |
-| `solid` | `solid-orchestrator` |
-| `swift-apple-expert` | `swift-expert` |
-| `tailwindcss` | `tailwindcss-expert` |
-| `tanstack-start-expert` | `tanstack-start-expert` |
-| `typescript-expert` | `typescript-expert` |
+Tier and model/effort per agent, per the [Model Policy](#model-policy)
+(2026-11-18).
+
+| Plugin | Agent | Tier | Model / effort |
+|--------|-------|------|----------------|
+| `ai-pilot` | `brainstorming` | `JUDGE` | `gpt-6.2-sol` / `high` |
+| `ai-pilot` | `challenger` | `JUDGE` | `gpt-6.2-sol` / `high` |
+| `ai-pilot` | `commit` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `ai-pilot` | `explore-codebase` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `ai-pilot` | `research-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `ai-pilot` | `skill-creator` | `JUDGE` | `gpt-6.2-sol` / `high` |
+| `ai-pilot` | `sniper` | `JUDGE` | `gpt-6.2-sol` / `high` |
+| `ai-pilot` | `sniper-faster` | `NON_CORE` | `gpt-6.1-terra` / `medium` |
+| `ai-pilot` | `websearch` | `NON_CORE` | `gpt-6.1-terra` / `medium` |
+| `astro-expert` | `astro-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `cartographer` | `cartographer` | `NON_CORE` | `gpt-6.1-terra` / `medium` |
+| `changelog-watcher` | `changelog-watcher` | `NON_CORE` | `gpt-6.1-terra` / `medium` |
+| `commit-pro` | `commit-detector` | `NON_CORE` | `gpt-6.1-terra` / `medium` |
+| `design-expert` | `design-expert` | `JUDGE` | `gpt-6.2-sol` / `high` |
+| `devops-expert` | `devops-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `go-expert` | `go-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `hermes-expert` | `hermes-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `laravel-expert` | `laravel-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `lessons` | `lessons-compactor` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `nextjs-expert` | `nextjs-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `php-expert` | `php-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `prompt-engineer` | `prompt-engineer` | `JUDGE` | `gpt-6.2-sol` / `high` |
+| `react-expert` | `react-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `rust-expert` | `rust-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `security-expert` | `security-expert` | `SECURITY` | `gpt-6.1-terra` / `high` |
+| `seo` | `seo-cluster` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `seo` | `seo-content` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `seo` | `seo-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `seo` | `seo-geo` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `seo` | `seo-images` | `NON_CORE` | `gpt-6.1-terra` / `medium` |
+| `seo` | `seo-local` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `seo` | `seo-schema` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `seo` | `seo-sitemap` | `NON_CORE` | `gpt-6.1-terra` / `medium` |
+| `seo` | `seo-technical` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `shadcn-expert` | `shadcn-ui-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `solid` | `solid-orchestrator` | `JUDGE` | `gpt-6.2-sol` / `high` |
+| `swift-apple-expert` | `swift-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `tailwindcss` | `tailwindcss-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `tanstack-start-expert` | `tanstack-start-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
+| `typescript-expert` | `typescript-expert` | `DEFAULT` | `gpt-6.2-sol` / `medium` |
 
 ## Agent Teams
 
