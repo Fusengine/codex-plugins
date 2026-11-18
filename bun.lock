@@ -6,7 +6,7 @@
       "name": "codex-plugins",
       "dependencies": {
         "@clack/prompts": "^1.8.1",
-        "@fusengine/harness": "0.1.125",
+        "@fusengine/harness": "0.1.126",
         "cheerio": "^1.2.0",
         "chrome-launcher": "^1.2.2",
         "fast-xml-parser": "^5.11.2",
@@ -36,7 +36,7 @@
 
     "@formatjs/intl-localematcher": ["@formatjs/intl-localematcher@0.6.2", "", { "dependencies": { "tslib": "^2.8.0" } }, "sha512-XOMO2Hupl0wdd172Y06h6kLpBz6Dv+J4okPLl4LPtzbr8f66WbIoy4ev98EBuZ6ZK4h5ydTN6XneT4QVpD7cdA=="],
 
-    "@fusengine/harness": ["@fusengine/harness@0.1.125", "", { "dependencies": { "figures": "^6.1.0" }, "peerDependencies": { "@vercel/detect-agent": "*" }, "optionalPeers": ["@vercel/detect-agent"], "bin": { "harness": "dist/cli/bin.mjs" } }, "sha512-TZrlSFbiZzJqO4hNRklVRzrbny5b+HzClnr/B0dvaLNVQTk/hhA6YT4eOet9YyIOpsldBXcuSTzKO/gAYI/bkw=="],
+    "@fusengine/harness": ["@fusengine/harness@0.1.126", "", { "dependencies": { "figures": "^6.1.0" }, "peerDependencies": { "@vercel/detect-agent": "*" }, "optionalPeers": ["@vercel/detect-agent"], "bin": { "harness": "dist/cli/bin.mjs" } }, "sha512-h4Vc8AE8ge0CecmMMkVRoZ1oo8vDfew4HO3T7igESavGOKnIfuytwrgjiThpnP0c53aBiskqAMa1vE5Ujv/Daw=="],
 
     "@iarna/toml": ["@iarna/toml@2.2.5", "", {}, "sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg=="],
 
