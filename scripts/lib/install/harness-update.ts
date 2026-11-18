@@ -34,6 +34,8 @@ export interface HarnessSnapshot {
 	packageJson: string;
 	/** `null` means `bun.lock` did not exist before the update. */
 	bunLock: string | null;
+	/** `harness-hook-policy.ts` (carries the `HARNESS_VERSION` tripwire); `null` when absent. */
+	hookPolicy: string | null;
 }
 
 /** Read the RESOLVED `@fusengine/harness` version installed under `root/node_modules`. */
@@ -42,18 +44,21 @@ export function installedHarnessVersion(root: string): string {
 	return (JSON.parse(readFileSync(file, "utf8")) as { version: string }).version;
 }
 
-/** Capture `package.json` and `bun.lock` (if present) so a failed update can be reverted. */
+/** Capture `package.json`, `bun.lock` and the tripwire file (if present) so a failed update can be reverted. */
 export function takeSnapshot(root: string): HarnessSnapshot {
 	const bunLockFile = join(root, "bun.lock");
+	const policyFile = harnessHookPolicyPath(root);
 	return {
 		packageJson: readFileSync(join(root, "package.json"), "utf8"),
 		bunLock: existsSync(bunLockFile) ? readFileSync(bunLockFile, "utf8") : null,
+		hookPolicy: existsSync(policyFile) ? readFileSync(policyFile, "utf8") : null,
 	};
 }
 
-/** Restore `package.json` and `bun.lock` from a snapshot taken by `takeSnapshot`. */
+/** Restore `package.json`, `bun.lock` and `HARNESS_VERSION` from a snapshot taken by `takeSnapshot`. */
 export function restoreSnapshot(root: string, snapshot: HarnessSnapshot): void {
 	writeFileSync(join(root, "package.json"), snapshot.packageJson);
+	if (snapshot.hookPolicy !== null) writeFileSync(harnessHookPolicyPath(root), snapshot.hookPolicy);
 	const bunLockFile = join(root, "bun.lock");
 	if (snapshot.bunLock === null) {
 		if (existsSync(bunLockFile)) rmSync(bunLockFile);
@@ -65,15 +70,14 @@ export function restoreSnapshot(root: string, snapshot: HarnessSnapshot): void {
 /**
  * True unless the repo is already fully settled on `target`: installed
  * package, audited tripwire, and declared range must all match — else a
- * stale `HARNESS_VERSION` or declared range would dead-end `--check` even
+ * stale `HARNESS_VERSION` or declared spec would dead-end `--check` even
  * though `node_modules` already holds the target (the reinstall is then a
- * safe no-op). `declared` matches whether it is a caret range (`^X.Y.Z`,
- * written for an auto-detected target) or an exact pin (`X.Y.Z`, written for
- * an explicit target) — see `bumpHarnessSpec`.
+ * safe no-op). `declared` must be the exact pin `X.Y.Z` (see
+ * `bumpHarnessSpec`): a caret/range spec counts as drift even when its
+ * version equals `target`, so the next update normalises it to an exact pin.
  */
 export function needsUpdate(installed: string, audited: string, declared: string, target: string): boolean {
-	const declaredMatches = declared === `^${target}` || declared === target;
-	return !(installed === target && audited === target && declaredMatches);
+	return !(installed === target && audited === target && declared === target);
 }
 
 function runPmView(): string {
@@ -101,11 +105,11 @@ export function latestHarnessVersion(fetchLatest: () => string = runPmView): str
 
 const HARNESS_DEP_RE = /^(\s*"@fusengine\/harness":\s*")\^?[\d.]+("[,]?\s*)$/;
 
-/** Rewrite only the `"@fusengine/harness"` dependency line in `root/package.json`. `exact: true` writes a bare pin (explicit target); `false` writes a caret range (auto-detected target). */
-export function bumpHarnessSpec(root: string, version: string, options: { exact: boolean }): void {
+/** Rewrite only the `"@fusengine/harness"` dependency line in `root/package.json`, always as a bare exact pin `X.Y.Z` (never a caret range). */
+export function bumpHarnessSpec(root: string, version: string): void {
 	const file = join(root, "package.json");
 	const lines = readFileSync(file, "utf8").split("\n");
-	const spec = options.exact ? version : `^${version}`;
+	const spec = version;
 	let matched = false;
 	const next = lines.map((line) => {
 		const match = line.match(HARNESS_DEP_RE);

@@ -44,7 +44,7 @@ if (!needsUpdate(before, audited, declared, target)) {
 }
 
 const snapshot = takeSnapshot(root);
-bumpHarnessSpec(root, target, { exact: explicit });
+bumpHarnessSpec(root, target);
 const scratchCodexHome = mkdtempSync(join(tmpdir(), "harness-audit-"));
 // `process.exit()` inside a `try`/`catch` skips `finally` on both Node and
 // Bun — the exit code is captured here and applied AFTER the try/finally so

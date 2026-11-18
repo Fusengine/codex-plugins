@@ -58,11 +58,11 @@ describe("takeSnapshot / restoreSnapshot", () => {
 });
 
 describe("needsUpdate", () => {
-	test("false when installed, audited, and declared (caret) all already match target", () => {
-		expect(needsUpdate("0.1.91", "0.1.91", "^0.1.91", "0.1.91")).toBe(false);
+	test("true when declared is a caret range even if its version equals target (exact pin enforced)", () => {
+		expect(needsUpdate("0.1.91", "0.1.91", "^0.1.91", "0.1.91")).toBe(true);
 	});
 
-	test("false when declared is an exact pin matching target (explicit-version install)", () => {
+	test("false when declared is an exact pin matching target", () => {
 		expect(needsUpdate("0.1.91", "0.1.91", "0.1.91", "0.1.91")).toBe(false);
 	});
 
