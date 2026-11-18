@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.0.80] - 2026-11-18
+
+### Removed
+
+- Removed: the launchd LaunchAgent `com.fusengine.harness-auto-update` introduced in 1.0.79 (owner decision: no background mechanism).
+
+### Changed
+
+- Changed: the audited harness auto-update now runs at the end of `bun run sync:agents` and the installer (`./setup.sh`), best-effort: a failure prints one warning and never fails the command. Skip it with `FUSE_HARNESS_AUTO_UPDATE=0`. The registry check times out after 15 s (`FUSE_HARNESS_REGISTRY_TIMEOUT_SEC`). Setup no longer downgrades a newer audited runtime in `~/.codex`.
+- refactor(harness): move auto-update into sync:agents and setup
+- docs(harness): drop launchd job, document sync/setup trigger
+- chore(release): suite 1.0.79 -> 1.0.80 in `.agents/plugins/marketplace.json`; README version badge 1.0.80; no plugin bumped (`plugins/` untouched)
+
+### Added
+
+- test(harness): real-run proof of sync:agents auto-update trigger — 3 real `bun run sync:agents` runs (default, `FUSE_HARNESS_AUTO_UPDATE=0`, 0.001 s registry timeout), all exit 0, in `docs/validation/remove-launchd-real-run-2026-11-18/`
+
 ## [1.0.79] - 2026-11-18
 
 ### Added
