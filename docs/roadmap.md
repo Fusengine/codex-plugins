@@ -4,7 +4,9 @@ Read with `docs/decisions.md` at the start of every mandate. Done = shipped or a
 
 ## Done
 
-- v1.0.79 — released (PR #65, tag `v1.0.79`): harness auto-update with exact pin (owner « oui met le but estq ue ca ce mette a jours tous seul », « lance la tache », `docs/decisions.md` 2026-11-18). `update-harness` always writes an exact pin `X.Y.Z` and rewrites a `^X` spec. `bun run harness:auto-update` audits, validates and tests `<latest>` in a temporary `git worktree` of HEAD, and only then swaps the harness atomically into `~/.codex`; 3 backups kept, rollback on failure, 24 h stale-lock limit, log `~/Library/Logs/fusengine-harness-auto-update.log`. The scheduled background trigger shipped in this release was removed afterwards (see In progress, 1.0.80).
+- v1.0.81 — `design-expert` on Sol 6.2 `max`, a named exception (owner « Oui, en max », `docs/decisions.md` 2026-11-19): new tier `DESIGN` `gpt-6.2-sol`/`max` (1 agent), `JUDGE` now 6; `max` stays retired for the other 39 agents. Code of record `TIER_PROFILES` + `AGENT_TIERS` in `scripts/lib/agent-toml.ts`; policy `docs/workflow/agents.md` § Model Policy.
+- v1.0.80 — released (PR #66, tag `v1.0.80`): launchd job removed; the audited harness auto-update runs best-effort at the end of `bun run sync:agents` and the installer `./setup.sh` (skip with `FUSE_HARNESS_AUTO_UPDATE=0`; registry lookup bounded by `FUSE_HARNESS_REGISTRY_TIMEOUT_SEC`, default 15 s; setup keeps a `~/.codex` runtime newer than the repo pin instead of downgrading it).
+- v1.0.79 — released (PR #65, tag `v1.0.79`): harness auto-update with exact pin (owner « oui met le but estq ue ca ce mette a jours tous seul », « lance la tache », `docs/decisions.md` 2026-11-18). `update-harness` always writes an exact pin `X.Y.Z` and rewrites a `^X` spec. `bun run harness:auto-update` audits, validates and tests `<latest>` in a temporary `git worktree` of HEAD, and only then swaps the harness atomically into `~/.codex`; 3 backups kept, rollback on failure, 24 h stale-lock limit, log `~/Library/Logs/fusengine-harness-auto-update.log`. The scheduled background trigger shipped in this release was removed afterwards (see v1.0.80).
 - v1.0.78 — Sol 6.2 fleet + harness 0.1.126 commit cycle, merged as PR #64, tag `v1.0.78` (items below).
 - 2026-11-18 — Sol 6.2 fleet reorganisation (owner « okay sol 6.2 est sorti on vas reorganisé tous propremet repense », `docs/decisions.md`). 40 agent TOMLs regenerated from `scripts/lib/agent-toml.ts`: `DEFAULT` `gpt-6.2-sol`/medium (25), `JUDGE` `gpt-6.2-sol`/high (7), `NON_CORE` `gpt-6.1-terra`/medium (7), `SECURITY` `gpt-6.1-terra`/high (1, `security-expert`). Effort `max` retired fleet-wide, `ultra` never used. Policy: `docs/workflow/agents.md` § Model Policy.
 - 2026-11-18 — Fleet synced to `~/.codex/agents` through `bun run sync:agents` (backups in `docs/validation/sol62-sync-backup-2026-11-18/`); coordinator moved to `gpt-6.2-sol`/medium in `~/.codex/config.toml` (applied by the owner).
@@ -22,7 +24,7 @@ Read with `docs/decisions.md` at the start of every mandate. Done = shipped or a
 
 ## In progress
 
-- 1.0.80: launchd job removed; auto-update inside sync:agents/setup. The audited update now runs best-effort at the end of `bun run sync:agents` and the installer `./setup.sh` (skip with `FUSE_HARNESS_AUTO_UPDATE=0`; registry lookup bounded by `FUSE_HARNESS_REGISTRY_TIMEOUT_SEC`, default 15 s; setup keeps a `~/.codex` runtime newer than the repo pin instead of downgrading it).
+- 1.0.81 commit cycle (owner « OUI CYCLE COMPLET AVEC FUSION DES BRANCHE ET CLEAN DES BRANCHE ET RESIDU », `docs/decisions.md` 2026-11-19): release of `chore/design-expert-sol-max`, `bun run sync:agents` into `~/.codex` (backup first), then merged-branch and residue cleanup to the Trash.
 
 ## Next
 
@@ -31,3 +33,4 @@ Read with `docs/decisions.md` at the start of every mandate. Done = shipped or a
 - Harness auto-update: audit the staged runtime before the swap — the transitive deps of the promoted binary are not audited today.
 - Harness auto-update: clean orphan `harness-audit-*` temp dirs.
 - Commit agent post-commit step: support the Codex layout (`.codex-plugin/plugin.json` + `.agents/plugins/marketplace.json`) instead of `.claude-plugin/` only.
+- Skill paths: `sync:agents` rewrites `~/.codex` agent skill paths cache→repo; align with the install mode.

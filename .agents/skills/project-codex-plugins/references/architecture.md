@@ -20,7 +20,7 @@
 ## Agent TOML pipeline
 
 1. Claude-style source agent → `buildAgentToml` in `scripts/lib/agent-toml.ts`.
-2. Model and effort come only from the name-keyed `AGENT_TIERS` map (tiers `DEFAULT`, `JUDGE`, `NON_CORE`, `SECURITY` in `TIER_PROFILES`, combined into `AGENT_MODEL_PROFILES`); the source `model:` frontmatter is ignored; unknown names fall back to `DEFAULT`.
+2. Model and effort come only from the name-keyed `AGENT_TIERS` map (tiers `DEFAULT`, `JUDGE`, `DESIGN`, `NON_CORE`, `SECURITY` in `TIER_PROFILES`, combined into `AGENT_MODEL_PROFILES`); the source `model:` frontmatter is ignored; unknown names fall back to `DEFAULT`.
 3. Output: `plugins/<plugin>/agents/<name>.toml` (40 files).
 4. Install / `sync:agents`: the materializer writes `~/.codex/agents/*.toml` with a "Managed by fusengine-codex" header and absolute skill paths into this repo, plus `~/.codex/prompts` symlinks.
 

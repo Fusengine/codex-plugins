@@ -23,11 +23,12 @@ Pins of `@fusengine/harness` are always exact (`"X.Y.Z"`): on a `0.x` package `^
 | Tier | Model / effort | Count |
 |---|---|---|
 | `DEFAULT` | `gpt-6.2-sol` / `medium` | 25 |
-| `JUDGE` | `gpt-6.2-sol` / `high` | 7 |
+| `JUDGE` | `gpt-6.2-sol` / `high` | 6 |
+| `DESIGN` | `gpt-6.2-sol` / `max` | 1 (`design-expert`, since 2026-11-19) |
 | `NON_CORE` | `gpt-6.1-terra` / `medium` | 7 |
 | `SECURITY` | `gpt-6.1-terra` / `high` | 1 (`security-expert`) |
 
-No `max`, never `ultra`. Coordinator (owner's own session): `gpt-6.2-sol` / `medium`, outside the TOML policy. Canonical text and agent names: `docs/workflow/agents.md` § Model Policy; code of record: `AGENT_TIERS` + `TIER_PROFILES` in `scripts/lib/agent-toml.ts`. Any tier change needs a dated owner decision quoted in the task PRD (`codex-rules` rule 03, rule 12).
+`max` only for `design-expert` (named exception, `docs/decisions.md` 2026-11-19), retired for the other 39 agents; never `ultra`. Coordinator (owner's own session): `gpt-6.2-sol` / `medium`, outside the TOML policy. Canonical text and agent names: `docs/workflow/agents.md` § Model Policy; code of record: `AGENT_TIERS` + `TIER_PROFILES` in `scripts/lib/agent-toml.ts`. Any tier change needs a dated owner decision quoted in the task PRD (`codex-rules` rule 03, rule 12).
 
 ## Versions of record
 

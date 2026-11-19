@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.81] - 2026-11-19
+
+### Changed
+
+- chore(agents): run design-expert on gpt-6.2-sol max (named exception) — new tier `DESIGN` `gpt-6.2-sol`/`max` for `design-expert` only (owner decision 2026-11-19, `docs/decisions.md`); `JUDGE` now 6 agents; `max` stays retired for the other 39 agents. Code of record `TIER_PROFILES` + `AGENT_TIERS` in `scripts/lib/agent-toml.ts`; policy `docs/workflow/agents.md` § Model Policy
+- docs(agents): record design-expert max decision and real-run proof — decision log, roadmap and project skill updated
+- chore(release): bump ai-pilot 1.2.69 + design-expert 2.1.56 (PATCH) + suite to 1.0.81; mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.81
+
+### Added
+
+- test(agents): real-run proof in `docs/validation/design-expert-max-2026-11-19/` — `bun run sync:agents` exit 0, 40 agents installed, only diff `design-expert` high -> max
+
 ## [1.0.80] - 2026-11-18
 
 ### Removed

@@ -89,16 +89,17 @@ plugins/<plugin-name>/
 
 ## Model Tier Matrix
 
-Choose the tier explicitly — always the full model id, never a bare alias. Four role tiers (25 + 7 + 7 + 1 = 40); `gpt-6.2-sol` is the fleet default, `gpt-6.1-terra` is kept only for non-core tasks and the security exception:
+Choose the tier explicitly — always the full model id, never a bare alias. Five role tiers (25 + 6 + 1 + 7 + 1 = 40); `gpt-6.2-sol` is the fleet default, `gpt-6.1-terra` is kept only for non-core tasks and the security exception:
 
 | Tier | Model / effort | Agents |
 |------|----------------|--------|
 | `DEFAULT` (25) | `gpt-6.2-sol` / `medium` | Every agent not listed below (code executors, `research-expert`, `explore-codebase`, `commit`, `lessons-compactor`, SEO analysis agents) — the default for any new agent |
-| `JUDGE` (7) | `gpt-6.2-sol` / `high` | `sniper`, `challenger`, `brainstorming`, `prompt-engineer`, `skill-creator`, `solid-orchestrator`, `design-expert` |
+| `JUDGE` (6) | `gpt-6.2-sol` / `high` | `sniper`, `challenger`, `brainstorming`, `prompt-engineer`, `skill-creator`, `solid-orchestrator` |
+| `DESIGN` (1) | `gpt-6.2-sol` / `max` | `design-expert` (the only agent allowed `max`, named exception, owner decision 2026-11-19) |
 | `NON_CORE` (7) | `gpt-6.1-terra` / `medium` | `commit-detector`, `cartographer`, `seo-images`, `seo-sitemap`, `sniper-faster`, `websearch`, `changelog-watcher` |
 | `SECURITY` (1) | `gpt-6.1-terra` / `high` | `security-expert` |
 
-Never `max` or `ultra` effort, and never a model other than `gpt-6.2-sol` / `gpt-6.1-terra`; any other model or effort needs a new owner decision. Owner correction rule: the owner's direct observation of a model's output outranks an older benchmark — a model/effort change the owner decided is applied without a new benchmark gate, and residual risks go to the real-condition run.
+Never `ultra` effort, never `max` for any agent except `design-expert` (named exception), and never a model other than `gpt-6.2-sol` / `gpt-6.1-terra`; any other model or effort needs a new owner decision. Owner correction rule: the owner's direct observation of a model's output outranks an older benchmark — a model/effort change the owner decided is applied without a new benchmark gate, and residual risks go to the real-condition run.
 
 Rationale, decision dates and every superseded policy live only in [`docs/workflow/agents.md` § Model Policy](../../../../docs/workflow/agents.md#model-policy) — not reproduced here, to avoid the copies drifting.
 
@@ -178,4 +179,4 @@ Use **`skill-creator`** to create skills for the agent:
 - Skip the Agent Workflow section inside `developer_instructions`
 - Put a hooks table, a tool list, or a display color on the agent TOML
 - Create an agent without its skills
-- Assign a bare alias, any model other than `gpt-6.2-sol` / `gpt-6.1-terra`, or `max` / `ultra` effort to any agent — always the full model id with the effort set by the Model Tier Matrix
+- Assign a bare alias, any model other than `gpt-6.2-sol` / `gpt-6.1-terra`, or `ultra` effort to any agent, or `max` to any agent other than `design-expert` — always the full model id with the effort set by the Model Tier Matrix

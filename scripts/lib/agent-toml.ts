@@ -4,11 +4,11 @@ import { identityNicknames, normalizeSkillNames } from "./agent-names.ts";
 import { skillConfigLines, tomlArray, tomlMultiline, tomlString } from "./agent-toml-format.ts";
 import type { AgentTomlOptions } from "./agent.types.ts";
 
-/** Codex model ids the fleet may use. `max` and `ultra` efforts are deliberately not representable. */
+/** Codex model ids the fleet may use. The `ultra` effort is deliberately not representable. */
 export type AgentModel = "gpt-6.2-sol" | "gpt-6.1-terra";
 
-/** Reasoning efforts the fleet may use (`max` retired fleet-wide, `ultra` excluded). */
-export type AgentEffort = "medium" | "high";
+/** Reasoning efforts the fleet may use (`max` only via the `DESIGN` tier exception, `ultra` excluded). */
+export type AgentEffort = "medium" | "high" | "max";
 
 /** A supported Codex model and reasoning-effort pair. */
 export type ModelProfile = {
@@ -17,7 +17,7 @@ export type ModelProfile = {
 };
 
 /** Role-named tiers: a tier says what an agent is for, never which model it runs. */
-export type AgentTier = "DEFAULT" | "JUDGE" | "NON_CORE" | "SECURITY";
+export type AgentTier = "DEFAULT" | "JUDGE" | "DESIGN" | "NON_CORE" | "SECURITY";
 
 /**
  * The model and effort of each role tier, defined once. Owner decisions
@@ -26,23 +26,28 @@ export type AgentTier = "DEFAULT" | "JUDGE" | "NON_CORE" | "SECURITY";
  * non-core tasks, and retired effort `max` in favour of `high` (`ultra` stays
  * excluded); 2026-11-18 "Sol 6.2 matrix approved" fixed the 40-agent split:
  * `DEFAULT` (25 agents, the code executors, `commit`, explorers, SEO), `JUDGE`
- * (7: `sniper`, `challenger`, `brainstorming`, `prompt-engineer`,
- * `skill-creator`, `solid-orchestrator`, `design-expert`), `NON_CORE` (7:
- * utility agents such as `websearch` and `sniper-faster`) and `SECURITY` (1:
- * `security-expert`, a capability exception that stays on the Terra model).
+ * (6: `sniper`, `challenger`, `brainstorming`, `prompt-engineer`,
+ * `skill-creator`, `solid-orchestrator`), `DESIGN` (1: `design-expert`, the
+ * named `max` exception below), `NON_CORE` (7: utility agents such as
+ * `websearch` and `sniper-faster`) and `SECURITY` (1: `security-expert`, a
+ * capability exception that stays on the Terra model). 2026-11-19 "design-expert
+ * max" (owner « Oui, en max », docs/decisions.md): `design-expert` moves from
+ * `JUDGE` (Sol/high) to `DESIGN` (Sol/max), a NAMED EXCEPTION; the 2026-11-18
+ * `max` retirement stays in force for every other agent (no `max` elsewhere).
  * Superseded policies and their rationale live only in docs/workflow/agents.md
  * § Model Policy.
  */
 export const TIER_PROFILES: Record<AgentTier, ModelProfile> = {
 	DEFAULT: { model: "gpt-6.2-sol", effort: "medium" },
 	JUDGE: { model: "gpt-6.2-sol", effort: "high" },
+	DESIGN: { model: "gpt-6.2-sol", effort: "max" },
 	NON_CORE: { model: "gpt-6.1-terra", effort: "medium" },
 	SECURITY: { model: "gpt-6.1-terra", effort: "high" },
 };
 
 /**
- * Shipped-agent classification (40 agents: 25 DEFAULT, 7 JUDGE, 7 NON_CORE,
- * 1 SECURITY; owner decisions 2026-11-18, docs/decisions.md). Counts live in
+ * Shipped-agent classification (40 agents: 25 DEFAULT, 6 JUDGE, 1 DESIGN,
+ * 7 NON_CORE, 1 SECURITY; owner decisions 2026-11-18 and 2026-11-19, docs/decisions.md). Counts live in
  * the contract tests too, which keep their own literal tables.
  */
 export const AGENT_TIERS: Record<string, AgentTier> = {
@@ -77,7 +82,7 @@ export const AGENT_TIERS: Record<string, AgentTier> = {
 	"prompt-engineer": "JUDGE",
 	"skill-creator": "JUDGE",
 	"solid-orchestrator": "JUDGE",
-	"design-expert": "JUDGE",
+	"design-expert": "DESIGN",
 	"commit-detector": "NON_CORE",
 	cartographer: "NON_CORE",
 	"seo-images": "NON_CORE",
