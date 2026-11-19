@@ -1,0 +1,11 @@
+$ bun run scripts/sync-agents.ts
+┌  Fusengine Codex Sync (agents + commands → /Users/brunoazoulay/.codex)
+│
+◆  Installed 40 agent(s) into /Users/brunoazoulay/.codex/agents (40 replaced)
+│
+◆  Symlinked 35 command(s) into /Users/brunoazoulay/.codex/prompts (35 replaced)
+│
+●  up to date: latest 0.1.126 (/Users/brunoazoulay/.codex 0.1.126)
+│
+└  Sync complete. Restart Codex CLI to apply.
+
