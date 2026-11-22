@@ -175,6 +175,9 @@
 | **UI Components** | UX-01, UX-02, UX-03, TEST-01, ARCH-04 |
 | **Business Logic** | ARCH-01, TEST-01, CQ-01, DOC-03, MAINT-01 |
 | **Refactoring** | ARCH-02, ARCH-03, INT-02, TEST-06, CQ-07 |
+| **App consuming a third-party API / untrusted external data** | SEC-02, SEC-07, INT-01, INT-04, INT-05, INT-06, TEST-02, TEST-05, UX-02 |
+
+Rows add up: code matching several types gets the union (same rule as `apex-methodology` `references/03.5-elicit.md` Auto-Detection Matrix).
 
 ### By Risk Level
 

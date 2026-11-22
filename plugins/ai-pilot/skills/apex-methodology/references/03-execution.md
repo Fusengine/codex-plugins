@@ -15,6 +15,20 @@ next_step: references/03.5-elicit.md
 - Follow update_plan task order
 - Update progress as you go
 
+**MUST read `references/never-do-code.md` when starting this phase**, in its own tool call, before writing any code; every applicable rule holds for the deliverable and is re-checked at eLicit.
+
+---
+
+## Tests First (required artifact)
+
+```text
+Before the implementation (RED), then green:
+✅ One test per pure function that gates input or interprets data
+✅ One failure-path test per external call (error status, timeout, malformed payload)
+✅ No test runner in the project → add a minimal one (or the language's built-in runner) in this task
+❌ "Local testing passed" alone is not done: the REPORT names each test file and the command + output that ran it
+```
+
 ---
 
 ## Execution Order
@@ -114,10 +128,12 @@ Use your language's documentation standard:
 
 ### Atomic Commits
 
+Executors never commit. Every commit is made by the `commit` agent only (`06-tooling-rules` "WIP mode"; `AGENTS.md` HARD STOP 1): the lead launches it in WIP mode once per verified task. The executor's part is to keep each task's change atomic and to suggest the message below in its REPORT.
+
 ```text
-✅ One logical change per commit
-✅ Commit after each task completion
-✅ Conventional commit format
+✅ One logical change per commit (made by the commit agent)
+✅ One WIP commit after each verified task, by the commit agent — never by the executor
+✅ Conventional commit format (suggested in the REPORT)
 ```
 
 ### Commit Format
@@ -201,9 +217,10 @@ If you encounter:
 □ Documentation on all functions
 □ Existing patterns followed
 □ No duplicate utilities
-□ Atomic commits made
+□ Atomic change per task, commit message suggested in the REPORT (the commit agent commits, never the executor)
 □ Tasks updated via update_plan
-□ Local testing passed
+□ Local testing passed — proven by the Tests First artifact (test files + command + output), never by the claim alone
+□ Every applicable `references/never-do-code.md` rule held
 ```
 
 ---

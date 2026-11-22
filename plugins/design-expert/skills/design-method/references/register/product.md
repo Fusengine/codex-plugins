@@ -61,4 +61,25 @@ Signature Dominance and the Focal-Block Floor genuinely do not apply here (Gate 
 `design-web/references/layout-discipline.md` rule 9) — a product screen is allowed, and
 usually correct, to have several equal-weight blocks with no single dominant focal
 element. Do not import brand-register expressiveness requirements (§4 of `brand.md`) into
-product work; the floor here is domain-specificity, not visual drama.
+product work; the floor here is domain-specificity, not visual drama. **One exception: a
+single-purpose tool keeps a dominant primary action (§5).**
+
+## 5. Single-Purpose Tools and Data Results (not exempt)
+
+A public single-purpose tool (checker, converter, lookup, calculator) is `product`, but the
+§4 exemption does not apply to its primary action. Canonical errors and checks:
+`../never-do.md` N1-N4, N9-N10.
+
+- **Primary action dominant** — the input or command bar is the focal block of the first
+  screen (largest and highest contrast under the Squint test). The headline is a short
+  value line, never a category slogan larger than the input (N2).
+- **Output-first** — a result leads with the answer to the user's question. For a
+  comparative or multi-source result: verdict first (agree / diverge / partial), sources
+  grouped by identical answer, values sorted stably, the outlier marked, per-source detail
+  on demand (N1).
+- **Pre-use state shows the output** — the real result component, populated with a live or
+  clearly labelled sample, before the first input. Naming the object and the first action
+  (§3 empty state) is necessary, not sufficient, for a data surface (N4).
+- **Visuals carry data** — a map/chart earns its area only by encoding the current result
+  (N3). **States** stream per source: pending → answered / failed, inside the result
+  component (N9). **Mobile** is composed, not shrunk (N10).

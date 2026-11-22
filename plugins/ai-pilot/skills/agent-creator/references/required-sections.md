@@ -148,10 +148,13 @@ the injected context:
 Traceability for maintainers of this reference (not required inside the
 generated agent body itself): `spawn_agent` / no team-spawn primitive —
 `docs/reference/creating-skills-agents.md:124-125`; sniper-then-challenger
-before "done" — `plugins/ai-pilot/skills/lead-orchestration/SKILL.md:179`; prd
-report path — `SKILL.md:102`; never commit without an order — `AGENTS.md:9`;
-regression = failure — `plugins/codex-rules/rules/00-critical-rules.md:39`;
-`list_agents`/`send_message` — `SKILL.md:144`; size ceiling — `AGENTS.md:41`.
+before "done" — `plugins/ai-pilot/skills/lead-orchestration/SKILL.md` step 10
+"Control"; prd report path — `lead-orchestration/references/prd-mode.md`
+"Layers"; never commit without an order — `AGENTS.md` HARD STOP 1 "Git";
+regression = failure — `plugins/codex-rules/rules/00-critical-rules.md` "Code
+Error Prevention" item 9; `list_agents`/`send_message` — `lead-orchestration/SKILL.md`
+step 7 "Launch"; size ceiling — `AGENTS.md` RECURRING TRAPS "Never invent a
+constraint". Cite step or section titles, never line numbers (they drift).
 
 ---
 

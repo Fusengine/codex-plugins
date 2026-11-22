@@ -1,0 +1,97 @@
+{
+  "domain": "example.com",
+  "runs": [
+    {
+      "profile": "desktop",
+      "scheme": "light",
+      "rows": 12,
+      "status": "Mesure terminée · 12/12 sondes terminées.",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "scheme": "light",
+      "rows": 12,
+      "status": "Mesure terminée · 12/12 sondes terminées.",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "desktop",
+      "scheme": "dark",
+      "rows": 12,
+      "status": "Mesure terminée · 12/12 sondes terminées.",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "scheme": "dark",
+      "rows": 0,
+      "status": "",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "matrix": {
+        "invalid": {
+          "value": "not a domain!!",
+          "messages": "Saisissez un domaine complet ou une URL HTTP(S) valide. | Aucun test lancé | 214 / 250 tests disponibles",
+          "rows": 1
+        },
+        "nonexistent": {
+          "value": "zzqx-nonexistent-8842.com",
+          "messages": "Mesure terminée · 12/12 sondes terminées. | — | 202 / 250 tests disponibles",
+          "rows": 12
+        },
+        "keyboard": {
+          "reachedInputWithTab": true,
+          "stops": [
+            {
+              "tag": "A",
+              "id": "",
+              "text": "Aller à la vérification",
+              "outline": "solid 3px",
+              "shadow": "none",
+              "isDomain": false
+            },
+            {
+              "tag": "A",
+              "id": "",
+              "text": "Atlas\nDNS",
+              "outline": "solid 3px",
+              "shadow": "none",
+              "isDomain": false
+            },
+            {
+              "tag": "A",
+              "id": "",
+              "text": "Résultats",
+              "outline": "solid 3px",
+              "shadow": "none",
+              "isDomain": false
+            },
+            {
+              "tag": "A",
+              "id": "",
+              "text": "Méthode",
+              "outline": "solid 3px",
+              "shadow": "none",
+              "isDomain": false
+            },
+            {
+              "tag": "INPUT",
+              "id": "domain",
+              "text": "",
+              "outline": "solid 3px",
+              "shadow": "none",
+              "isDomain": true
+            }
+          ],
+          "rows": 12
+        }
+      }
+    }
+  ]
+}

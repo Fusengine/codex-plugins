@@ -1,0 +1,65 @@
+{
+  "domain": "example.com",
+  "runs": [
+    {
+      "profile": "desktop",
+      "scheme": "light",
+      "rows": 12,
+      "status": "example.com · A : mesure terminée.",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "scheme": "light",
+      "rows": 12,
+      "status": "example.com · A : mesure terminée.",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "desktop",
+      "scheme": "dark",
+      "rows": 12,
+      "status": "example.com · A : mesure terminée.",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "scheme": "dark",
+      "rows": 0,
+      "status": "",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "matrix": {
+        "invalid": {
+          "value": "not a domain!!",
+          "messages": "Saisissez un domaine public valide, par exemple example.com.",
+          "rows": 0
+        },
+        "nonexistent": {
+          "value": "zzqx-nonexistent-8842.com",
+          "messages": "zzqx-nonexistent-8842.com · A : mesure terminée.",
+          "rows": 12
+        },
+        "keyboard": {
+          "reachedInputWithTab": true,
+          "stops": [
+            {
+              "tag": "INPUT",
+              "id": "domain",
+              "text": "",
+              "outline": "solid 3px",
+              "shadow": "none",
+              "isDomain": true
+            }
+          ],
+          "rows": 12
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "domain": "example.com",
+  "runs": [
+    {
+      "profile": "desktop",
+      "scheme": "light",
+      "rows": 6,
+      "status": "Mesure terminée · 6 sondes",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "scheme": "light",
+      "rows": 6,
+      "status": "Mesure terminée · 6 sondes",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "desktop",
+      "scheme": "dark",
+      "rows": 6,
+      "status": "Mesure terminée · 6 sondes",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "scheme": "dark",
+      "rows": 0,
+      "status": "",
+      "errors": [],
+      "failed": []
+    }
+  ]
+}

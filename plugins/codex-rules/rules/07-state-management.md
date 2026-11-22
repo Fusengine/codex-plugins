@@ -11,7 +11,7 @@
 
 ## Zustand Rules
 - Feature store: `modules/[feature]/src/stores/` | Global: `modules/cores/stores/`
-- Max 40 lines per store, always use selectors, actions inside store
+- Store budget: 40 lines (owner rule, mirrors Claude 0.4 × `FUSE_SOLID_MAX_LINES` at its default 100), always use selectors, actions inside store
 
 ## FORBIDDEN
 Prop drilling (3+ levels), `useContext` for global, `useEffect` for fetching, `useState` for shared, store in component file, subscribing to entire store

@@ -1,0 +1,89 @@
+{
+  "domain": "example.com",
+  "runs": [
+    {
+      "profile": "desktop",
+      "scheme": "light",
+      "rows": 6,
+      "status": "A pour example.com — Mesure terminée : 6 sur 6 sondes.",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "scheme": "light",
+      "rows": 6,
+      "status": "A pour example.com — Mesure terminée : 6 sur 6 sondes.",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "desktop",
+      "scheme": "dark",
+      "rows": 6,
+      "status": "A pour example.com — Mesure terminée : 6 sur 6 sondes.",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "scheme": "dark",
+      "rows": 0,
+      "status": "",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "matrix": {
+        "invalid": {
+          "value": "not a domain!!",
+          "messages": "Saisissez un nom de domaine public valide, par exemple example.com. | Aucune mesure lancée.",
+          "rows": 0
+        },
+        "nonexistent": {
+          "value": "zzqx-nonexistent-8842.com",
+          "messages": "Quota Globalping : 226 / 250 points restants | A pour zzqx-nonexistent-8842.com — Mesure terminée : 6 sur 6 sondes. | 6 réponses concordantes",
+          "rows": 6
+        },
+        "keyboard": {
+          "reachedInputWithTab": true,
+          "stops": [
+            {
+              "tag": "A",
+              "id": "",
+              "text": "Aller à la vérification",
+              "outline": "solid 3px",
+              "shadow": "none",
+              "isDomain": false
+            },
+            {
+              "tag": "A",
+              "id": "",
+              "text": "Atlas DNS",
+              "outline": "solid 3px",
+              "shadow": "none",
+              "isDomain": false
+            },
+            {
+              "tag": "A",
+              "id": "",
+              "text": "Comment ça marche ?",
+              "outline": "solid 3px",
+              "shadow": "none",
+              "isDomain": false
+            },
+            {
+              "tag": "INPUT",
+              "id": "domain",
+              "text": "",
+              "outline": "solid 3px",
+              "shadow": "none",
+              "isDomain": true
+            }
+          ],
+          "rows": 6
+        }
+      }
+    }
+  ]
+}

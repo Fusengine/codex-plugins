@@ -40,6 +40,13 @@ reuse an id from another task.
 5. Before the first frame is locked, do not load sibling creative workflows, pattern
    banks, design-system defaults, inspiration quotas, or move procedures. They cannot
    steer this lane.
+6. **Exception, MUST read before the first frame:** `../design-method/references/never-do.md`.
+   It is a list of errors to avoid (N1-N18), not a creative workflow, so it does not steer
+   the thesis; it binds this lane exactly as it binds `design-method`. The sections it
+   points to (AI-slop clusters, type scale) are opened only to check a suspected hit,
+   never to pick a direction. Record the reference
+   bar it defines (two best-in-class references of the same domain and function, or the
+   owner-named one) now; it is used only at Promotion Checkpoint 2.
 
 ## Art-direction work
 
@@ -112,11 +119,15 @@ then run the repository's required technical checks. Promotion requires:
 - owner constraints remain intact;
 - accessibility, responsive behavior, runtime, console, lint, typecheck, tests, and build
   pass where applicable;
+- no never-do hit at P0/P1 (`../design-method/references/never-do.md`), light and dark
+  captures both designed and distinct unless the owner locked one theme;
+- the reference bar: build and references captured at the same viewports, compared section
+  by section; any `worse` section is a `BLOCK`;
 - remaining limitations are explicitly owner-accepted.
 
 The mandatory `challenger` is the independent visual critic inside this checkpoint. It
-receives only the owner brief, constraints, locked frames, final renders, and fidelity
-criteria. When retesting a previously owner-rejected category, it also receives the
+receives only the owner brief, constraints, locked frames, final renders, the reference-bar
+captures at the same viewports, and fidelity criteria. When retesting a previously owner-rejected category, it also receives the
 owner's latest verdict without rationale or replacement direction. A separate technical
 validator receives only the implementation and technical evidence it needs. Each returns
 `PASS` or `BLOCK` and may cite only observed evidence; neither receives rationale or
@@ -138,6 +149,12 @@ the task stops before this update.
 - No mandatory four-question brief when inputs are sufficient.
 - No mandatory signature element, widget, focal quota, hero quota, pattern quota,
   competitor-lift test, lookalike test, or copy self-audit as an independent gate.
+  Reconciliation: the intent of this ban (never copy or anti-copy a reference's
+  structure or look) stays whole. The reference bar is not a lift or lookalike test: it is
+  a quality floor ("is each section at least as good as the best real product of this
+  function?"), required in this lane and run inside Promotion Checkpoint 2, never at
+  Checkpoint 1 and never as a design source (`../design-method/references/never-do.md`
+  §Reconciliation).
 - No candidate tournament, ablation, relative winner, or committee selection.
 - No critic rationale, replacement direction, style prescription, or shared authorship.
 - No additional promotion stage beyond the two defined here.

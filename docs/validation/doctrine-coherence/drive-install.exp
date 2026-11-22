@@ -1,0 +1,28 @@
+#!/usr/bin/expect -f
+# Drives scripts/install-codex.ts (--skip-env) through a pty into a THROWAWAY CODEX_HOME.
+# clack redraws prompts char by char, so prompt text cannot be matched reliably: once the
+# "Codex CLI base config" step is reached, each 8 s idle moment answers the next prompt in
+# order: native re-confirmation = n, "Trust all ... hooks" = y, anything after = Enter.
+# Usage: drive-install.exp <repo-copy> <throwaway-codex-home>
+set timeout 600
+set repo [lindex $argv 0]
+set home [lindex $argv 1]
+if {[string match "*/.codex" $home] || $home eq ""} { puts "refusing real home"; exit 9 }
+set env(CODEX_HOME) $home
+set env(FUSE_HARNESS_AUTO_UPDATE) 0
+cd $repo
+stty rows 50 columns 200
+spawn bun scripts/install-codex.ts --skip-env
+expect -re {Codex CLI base config}
+set timeout 8
+set n 0
+expect {
+	eof { }
+	timeout {
+		incr n
+		if {$n == 1} { send "n\r" } elseif {$n == 2} { send "y\r" } else { send "\r" }
+		exp_continue
+	}
+}
+catch wait result
+exit [lindex $result 3]

@@ -5,7 +5,7 @@ argument-hint: "<fix description>"
 
 # APEX Quick Flow
 
-Fast-track workflow for a trivial 1-3 line change (typo, one-line bug fix, config value). No team, no handoffs between agents. It skips Brainstorm, the Analyze trio and the team split — never eLicit, the functional check, or sniper.
+Fast-track workflow for a trivial 1-3 line change (typo, one-line bug fix, config value). No team, no handoffs between agents.
 
 A trivial 1-3 line change runs here with one delegated domain expert: no Brainstorm, no Analyze trio, no team split; eLicit, a real functional check, and sniper still run.
 
@@ -15,7 +15,7 @@ A trivial 1-3 line change runs here with one delegated domain expert: no Brainst
 
 ## When to Use
 
-Scope rule (owner decision 2026-11-08): read-only question → `explore-codebase` alone; anything that touches code beyond a trivial 1-3 line change → full APEX (`/prompts:apex`) with the Analyze trio (`explore-codebase` + `research-expert` + the domain expert) in one parallel message; one agent per task; at most 6 agents concurrently — a ceiling, never a minimum.
+Scope rule (owner « Version Claude », 2026-11-08; ported in commit 088e99f9; owning text: `AGENTS.md` ROUTING): read-only question → `explore-codebase` alone; anything that touches code beyond a trivial 1-3 line change → full APEX (`/prompts:apex`) with the Analyze trio (`explore-codebase` + `research-expert` + the domain expert) in one parallel message; one agent per task; at most 6 agents concurrently — a ceiling, never a minimum.
 
 ✅ **Use APEX Quick (trivial 1-3 line change only):**
 - Typo fixes
@@ -83,7 +83,7 @@ quick technique (never left to the user to pick):
 --skip-elicit is ignored. The challenger is not required for the
 trivial change itself (it is proven by the real check below); it runs
 as soon as the change turns out consequential or a root-cause claim
-is made.
+is made (owning rule: 02-apex-workflow "Mandatory skill routes").
 ```
 
 ### Step 4: VERIFY

@@ -76,16 +76,16 @@ Every Codex agent inherits these marketplace-wide rules. Keep the imperative and
 - Never self-declare "done" — sniper, then challenger, clears the change first; a trivial 1-3 line `apex-quick` change is cleared by an executed real check with its output cited instead of the challenger (owner decision 9; `lead-orchestration/SKILL.md` step 10 "Control").
 - Tick your finished sub-tasks only in `.codex/apex/prd/agents/<agent>-prd.json` (status `done`, files modified, files unchanged); never write `prd.json` or a task PRD `prd/<task>-prd.json` — the lead checks the disk and marks `validated` there. You may read every PRD file at any time (`lead-orchestration/SKILL.md` step 5 "Distribute").
 - Never commit, push, reset, or tag yourself — Git writes go only through the commit agent (`AGENTS.md` hard stops).
-- A regression on previously working code is a failing check — re-confirm the prior behavior before reporting done (`codex-rules/rules/00-critical-rules.md:39`).
-- Enumerate every part of a multi-part request before reporting; name any part not yet done (`codex-rules/rules/00-critical-rules.md:3`).
-- Never substitute a generic agent for an available domain expert. Scope rule (owner decision 2026-11-08): one agent per task; code touched → the Analyze trio (`explore-codebase` + `research-expert` + the domain expert) in one parallel message; a trivial 1-3 line change → `apex-quick`, one delegated agent; at most 6 agents concurrently — a ceiling, never a minimum (`lead-orchestration/SKILL.md` steps 3 "Analyze" and 4 "Decompose").
+- A regression on previously working code is a failing check — re-confirm the prior behavior before reporting done (`codex-rules/rules/00-critical-rules.md` "Code Error Prevention" item 9).
+- Enumerate every part of a multi-part request before reporting; name any part not yet done (`codex-rules/rules/00-critical-rules.md` "Judgment first").
+- Never substitute a generic agent for an available domain expert. Scope rule (owner « Version Claude », 2026-11-08; ported in commit 088e99f9): one agent per task; code touched → the Analyze trio (`explore-codebase` + `research-expert` + the domain expert) in one parallel message; a trivial 1-3 line change → `apex-quick`, one delegated agent; at most 6 agents concurrently — a ceiling, never a minimum (`lead-orchestration/SKILL.md` steps 3 "Analyze" and 4 "Decompose").
 - Self-spawn only on doubt: start from the lead's Analyze trio; re-launch `explore-codebase`/`research-expert` yourself only when evidence is missing, stale, or contradicted, and say so in the report. Never spawn executors or teammates; the only helpers you may launch for your own task, when the depth limit allows, are `research-expert`, `explore-codebase`, `challenger`, `sniper` — they never replace the lead's Control (`lead-orchestration/SKILL.md` step 7 "Launch").
 - Every task runs APEX, eLicit always automatic (never manual or skipped); sniper, then challenger, clear the change before any "done", except the trivial 1-3 line `apex-quick` change cleared by an executed real check (`lead-orchestration/SKILL.md` steps 3 "Analyze" and 10 "Control").
 - Spawn peers with `spawn_agent` only — never `TeamCreate` or `Task` (see `docs/reference/creating-skills-agents.md`).
-- The only file-size ceiling is `FUSE_SOLID_MAX_LINES` — never invent a stricter cap (`AGENTS.md:41`).
-- Document every exported function with JSDoc/PHPDoc, or the language equivalent (`codex-rules/rules/04-solid-dry-rules.md:4`).
-- Never repeat a failed fix verbatim — research a new documented hypothesis first (`codex-rules/rules/00-critical-rules.md:38`).
-- Discover and message peers with `list_agents` / `send_message`; the lead is addressed as `/root` (`lead-orchestration/SKILL.md:144`).
+- The only file-size ceiling is `FUSE_SOLID_MAX_LINES` — never invent a stricter cap (`AGENTS.md` RECURRING TRAPS "Never invent a constraint").
+- Document every exported function with JSDoc/PHPDoc, or the language equivalent (`codex-rules/rules/04-solid-dry-rules.md` "SOLID Skill per Stack").
+- Never repeat a failed fix verbatim — research a new documented hypothesis first (`codex-rules/rules/00-critical-rules.md` "Code Error Prevention" item 8).
+- Discover and message peers with `list_agents` / `send_message`; the lead is addressed as `/root` (`lead-orchestration/SKILL.md` step 7 "Launch").
 
 ## Coding Standards
 
