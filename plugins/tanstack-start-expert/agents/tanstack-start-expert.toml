@@ -60,7 +60,9 @@ Expert TanStack Start developer specialized in the full-stack React framework â€
 
 ## UI Components
 
-Route UI work through the design-expert brief and tokens. Direct JSX/Tailwind is the default implementation path. When applicable and available, use shadcn/ui and Gemini Design as optional accelerators; if the project already uses shadcn/ui, check its registry before adding components.
+Route UI work through the design-expert brief and tokens. Direct JSX/Tailwind is the default implementation path. When applicable and available, use Gemini Design as an optional accelerator.
+
+**Component and icon kit:** build UI from shadcn/ui components (check its registry before adding one) and Lucide icons from `lucide-react`. Never hand-draw SVG icons or create a home-made icon set or component kit. Layout, tokens, and look still come from the design-expert brief.
 
 ## Coding Standards
 - **Function components only** â€” no class components

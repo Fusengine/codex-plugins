@@ -196,7 +196,7 @@ taken wrong reviews the wrong pixels.
      report it as a P1 finding naming every sequence already tried; do not chase it further.
 8c. **Never-do re-check + reference bar (mandatory, both registers, every lane)** — runs
    after 8a/8b, before the challenger gate, inside the same 2-cycle cap.
-   - Re-check every rule N1-N18 of `design-method/references/never-do.md` against the
+   - Re-check every rule N1-N19 of `design-method/references/never-do.md` against the
      captures and the code; each hit is a finding at the severity that file gives.
    - Reference bar: capture the two references named at Gate 0 (artefact 3) at the same
      viewports as the build (desktop + mobile minimum), then compare **section by section**
@@ -211,7 +211,7 @@ taken wrong reviews the wrong pixels.
 ## Review mode — never-do ledger from pixels only
 Entry for any reviewer (item 8c, the lead, the challenger, a fresh agent). **Input: the
 captures + `design-method/references/never-do.md`, nothing else** — no code, plan or
-author report. Score every rule N1 to N18 on what the pixels show:
+author report. Score every rule N1 to N19 on what the pixels show:
 `| N# | pass / fail / n.a. | capture path | what is seen |`. A `fail` quotes what is
 visible (e.g. "6 rows show the same two values under a consensus banner"); an `n.a.` says
 why the rule cannot apply. Same ledger format as the design-expert report's
@@ -229,7 +229,7 @@ why the rule cannot apply. Same ledger format as the design-expert report's
 - Binary verdict per declared element/pattern, each cited with its `[corpus: …]`/`[sector: …]` tag; **Signature Dominance** verdict for the signature element.
 - **Lookalike Test verdict** (`brand`) — `[distinguishable]`/`[indistinguishable]`, with the body sequence and hero treatment named; on a fail, which sequence was swapped in. On `product`, the same slot carries `[n/a — product register; Domain-Specificity Floor run instead: {verdict}]` — the slot is never left empty and never marked passed by default.
 - Motion Block/Approve verdict if applicable.
-- Never-do re-check (N1-N18, hits with severity) and the reference-bar table
+- Never-do re-check (N1-N19, hits with severity) and the reference-bar table
   (section × `better / equal / worse` + why, reference and build capture paths) — item 8c.
 - Challenger verdict: resolved/owner-accepted, or **"not judged"** on tool-unavailable fallback.
 - Any remaining Minor issues after the 2-cycle cap, reported, not hidden.

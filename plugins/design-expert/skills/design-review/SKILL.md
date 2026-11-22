@@ -104,7 +104,7 @@ to the **body sequence** pick, never to a cosmetic tweak. On `product` it does n
 an app screen is supposed to share a silhouette with other app screens, Jakob's Law — and
 the **Domain-Specificity Floor** (`design-method/references/register/product.md` §2) runs
 in its slot instead, per `design-webapp/SKILL.md`) → **never-do re-check + reference bar,
-both registers, every lane** (item 8c: rules N1-N18 of
+both registers, every lane** (item 8c: rules N1-N19 of
 `design-method/references/never-do.md` re-checked on captures and code; the two Gate 0
 references captured at the same viewports and compared section by section,
 `better / equal / worse`; **any `worse` = not done**). Full step-by-step:
@@ -159,7 +159,7 @@ Full mechanics: `references/review-procedure.md` item 9.
   `[n/a — product register; Domain-Specificity Floor run instead: {verdict}]`. Never blank,
   never "passed" by default.
 - Motion Block/Approve verdict if applicable.
-- Never-do hits (N1-N18) and the reference-bar table (section × better/equal/worse + why).
+- Never-do hits (N1-N19) and the reference-bar table (section × better/equal/worse + why).
 - Findings list, P0-P3, no aggregate score.
 - Challenger verdict: resolved/owner-accepted, or "not judged" on tool-unavailable fallback.
 - Any remaining Minor/P2-P3 issues after the 2-cycle cap, reported, not hidden.

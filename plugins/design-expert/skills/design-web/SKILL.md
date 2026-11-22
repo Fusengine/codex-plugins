@@ -97,10 +97,42 @@ routes here for that one page (see `design-webapp`'s reciprocal note).
    subordinated to the POV from `register/brand.md`, never dropped in unedited. No
    component earns a place because it's common; each maps to a real content need.
 
-7. **Ship HTML/CSS directly** (default path, same method as Anthropic's `frontend-design`
-   skill: commit to a point of view, verify with tools not vibes). Gemini Design MCP
-   (`references/gemini/`), Magic (21st.dev), and shadcn MCP are optional fallback tools,
-   never a requirement.
+7. **Ship the page** (same method as Anthropic's `frontend-design` skill: commit to a point
+   of view, verify with tools not vibes). A plain static HTML page ships as HTML/CSS
+   directly; a web stack ships on shadcn/ui + Lucide (§Component kit and icons below).
+   Gemini Design MCP (`references/gemini/`) and Magic (21st.dev) are optional fallback
+   tools, never a requirement.
+
+### Component kit and icons — web stacks (canonical rule)
+On a web stack (Vite, Next.js, Astro, TanStack Start, Laravel + Inertia React),
+**marketing and landing sites included**, and for any web-app frontend (`design-webapp` inherits this section):
+
+- **Identity comes from customizing shadcn, never from distorting it.** The brand look is
+  built through the theme tokens / CSS variables (fed by `design-system.md`), variants
+  (`cva`), composition of components, and shadcn blocks / registry items. Never fork or
+  rewrite a component's internals, and never run a parallel home-made kit beside it. The
+  hero treatment, body sequence and signature element above are composed *from* shadcn
+  pieces, not instead of them.
+
+- **Components: shadcn/ui.** Initialise with `npx shadcn@latest init -t {next|vite|start|react-router|laravel|astro}`
+  (templates verified on ui.shadcn.com/docs/cli), add components with
+  `npx shadcn@latest add <name>`, browse the registry through the shadcn MCP. Restyle them
+  through the `design-system.md` tokens; never re-implement a button, input, dialog, menu,
+  tabs or table that the registry ships. Usage: `references/shadcn.md`.
+- **Icons: Lucide**, from the package matching the file (verified on the npm registry):
+  `lucide-react` in React components (shadcn's default icon library), `@lucide/astro` in
+  `.astro` files, `lucide` in vanilla JS. One pack, one stroke width
+  (`references/icons-guide.md`). Never a hand-drawn SVG icon set or a custom sprite.
+- **Stack: use the project's existing boilerplate/stack as is.** If the folder has no
+  stack, the lead asks the owner once (TypeScript or JavaScript, and which stack) before
+  scaffolding; never framework-less JS, never a stack picked silently. Owning rule:
+  `codex-rules/rules/05-frontend-rules.md`. The stack is reported in the Design Read
+  constraints.
+- **Exempt:** plain static HTML pages with no build step, and mobile mockups
+  (`design-ios`, `design-android`): direct HTML/CSS stays the path there. Brand marks and
+  logos are not icons. Violation = never-do N19.
+- Wiring these components into a live codebase stays with the framework expert; this
+  skill decides the kit and designs with it.
 
 ### Declared Elements — the `Je reproduis` line
 Before handoff, write this line into the deliverable's report and into `design-system.md`,

@@ -200,8 +200,14 @@ table first — if the surface is a marketing/landing page instead, use `design-
     marketing-adjacent surface inside the app (e.g. an in-app pricing page) routes to
     `design-web` for that one page.
 
-12. **Generate directly as HTML/CSS** (default), or optionally via Gemini Design MCP
-    (`../design-web/references/gemini/`) — same brief content either way.
+12. **Build on shadcn/ui components + Lucide icons — required for every web-app frontend**
+    (rule, verified packages and exemptions: `../design-web/SKILL.md` §Component kit and
+    icons; violation = never-do N19). Customize through tokens, `cva` variants,
+    composition and shadcn blocks; never fork a component's internals. Use the project's existing boilerplate/stack as is;
+    a folder with no stack → the lead asks the owner once (TypeScript or JavaScript, which
+    stack) before scaffolding, never framework-less JS (owning rule:
+    `codex-rules/rules/05-frontend-rules.md`). Gemini Design MCP (`../design-web/references/gemini/`) stays
+    an optional draft tool — same brief content either way.
 
 ### Declared Elements — the `Je reproduis` line
 Before handoff, write this line into the deliverable's report and into `design-system.md`,

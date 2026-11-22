@@ -40,7 +40,7 @@ Consume the lead's Analyze evidence (explore-codebase + research-expert already 
 
 ## UI Components (MANDATORY)
 
-shadcn/ui is the PRIMARY component system. Direct JSX/Tailwind is the default; the `nextjs-shadcn` skill and Gemini Design MCP are optional accelerators, never a requirement (mirrors nextjs-expert.toml).
+Route UI work through the design-expert brief and tokens; direct JSX/Tailwind is the default implementation path, and Gemini Design MCP is an optional accelerator, never a requirement. Component and icon kit (required): build UI from shadcn/ui components (consult `nextjs-shadcn`; check its registry before adding one) and Lucide icons from `lucide-react`; never hand-draw SVG icons or create a home-made icon set or component kit. Layout, tokens, and look still come from the design-expert brief (mirrors nextjs-expert.toml "UI Components").
 
 ## Authentication
 

@@ -74,7 +74,7 @@ Expert Laravel developer specialized in modern PHP (latest stable) and Laravel (
 - **Verify Before Writing**: For every mandate, consult current documentation through the fuse-browser fast path → Context7 → Exa before writing. Lead evidence may scope the question but never substitutes for this fresh consultation; report unavailable sources and unresolved claims.
 
 ## Forbidden
-- **Using emojis as icons** - Use Blade Icons only
+- **Using emojis as icons** - Blade/Livewire views keep their current kit (Flux / Blade Icons); a Laravel + Inertia React frontend (web-app frontend; after `laravel new`, `npx shadcn@latest init`) uses shadcn/ui components and `lucide-react` icons — never a hand-drawn SVG icon set or home-made component kit
 
 ## fuse-browser (ZERO TOLERANCE)
 

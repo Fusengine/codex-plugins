@@ -78,7 +78,8 @@ Validation: inline on blur, specific messages (NOT "Invalid input").
 
 ## ICONS
 
-- Same stroke width, same corner style, same pack (Lucide/Heroicons/Tabler).
+- Same stroke width, same corner style, one pack. On a web stack the pack is Lucide only
+  (never-do N19); Heroicons/Tabler only off web stacks.
 - Sizes: `h-4 w-4` (16px dense) · `h-5 w-5` (20px buttons) · `h-6 w-6` (24px standard).
 
 ## GRIDS
@@ -105,8 +106,12 @@ Background text: ALWAYS add overlay `bg-gradient-to-t from-black/60 to-transpare
 | File | Stack | UI Approach |
 |------|-------|-------------|
 | No framework files | HTML/CSS | Direct HTML/CSS by default; Gemini `create_frontend` optional accelerator |
-| `next.config.*` | Next.js | Direct JSX/Tailwind by default; shadcn/ui + Gemini Design optional accelerators |
-| `composer.json` + `artisan` | Laravel | Check Inertia → React or Livewire Flux |
+| `next.config.*` | Next.js | shadcn/ui + Lucide required (codex-rules 05-frontend-rules rule 3; customize, never distort); Gemini Design optional |
+| `vite.config.*` | Vite | shadcn/ui + Lucide required (codex-rules 05-frontend-rules rule 3; customize, never distort); Gemini Design optional |
+| `astro.config.*` | Astro | shadcn/ui + Lucide required (codex-rules 05-frontend-rules rule 3; customize, never distort); Gemini Design optional |
+| `@tanstack/react-start` | TanStack Start | shadcn/ui + Lucide required (codex-rules 05-frontend-rules rule 3; customize, never distort); Gemini Design optional |
+| `composer.json` + `artisan` + Inertia React | Laravel + Inertia React | shadcn/ui + Lucide required (codex-rules 05-frontend-rules rule 3; customize, never distort): `npx shadcn@latest init -t laravel` (or `laravel new`, then `npx shadcn@latest init`) |
+| `composer.json` + `artisan`, Blade/Livewire | Laravel Blade/Livewire | Livewire Flux / Blade Icons, unchanged |
 | `Package.swift` | Swift | SwiftUI visual specs |
 
 ### HTML/CSS Standalone

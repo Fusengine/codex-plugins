@@ -1,8 +1,10 @@
 # Design Expert Plugin (`fuse-design`)
 
 UI/UX design director covering four targets: **marketing websites, web apps, iOS, and
-Android**. Generates production-ready HTML/CSS directly — Gemini Design MCP, Magic
-(21st.dev), and shadcn MCP are optional tools of convenience, never a requirement. Mobile
+Android**. Generates production-ready HTML/CSS directly for plain static pages; on a web
+stack (Vite, Next.js, Astro, TanStack Start) and every web-app frontend it builds on
+shadcn/ui components + Lucide icons (required). Gemini Design MCP and Magic (21st.dev) are
+optional tools of convenience, never a requirement. Mobile
 targets never produce SwiftUI or Compose code: they produce tokens, an HTML
 device-framed mockup, and a handoff spec for `swift-expert` or an Android developer.
 
@@ -55,8 +57,10 @@ All design work starts in `skills/design-method/SKILL.md`:
   light+dark validation, or gate Gemini usage. The pipeline discipline in
   `design-method` is followed by convention and verified in `design-review`, not
   enforced by a hook. See `hooks/hooks.json`.
-- **Gemini Design MCP, Magic, and shadcn MCP are optional.** Direct HTML/CSS generation
-  is the default and the fallback if any of them is unavailable.
+- **Gemini Design MCP and Magic are optional.** Direct HTML/CSS generation is the default
+  for plain static pages and the fallback if either is unavailable. **shadcn/ui + Lucide
+  are required on web stacks** (`skills/design-web/SKILL.md` §Component kit and icons,
+  never-do N19).
 - **Every fact has one home.** Forbidden fonts and contrast thresholds live in
   `design-system`; the screenshot/review procedure lives in `design-review`; iOS/Android
   numeric facts live in `design-ios`/`design-android` with a verified/to-reconfirm status
