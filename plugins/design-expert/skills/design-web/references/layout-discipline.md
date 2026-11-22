@@ -65,4 +65,4 @@ Alternating "left-image + right-text" then "left-text + right-image" is banal pa
 ## 9. Focal-Block Floor
 
 - **≥ 1 dominant focal block per viewport** (register `brand` only — see `design-method/SKILL.md` Gate 0). Not "≥ 4 layout families" (that's variety, covered by rule 5) — this is hierarchy: within a single viewport, one block reads as visually dominant. Mechanical predicate: the largest block by rendered area OR by contrast (color/weight) against its neighbors is identifiable and not tied with 2+ other blocks of near-equal area/contrast.
-- **Register `product` exempt** (dashboards, panels of equal-weight density): a single dominant block is not required — at most a soft-flag, never a Block.
+- **Register `product` exempt** (dashboards, panels of equal-weight density): a single dominant block is not required — at most a soft-flag, never a Block. **Exception:** a single-purpose tool (checker, converter, lookup) keeps its primary action as the focal block of the first screen (`design-method/references/register/product.md` §5, never-do N2); failing that is a Block.

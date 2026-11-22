@@ -9,7 +9,7 @@
 | **Gemini Design** | AI frontend | `design-expert` |
 | **fuse-browser** | Browser automation, scraping, SERP, visual diff | `seo`, `security-expert`, `design-expert`, frontend experts, `changelog-watcher`, ai-pilot `research-expert`/`websearch`/`sniper` |
 
-**Verification chain (any uncertain API/version — ZERO TOLERANCE):** ① fuse-browser fast-path (`browser_fetch` on known doc URLs, `serp_batch` for discovery) → ② Context7 (official docs) → ③ Exa code context. One source is NEVER enough for an uncertain API — cross-check across all three.
+**Verification chain tools (any uncertain API/version; the rule itself: `02-apex-workflow` "Mandatory skill routes"):** ① fuse-browser fast-path (`browser_fetch` on known doc URLs, `browser_serp_batch` for discovery) → ② Context7 (official docs) → ③ Exa code context. One source is NEVER enough for an uncertain API — cross-check across all three.
 
 ## fuse-browser — Efficient Usage (ZERO TOLERANCE)
 
@@ -36,8 +36,10 @@ ALL docs in `docs/` folder - NEVER outside except root `README.md`. The decision
 
 ## Git & GitHub Flow (ZERO TOLERANCE)
 
+Authorization (who may write Git, protected branches, force-push/reset): AGENTS.md HARD STOP 1. This section owns the flow detail.
+
 **Commit tool**: the lead follows the AGENTS.md commit route (`$commit-pro:commit` + `git-flow`); execution is delegated to agent `commit` (`plugins/ai-pilot/agents/commit.toml`), which loads those skills. NEVER `git commit` directly, never hand-roll the flow yourself. External executors (Kimi/Claude/Cursor) never push/PR/merge/tag/publish — release goes through agent `commit` only.
-- **WIP mode** — after each verified task, agent `commit` makes a WIP commit on the working branch: commit only, no push, bump, PR, merge, or tag. It still runs the branch check and the secret scan.
+- **WIP mode** — after each verified task, agent `commit` makes one WIP commit on the working branch (one per task, never one per gate): commit only, no push, bump, PR, merge, or tag. It still runs the branch check and the secret scan. Condition: the task's changed files are tracked in a Git working tree of the owner's project; when they are not (no repository, untracked target, a copy outside the repo), the lead spawns no `commit` agent and reports "no WIP commit: <reason>".
 - **Release mode** — at the end of the mandate, or on the owner's commit-cycle request, the same agent runs Steps 0-8 below: push the working branch, PR, CI wait, merge (never squash), post-merge tag, release — announced in the report.
 - **Commit cycle** — any owner wording that asks for the commit cycle, in any language, starts Release mode run to the end with no further owner step (WIP commits, push, PR, CI, merge never squash, tag, release); every gate below still holds.
 - Relayed gos (commit cycle, release): AGENTS.md COORDINATOR PATH "Relayed message".
@@ -54,7 +56,7 @@ ALL docs in `docs/` folder - NEVER outside except root `README.md`. The decision
 3. Steps 2-5: conventional commit with auto-detection
 4. Step 6: post-commit (CHANGELOG + version bump — no tag)
 5. Step 7: push branch + PR + CI watch + merge
-6. Step 8: post-merge — tag `vX.Y.Z` on `main` + push tag (after merge validated — never squash, the tag targets the bump commit and squash would orphan it)
+6. Step 8: post-merge — tag `vX.Y.Z` on `main` + push tag, only after the merge is validated ("Repository invariants")
 
 **Merge strategy**: merge (never squash) via `gh pr merge --merge --delete-branch` — the release tag points to the bump commit; squash rewrites history and orphans it. Keep branches < 3 days.
 

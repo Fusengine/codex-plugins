@@ -9,7 +9,7 @@ description: Full step-by-step APEX flows for Standard Feature, Bug Fix, and Hot
 
 ```text
 1. 00-init-branch     → git checkout -b feature/xxx
-2. 00.5-brainstorm    → Ask questions, propose alternatives, get design approval (skipped when the owner's mandate already settled the design)
+2. 00.5-brainstorm    → Launched in the SAME message as the 01 trio; ask questions, propose alternatives, get design approval (owner's mandate already settled the design → it records it and asks nothing, still launched)
 3. 01-analyze-code    → explore-codebase + research-expert
 4. 02-features-plan   → update_plan task breakdown
 5. 03-execution       → TDD: write test FIRST, then implement (files within `FUSE_SOLID_MAX_LINES` (default 200) lines)

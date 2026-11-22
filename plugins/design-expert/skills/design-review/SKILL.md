@@ -47,6 +47,9 @@ skipped, never reported as passed if it wasn't actually run
 - **The register** (`brand`/`product`, from `design-method` Gate 0) — an input, never
   inferred mid-review: check 14's floors, Part 2 item 8's floors and the Lookalike Test
   (item 8b) all branch on it.
+- **The reference bar** (Gate 0 artefact 3): two named best-in-class references of the
+  same domain and function, or the owner-named one. Absent ⇒ P0
+  (`design-method/references/never-do.md` N12).
 
 ### The two assessments — ISOLATED, never in the same head
 This is the structural rule the whole procedure hangs on: the mechanical read and the
@@ -69,7 +72,7 @@ cream/serif/terracotta cluster shipped through this audit once already (document
 `anti-ai-slop-audit.md` Gate Semantics).
 
 ### Part 1 — Deterministic Checks (mechanical, run first)
-Full 15-item list is canonical in `references/review-procedure.md` Part 1 — contrast
+Full 16-item list is canonical in `references/review-procedure.md` Part 1 — contrast
 (4.5:1 text / 3:1 UI, light+dark), forbidden fonts, OKLCH-only color format **in the
 produced code** (corpus values arrive as hex/rgb — convert them, never drop them), em-dash
 crutch (2+ occurrences), token adherence, the anti-AI-slop audit
@@ -81,7 +84,9 @@ mechanical pre-flight (`references/pre-flight-checklist.md`), WCAG beyond contra
 (`references/ux-wcag.md`), cross-component consistency (`references/consistency-checks.md`),
 mobile nav functionality, doc↔code animation diff, integrity (no fabricated numbers/false
 urgency), no-JS baseline, Type-Scale/Body-Size/Measure/Focal-Block floors, and
-Dark-Elevation Direction. Any Critical/Major finding here is fixed before Part 2 runs.
+Dark-Elevation Direction, and theme existence (check 16: a designed dark theme unless the
+owner locked one; identical light/dark captures = P1). Any Critical/Major finding here is
+fixed before Part 2 runs.
 
 ### Part 2 — Bounded Visual Review
 Serve → screenshot per section + one full-page capture, light AND dark via
@@ -98,7 +103,11 @@ canonical in `design-web/references/design-inspiration.md`, never restated here;
 to the **body sequence** pick, never to a cosmetic tweak. On `product` it does not apply —
 an app screen is supposed to share a silhouette with other app screens, Jakob's Law — and
 the **Domain-Specificity Floor** (`design-method/references/register/product.md` §2) runs
-in its slot instead, per `design-webapp/SKILL.md`). Full step-by-step:
+in its slot instead, per `design-webapp/SKILL.md`) → **never-do re-check + reference bar,
+both registers, every lane** (item 8c: rules N1-N18 of
+`design-method/references/never-do.md` re-checked on captures and code; the two Gate 0
+references captured at the same viewports and compared section by section,
+`better / equal / worse`; **any `worse` = not done**). Full step-by-step:
 `references/review-procedure.md` Part 2.
 
 **Bounded loop — maximum 2 fix cycles.** The loop exits PASS only once the
@@ -150,6 +159,7 @@ Full mechanics: `references/review-procedure.md` item 9.
   `[n/a — product register; Domain-Specificity Floor run instead: {verdict}]`. Never blank,
   never "passed" by default.
 - Motion Block/Approve verdict if applicable.
+- Never-do hits (N1-N18) and the reference-bar table (section × better/equal/worse + why).
 - Findings list, P0-P3, no aggregate score.
 - Challenger verdict: resolved/owner-accepted, or "not judged" on tool-unavailable fallback.
 - Any remaining Minor/P2-P3 issues after the 2-cycle cap, reported, not hidden.

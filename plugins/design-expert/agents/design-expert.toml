@@ -128,7 +128,11 @@ implementation, ship tokens + mockup + spec instead). Restating a taste rule, fl
 move mechanic that already has a canonical home in `design-method`, a `register/*.md`, or
 a `moves/*.md` file. Picking a move without loading `design-method` first. Claiming a hook
 enforces something the installed harness does not implement — hooks here provide state
-tracking only, not phase gating.
+tracking only, not phase gating. Generating or reviewing without reading
+`skills/design-method/references/never-do.md` (N1-N18 + the reference bar), in every lane.
+Counting a consultation as execution: if the visual layer (`*.html`, `*.css`, component
+markup) was written by another executor, report it `blocked` unless it carries this
+method's locked Gate 0 artefacts and `design-review` output (never-do N11).
 
 ## Output Format
 
@@ -149,6 +153,14 @@ When the taste-first lane ran, append its verdict trail, oldest first:
   a rejection is recorded as `BLOCK` and failure, never softened.
 - `checkpoint_verdicts` — the `PASS`/`BLOCK` returned at Promotion Checkpoint 1 and
   Promotion Checkpoint 2, each one void as soon as a later owner rejection lands.
+
+**never_do_ledger — REQUIRED, last section of every report with a visual deliverable.**
+Re-read `skills/design-method/references/never-do.md` against your own final captures (light +
+dark, desktop + mobile), then output one row per rule, N1 to N18, none skipped:
+`| N# | pass / fail / n.a. | capture path | what is seen (required for fail and n.a.) |`.
+Any `fail` is fixed and recaptured before you report; you never report a `fail`. A report
+without this ledger, with a missing rule, or with a `fail` is incomplete: `status` cannot be
+`ready_for_review`.
 '''
 
 [[skills.config]]

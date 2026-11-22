@@ -42,6 +42,8 @@ The last step before reporting the deliverable done.
   input, not an inference made mid-review: checks 14, item 8's positive floors and item 8b
   all branch on it, and guessing it wrong either exempts a page that should be gated or
   fails one on a gate it cannot satisfy.
+- **The reference bar** (Gate 0 artefact 3): two named best-in-class references of the
+  same domain and function, or the owner-named one. Input of Part 2 item 8c; absent ⇒ P0.
 
 ## Part 1 — Deterministic Checks (run first, mechanical, not vibes)
 
@@ -94,8 +96,13 @@ The last step before reporting the deliverable done.
 13. **No-JS baseline** — content stays visible with JS disabled (inspect with
     `scripting: none`, or the DOM stripped of `<script>`). A blank or broken page without
     JS is a blocking fail.
-14. **Type-Scale, Body-Size, Measure & Focal-Block floors** — verify against `design-system/SKILL.md` (Type-Scale Floor, Body-Size Floor — both registers) and `design-web/references/layout-discipline.md` (Measure Floor — both registers; Focal-Block Floor — register-aware, rule 9: `brand` only, `product` exempt) — canonical there, not restated here.
+14. **Type-Scale, Body-Size, Measure & Focal-Block floors** — verify against `design-system/SKILL.md` (Type-Scale Floor, Body-Size Floor — both registers) and `design-web/references/layout-discipline.md` (Measure Floor — both registers; Focal-Block Floor — register-aware, rule 9: `brand` only, `product` exempt, **except a single-purpose tool, whose first screen must have the primary action as its focal block** per `design-method/references/register/product.md` §5) — canonical there, not restated here.
 15. **Dark-Elevation Direction** (deterministic, OKLCH `L`) — an `elevated`/`popular`/`featured` card must differ from its base sibling via a lighter `L` OR a border/accent, never identical; rule stated here, dark-surface `L`-scale mechanism at `design-system/references/edge-cases.md:31-42`.
+16. **Theme existence** (deterministic) — unless the owner locked a single theme, a dark
+    theme must exist: a `prefers-color-scheme: dark` block or theme-class token set
+    redefining the surface ladder, not only the text colour. Absent ⇒ **P1**. In Part 2,
+    light and dark captures of the same section that are byte-identical or visually
+    identical are also **P1** (`design-method/references/never-do.md` N7).
 
 Any Critical/Major finding from Part 1 gets fixed before Part 2 runs.
 
@@ -120,7 +127,7 @@ taken wrong reviews the wrong pixels.
    Block/Approve decision. Use `design-motion/references/animation-glossary.md` for
    shared vocabulary — don't redefine terms here.
 7. **Named eLicit technique(s)** — cite at least **two** techniques from `elicitation-visual.md` (Squint/Subtraction/Competitor Line-up/5-Second/Persona) against the captured screenshots; real independence comes from the challenger gate (item 9 below), not from stacking lenses solo.
-8. **Fix gaps** — apply fixes for Block verdicts or absent elements. The loop exits PASS only once the register-applicable positive floors (Type-Scale/Measure — both registers; Focal-Block/Signature Dominance — `brand` only, `product` exempt per check 14) are **met**, not merely "0 flags". **Maximum 2 fix cycles** — issues (or an unmet floor) remaining after cycle 2 STOP the loop and get reported, not chased further. A plateau (cycle 2 repeats cycle 1's finding) also stops immediately, even at cycle 1 of 2.
+8. **Fix gaps** — apply fixes for Block verdicts or absent elements. The loop exits PASS only once the register-applicable positive floors (Type-Scale/Measure — both registers; Focal-Block/Signature Dominance — `brand` only, `product` exempt per check 14 except a single-purpose tool's primary action) are **met**, not merely "0 flags". **Maximum 2 fix cycles** — issues (or an unmet floor) remaining after cycle 2 STOP the loop and get reported, not chased further. A plateau (cycle 2 repeats cycle 1's finding) also stops immediately, even at cycle 1 of 2.
 8a. **Render Judgment Pass (mandatory, look-then-judge — before the challenger gate)** —
    open the actual screenshot files captured in steps 2/3 and look at them; a verdict
    formed from what was planned, from `design-system.md`, or from the code is not a
@@ -187,7 +194,28 @@ taken wrong reviews the wrong pixels.
      `design-inspiration.md`).
    - Counts inside the same 2-cycle cap as item 8. Still `[indistinguishable]` at the cap →
      report it as a P1 finding naming every sequence already tried; do not chase it further.
+8c. **Never-do re-check + reference bar (mandatory, both registers, every lane)** — runs
+   after 8a/8b, before the challenger gate, inside the same 2-cycle cap.
+   - Re-check every rule N1-N18 of `design-method/references/never-do.md` against the
+     captures and the code; each hit is a finding at the severity that file gives.
+   - Reference bar: capture the two references named at Gate 0 (artefact 3) at the same
+     viewports as the build (desktop + mobile minimum), then compare **section by section**
+     (first screen, pre-use state, result/primary content, states, mobile), writing
+     `better / equal / worse` + one line why. **Any `worse` = not done**: fix it in the
+     loop, or report it as an open P1. No reference bar recorded at Gate 0 ⇒ P0 (N12).
+   - This is a quality floor, not the Lookalike Test above: it never asks whether the
+     page resembles the references and never borrows their structure. The challenger
+     (item 9) receives the reference captures alongside the build's.
 9. **Challenger gate (mandatory, in-loop — not a trailing consultation)** — before any "done" claim, the design-expert hands the **lead** the PNG + brief; the **lead** invokes `challenger` (it holds the `spawn_agent` tool) to judge blind (named elicitation lenses, fresh-context — never this procedure's own reasoning), never the design-expert itself. A Block must be resolved or owner-accepted before "done" (consultative, not a veto — CLAUDE.md Rule 5). **Fallback**: only if `spawn_agent`/`Agent` is withdrawn at max nesting depth 5 → the design-expert marks the check `unverified` and escalates to the lead, never claiming it ran.
+
+## Review mode — never-do ledger from pixels only
+Entry for any reviewer (item 8c, the lead, the challenger, a fresh agent). **Input: the
+captures + `design-method/references/never-do.md`, nothing else** — no code, plan or
+author report. Score every rule N1 to N18 on what the pixels show:
+`| N# | pass / fail / n.a. | capture path | what is seen |`. A `fail` quotes what is
+visible (e.g. "6 rows show the same two values under a consensus banner"); an `n.a.` says
+why the rule cannot apply. Same ledger format as the design-expert report's
+`never_do_ledger`; a P0/P1 `fail` here overrides a `pass` in that report.
 
 ## Failure Handling
 - All server ports 8899-8905 busy → stop, report the deliverable unreviewed, and say so
@@ -201,6 +229,8 @@ taken wrong reviews the wrong pixels.
 - Binary verdict per declared element/pattern, each cited with its `[corpus: …]`/`[sector: …]` tag; **Signature Dominance** verdict for the signature element.
 - **Lookalike Test verdict** (`brand`) — `[distinguishable]`/`[indistinguishable]`, with the body sequence and hero treatment named; on a fail, which sequence was swapped in. On `product`, the same slot carries `[n/a — product register; Domain-Specificity Floor run instead: {verdict}]` — the slot is never left empty and never marked passed by default.
 - Motion Block/Approve verdict if applicable.
+- Never-do re-check (N1-N18, hits with severity) and the reference-bar table
+  (section × `better / equal / worse` + why, reference and build capture paths) — item 8c.
 - Challenger verdict: resolved/owner-accepted, or **"not judged"** on tool-unavailable fallback.
 - Any remaining Minor issues after the 2-cycle cap, reported, not hidden.
 

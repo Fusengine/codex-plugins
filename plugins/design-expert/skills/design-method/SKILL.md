@@ -3,6 +3,8 @@ name: design-method
 description: "Use when starting any design task — resolves register, sets the 3 dials, locks Gate 0, and routes to the right move and target skill."
 ---
 
+> **How to read this file (Codex truncates one tool output at ~10k tokens; this file is ~11k).** Read it in three calls, each reading only this file — never inside a batched script (`Promise.allSettled`, several `exec_command` in one call), never in a multi-file `cat`, never with a `max_output_tokens` lowered below the range: (1) `sed -n '1,/^### Setting a dial/p' SKILL.md`, (2) `sed -n '/^### Setting a dial/,/^## Design guidance/p' SKILL.md`, (3) `sed -n '/^## Design guidance/,$p' SKILL.md`. Any output marked truncated → re-read the missing range before acting.
+
 <objective>
 The core design method and entry point for any design task: resolves the Register (brand vs product), states the Design Read one-liner and sets the 3 numeric dials (DESIGN_VARIANCE, VISUAL_DENSITY, MOTION_INTENSITY) against a scale anchored on the fifteen reference pages, enforces the Gate 0 brief lock before any HTML/CSS/tokens are touched, applies the Absolute bans, runs the 2-level AI-slop test, and routes to the matching move (generate, critique, audit, bolder, quieter, distill, harden, polish, redesign) and its target skill.
 
@@ -35,6 +37,9 @@ How this core gets loaded, every time, no exceptions:
    the pointer.
 6. If the move builds or touches code, read the matching
    `references/register/{brand,product}.md` floors too, once.
+7. **MUST read `references/never-do.md`** (short, own call) after Gate 0 and before the
+   first line of HTML/CSS/tokens, in every lane including `taste-first`; copy the rule
+   numbers that apply into the plan. `design-review` re-checks the same list before done.
 
 ## Register
 
@@ -50,7 +55,9 @@ silently.
 1. The owner states it explicitly.
 2. An existing `design-system.md`/`PRODUCT.md` already classifies it.
 3. Inferable from the concrete surface (dashboard/settings/internal tool → `product`;
-   landing/marketing/campaign/identity → `brand`).
+   landing/marketing/campaign/identity → `brand`). A public single-purpose tool (checker,
+   converter, lookup) is `product` with its dominant primary action kept
+   (`references/register/product.md` §5).
 4. Still unclear → ask **ONE** question. Never guess past this point.
 
 Once resolved, load `references/register/brand.md` or `references/register/product.md` —
@@ -142,7 +149,11 @@ just cleared. **The corpus contains no such page.** `supercommon`, its closest p
 
 The check is **countable, and it runs before code**. List what will physically be on screen,
 block by block: every image, video, mockup, drawn interface, chart, table, full-bleed colour
-field, and every type object large enough to be a composition in itself. If that list holds
+field, and every type object large enough to be a composition in itself. **A decorative
+visual does not count:** a map, chart, table or illustration enters the list only if it
+carries the subject or the user's data *in the state being counted* (pre-use and result
+are counted separately); one that is empty before use or duplicates data shown elsewhere
+counts zero (`references/never-do.md` N3). If that list holds
 fewer than one entry per planned section, one of three things has to change, and the plan
 says which:
 
@@ -337,6 +348,12 @@ HTML/CSS/tokens — six artefacts must exist **in writing**, not just in your he
    `design-web/references/refs-design/README.md` §*Look before you read*. A sector URL or a
    supplied screenshot is an addition to this artefact, never a substitute for either half.
 
+   **Plus the reference bar, mandatory in every register and lane:** two named
+   best-in-class references of the same domain and function (the owner-named one counts
+   first), recorded as `Reference bar: {name + URL}, {name + URL}`. A quality floor
+   compared section by section before done, never a design source; rule, comparison
+   method and the `taste-first` reconciliation: `references/never-do.md` §The reference bar.
+
 4. **What will be on screen, counted** — one list, block by block, of the images, videos,
    mockups, drawn interfaces, charts, tables, full-bleed colour fields and display-scale
    type objects the page will actually carry. Required unconditionally, and decisive
@@ -517,6 +534,7 @@ produce token specs, an HTML device-framed mockup, and a platform handoff spec.
 | Premium layout patterns | `skills/design-web/references/premium-patterns/PATTERNS.md` |
 | Component composition | `skills/design-web/references/component-composition-ref.md` |
 | Taste sourcing order (corpus first, then 1-2 sector sites for register only) + the canonical Lookalike Test | `skills/design-web/references/design-inspiration.md` (+ `-urls.md`) |
+| Never-do list (design + code, N1-N18) + the reference bar (canonical) | `skills/design-method/references/never-do.md` |
 
 ## Routing
 

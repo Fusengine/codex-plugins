@@ -283,6 +283,8 @@ exploration ran when it didn't.
 - 2a tokens-* sections cited (min. 2): {tokens-{name}.md #{section}} — gave: {procedure/measured value}
 - 2b sector sites (2 for FULL / 1 for PAGE / 0 if the register is already locked in writing): {URL} — screenshot: yes/no
 - Extracted (palette / typography / depth / craft ONLY — never structure, spacing, or section flow): {traits} from {source}
+- 2c Reference bar (Gate 0 artefact 3, quality floor only, never a design source): {name + URL} + {name + URL} — owner-named: yes/no
+- 2d Never-do rules that apply to this surface (`references/never-do.md`, read in its own call): {N#: one-line plan each}
 
 ### Step 3 — Tokens sourced
 - Palette: {values} ← sector-palettes.md #{sector} (only if the sector is one of the seven that file lists) | derived from the subject — say from what | design-system.md (PAGE)

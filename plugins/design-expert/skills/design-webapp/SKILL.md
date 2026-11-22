@@ -81,19 +81,29 @@ table first — if the surface is a marketing/landing page instead, use `design-
      — NNG: skeletons perceived 9-12% faster than spinners).
    - **Empty** — name the actual object type and the actual first action ("No invoices yet
      — create one from a quote" beats "No data yet", `register/product.md` §3 Cookie-cutter
-     empty state).
+     empty state). That governs the words; for a data surface it is not sufficient: the
+     pre-use state of a tool shows the real result component with a live or labelled
+     sample, never an empty container (`../design-method/references/never-do.md` N4).
    - **Error** — actionable message + retry affordance, never a raw stack trace or generic
      "Something went wrong."
    - For data tables specifically, this extends to sorting/filtering/pagination states.
+   - **Multi-source / streaming results** — each source shows pending → answered / failed
+     inside the result component, never a status sentence alone (N9).
 
 5. **Tables (hard rules, `layouts/patterns/data-table.md`):** first column is a readable
    identifier (not a raw ID/UUID), numeric columns right-aligned, header sticky on scroll,
    wrap content rather than truncate where legibility matters, density is a first-class
    mode (standard 48dp row / dense 36dp row — Material 3 baseline), mobile falls back to
-   horizontal scroll with a sticky first column. Corpus procedure for the dense case:
+   horizontal scroll with a sticky first column (data tables to browse; a comparative or
+   multi-source *result* follows the stacked-groups rule below instead, N10). Corpus procedure for the dense case:
    `linear/tokens-linear.md` §5.9 — a row height that **cannot grow**, with `nowrap` +
    `text-overflow: ellipsis`, is the condition for a dense list to stay readable at a glance
    (step 11). Where legibility beats density, the wrap rule above wins over it.
+   **These rules govern the table's mechanics, not its data.** A table passing all of them
+   can still fail the user: a comparative or multi-source result is never a raw per-source
+   dump. Lead with the verdict (agree / diverge / partial), group rows by identical answer,
+   sort values stably inside each row, and mark the outlier (N1). On mobile, compose the
+   result separately (stacked groups) rather than shrinking the table (N10).
 
 6. **Dataviz:** prefer bar/line charts over pie — preattentive processing reads
    magnitude/trend faster than angle/area. Color encodes data, never decorates; keep

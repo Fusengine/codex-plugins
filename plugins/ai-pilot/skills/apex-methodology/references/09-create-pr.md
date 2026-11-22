@@ -123,18 +123,14 @@ Related to #456
 
 ### Size Guidelines
 
+Review guideline only, never a gate: PR size never blocks a PR (`AGENTS.md` RECURRING TRAPS; same as `apex-methodology/SKILL.md` "File Size").
+
 ```text
-✅ Small PRs (<400 lines changed)
-   - Easier to review
-   - Faster feedback
-   - Lower risk
-
-⚠️ Medium PRs (400-800 lines)
-   - Split if possible
-   - Detailed description needed
-
-❌ Large PRs (>800 lines)
-   - Split into smaller PRs
+Smaller, focused PRs review best
+   - Easier to review, faster feedback, lower risk
+   - A large diff: consider splitting along independent changes,
+     and give the PR a detailed description
+   - Never refuse, block, or split a PR on line count alone
 ```
 
 ### Review-Friendly PRs

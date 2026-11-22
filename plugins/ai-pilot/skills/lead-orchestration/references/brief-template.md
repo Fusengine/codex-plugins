@@ -47,7 +47,7 @@ N. Negative: <"do not touch X">
 1. <part 1> -- <command + expected exit code | artifact path (capture, test log, diff hunk)>
 2. <part 2> -- <...>
 N. Negative -- `git diff --stat` shows no change under X
-Your deliverable is challenged by the challenger and validated by sniper before acceptance; a self-declared "done" is never accepted.
+Your deliverable is validated by sniper and challenged by the challenger before acceptance (order and verdict reuse on an unchanged diff: rule `02-apex-workflow` "Mandatory skill routes" "Gate order"); a self-declared "done" is never accepted.
 
 ## NON-GOALS
 - <what this task must not do, files it must not touch>
@@ -65,7 +65,7 @@ Your deliverable is challenged by the challenger and validated by sniper before 
 Code comments, docs, commit messages: English. Replies to the user: the user's language.
 
 ## REPORT (to `/root`, short)
-- Start: files taken. Long task: one status line at a fixed cadence (done / blocked / next).
+- Start: files taken. Each milestone: one line (done / blocked / next) to `/root` -- an internal report the lead measures; the lead never relays it to the owner as a status-only line.
 - Block: immediately, with the routes already tried. Escalation: <conditions for Retry, Ask, Rollback, or Escalate>.
 - Final:
   status: done | failed verification | blocked
@@ -86,7 +86,7 @@ Code comments, docs, commit messages: English. Replies to the user: the user's l
 |--------|------|
 | OWNER RULES | Copy the sentence. A mockup/capture the owner sent is given by path: it is the source of truth, not a hint. Protected target only when the owner named it in this session; otherwise omit the line. |
 | WRITE | Absolute paths; the same file never appears in two concurrent briefs. |
-| OUTPUT | One line per ledger item from step 1; context stays in two or three lines. |
+| OUTPUT | One line per ledger item from step 1; context stays in two or three lines. "Everywhere" ("everywhere / from any X / on every screen"): grep every place the entity is rendered or handled; OUTPUT lists each component and route by path, with one test per place and each place verified on a real capture before reporting. |
 | PROOF | One proof per OUTPUT line, something the lead can open or re-run. |
 | TOOLS | Visual task -> name the capture tool; without it, the part cannot be proven. |
 | NON-GOALS | External executor: add "write code only -- never push, PR, merge, tag, or publish; release goes through `$commit-pro:commit`". |

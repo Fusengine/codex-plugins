@@ -40,6 +40,12 @@ Only once both proofs are present does this phase proceed. The challenger runs S
 
 ---
 
+## Vacant Gate (ZERO TOLERANCE)
+
+A check that has no tool in the project is vacant, not green. No linter, no type check, no test runner, or no build in the project → either create a minimal one in this mandate (e.g. a test runner, `// @ts-check` + `tsc --noEmit --checkJs`, an HTML validator) and run it, or report that gate "not verified" with the reason. Never write "ZERO errors" / "✅ Pass" for a gate whose tool did not run; the report names, per gate, the command that ran and its output. Same for an empty capture or a zero-row run: a failed run, never a pass (`never-do-code.md` rules 3-4).
+
+---
+
 ## When to Use
 
 - After execution phase complete
@@ -78,6 +84,7 @@ Phase 5: apply fixes
 Phase 6: ZERO errors
 → Must pass completely
 → No warnings ignored
+→ A gate with no tool in the project is vacant: create the check or report "not verified" (Vacant Gate above)
 ```
 
 ---
@@ -249,6 +256,7 @@ Fix: Verify path, check exports, check package installed
 □ All files within `FUSE_SOLID_MAX_LINES` (default 200) lines verified
 □ Build successful
 □ No regressions detected
+□ No vacant gate: each gate shows the command that ran + its output, or "not verified" with the reason
 ```
 
 ---
