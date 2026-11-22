@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.82] - 2026-11-22
+
+### Changed
+
+- docs(doctrine): coherence of AGENTS.md, rules and orchestration skills — AGENTS.md, `codex-rules` 00-08 and `templates/AGENTS.md.template` aligned with `lead-orchestration`, `apex-methodology` and `design-expert` skills (one owning rule per detail, gate wording restored after challenger review); owner decisions recorded in `docs/decisions.md`
+- chore(release): bump ai-pilot 1.2.70 + codex-rules 1.0.44 + design-expert 2.1.57 (PATCH) + suite to 1.0.82; mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.82
+
+### Added
+
+- docs(doctrine): new references `apex-methodology/references/never-do-code.md`, `lead-orchestration/references/{prd-mode,project-skill,release,verify-by-type}.md`, `design-method/references/never-do.md`
+- test(validation): real Codex runs T10/T11 evidence in `docs/validation/doctrine-coherence/` — bench scripts, results, T10 runs 1,3-6 and T11 (Accord, delivered at 1721 s) captures and reports
+
 ## [1.0.81] - 2026-11-19
 
 ### Changed
