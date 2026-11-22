@@ -1,0 +1,113 @@
+{
+  "domain": "example.com",
+  "runs": [
+    {
+      "profile": "desktop",
+      "scheme": "light",
+      "rows": 6,
+      "status": "6/6 sondes concordantes : 104.20.23.154 · 172.66.147.243",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "scheme": "light",
+      "rows": 6,
+      "status": "6/6 sondes concordantes : 104.20.23.154 · 172.66.147.243",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "desktop",
+      "scheme": "dark",
+      "rows": 6,
+      "status": "6/6 sondes concordantes : 104.20.23.154 · 172.66.147.243",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "scheme": "dark",
+      "rows": 0,
+      "status": "",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "matrix": {
+        "invalid": {
+          "value": "not a domain!!",
+          "messages": "Saisissez un nom de domaine valide, par exemple example.com. | Prêt à vérifier.",
+          "rows": 1
+        },
+        "nonexistent": {
+          "value": "zzqx-nonexistent-8842.com",
+          "messages": "Mesure terminée · 6 sondes interrogées",
+          "rows": 6
+        },
+        "keyboard": {
+          "reachedInputWithTab": true,
+          "stops": [
+            {
+              "tag": "A",
+              "id": "",
+              "text": "Aller à la vérification",
+              "outline": "solid 2px",
+              "shadow": "none",
+              "isDomain": false
+            },
+            {
+              "tag": "A",
+              "id": "",
+              "text": "DNS\nAtlas",
+              "outline": "solid 2px",
+              "shadow": "none",
+              "isDomain": false
+            },
+            {
+              "tag": "A",
+              "id": "",
+              "text": "Vérificateur",
+              "outline": "solid 2px",
+              "shadow": "none",
+              "isDomain": false
+            },
+            {
+              "tag": "A",
+              "id": "",
+              "text": "Résultats",
+              "outline": "solid 2px",
+              "shadow": "none",
+              "isDomain": false
+            },
+            {
+              "tag": "A",
+              "id": "",
+              "text": "Méthode",
+              "outline": "solid 2px",
+              "shadow": "none",
+              "isDomain": false
+            },
+            {
+              "tag": "INPUT",
+              "id": "light-mode",
+              "text": "",
+              "outline": "solid 2px",
+              "shadow": "none",
+              "isDomain": false
+            },
+            {
+              "tag": "INPUT",
+              "id": "domain",
+              "text": "",
+              "outline": "solid 2px",
+              "shadow": "none",
+              "isDomain": true
+            }
+          ],
+          "rows": 6
+        }
+      }
+    }
+  ]
+}

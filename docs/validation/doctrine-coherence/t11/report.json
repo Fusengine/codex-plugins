@@ -1,0 +1,32 @@
+{
+  "url": "http://127.0.0.1:3055",
+  "flows": {
+    "desktop-light-rows": 8,
+    "createSupport": 201,
+    "createDispute": 201,
+    "statusOptions": [
+      "open",
+      "in_progress",
+      "waiting",
+      "resolved"
+    ],
+    "changeStatus": 200,
+    "assignOptions": [
+      "",
+      "Camille Martin",
+      "Samir Benali",
+      "Léa Dubois",
+      "Hugo Laurent"
+    ],
+    "assign": 200,
+    "statusAfter": "in_progress",
+    "assigneeAfter": "Camille Martin",
+    "searchT11Rows": 2,
+    "urgentRows": 1,
+    "emptyFormBlocked": true,
+    "mobile-light-rows": 10,
+    "desktop-dark-rows": 10,
+    "mobile-dark-rows": 10
+  },
+  "errors": []
+}
