@@ -41,7 +41,7 @@ reuse an id from another task.
    banks, design-system defaults, inspiration quotas, or move procedures. They cannot
    steer this lane.
 6. **Exception, MUST read before the first frame:** `../design-method/references/never-do.md`.
-   It is a list of errors to avoid (N1-N18), not a creative workflow, so it does not steer
+   It is a list of errors to avoid (N1-N19), not a creative workflow, so it does not steer
    the thesis; it binds this lane exactly as it binds `design-method`. The sections it
    points to (AI-slop clusters, type scale) are opened only to check a suspected hit,
    never to pick a direction. Record the reference

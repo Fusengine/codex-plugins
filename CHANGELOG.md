@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.83] - 2026-11-23
+
+### Changed
+
+- feat(design): require shadcn/ui + Lucide on React web stacks — every web project and web-app frontend (Vite, Next.js, Astro, TanStack Start, marketing sites included) builds on shadcn/ui components and Lucide icons, customized through theme tokens, variants and composition without distorting shadcn; plain static pages stay direct HTML/CSS; existing boilerplate used as is, empty folder → one question (TypeScript or JavaScript, stack). `design-expert` rules, skills, agent and README; `codex-rules` 01/05; astro, laravel (Inertia), nextjs, react and tanstack-start agent TOMLs; `lead-orchestration` + `agent-creator` references; owner decisions in `docs/decisions.md`
+- chore(release): bump ai-pilot 1.2.71 + astro-expert 1.0.28 + codex-rules 1.0.45 + design-expert 2.1.58 + laravel-expert 1.2.29 + nextjs-expert 1.1.45 + react-expert 1.0.41 + tanstack-start-expert 1.0.25 (PATCH) + suite to 1.0.83; mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.83
+
+### Added
+
+- test(validation): real Codex run T12 evidence in `docs/validation/web-shadcn-lucide/t12/` — Next.js + TypeScript task app on shadcn/ui primitives and lucide-react, no hand-drawn SVG; flow report, 9 captures, rollout excerpt
+
 ## [1.0.82] - 2026-11-22
 
 ### Changed

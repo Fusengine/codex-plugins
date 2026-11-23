@@ -83,8 +83,10 @@ match and the entry is inert rather than lenient. The equivalent anti-generic ga
 1. Run `design-method` Step 1 (brief) + Step 2 (signature element) BEFORE any generation —
    not a separate "identity" skill, `design-method` is the single entry point.
 2. Generate `design-system.md` with unique OKLCH tokens (`design-system` skill).
-3. Gemini Design MCP, Magic, and shadcn MCP are optional tools of convenience — never a
-   requirement, and never a substitute for the brief/signature-element discipline above.
+3. Gemini Design MCP and Magic are optional tools of convenience — never a requirement,
+   and never a substitute for the brief/signature-element discipline above. shadcn/ui +
+   Lucide are required on web stacks (`design-web/SKILL.md` §Component kit and icons),
+   restyled through the tokens, and equally no substitute for that discipline.
 4. Run this audit as part of `design-review` Part 1, after every major feature addition.
 
 ## Gate Semantics (per entry, no aggregate)

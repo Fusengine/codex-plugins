@@ -508,8 +508,12 @@ respected wherever motion is added.
 
 Generate HTML/CSS directly — the default and primary path, following the same method as
 Anthropic's official `frontend-design` skill (commit to a point of view, avoid templated
-defaults, verify with tools not vibes). Gemini Design MCP, Magic (21st.dev) and shadcn MCP
-are optional conveniences, never a requirement; direct generation is always the fallback.
+defaults, verify with tools not vibes) — for plain static HTML pages. **On a web stack
+(Vite, Next.js, Astro, TanStack Start), marketing sites included, and every web-app
+frontend, shadcn/ui components + Lucide icons are required**, the identity coming from
+customizing shadcn (tokens, variants, composition, blocks), never from distorting it
+(`design-web/SKILL.md` §Component kit and icons; never-do N19). Gemini Design MCP and Magic (21st.dev) are optional conveniences, never a
+requirement; direct generation is always their fallback.
 Mobile targets (`design-ios`, `design-android`) never generate SwiftUI or Compose — they
 produce token specs, an HTML device-framed mockup, and a platform handoff spec.
 
@@ -534,7 +538,7 @@ produce token specs, an HTML device-framed mockup, and a platform handoff spec.
 | Premium layout patterns | `skills/design-web/references/premium-patterns/PATTERNS.md` |
 | Component composition | `skills/design-web/references/component-composition-ref.md` |
 | Taste sourcing order (corpus first, then 1-2 sector sites for register only) + the canonical Lookalike Test | `skills/design-web/references/design-inspiration.md` (+ `-urls.md`) |
-| Never-do list (design + code, N1-N18) + the reference bar (canonical) | `skills/design-method/references/never-do.md` |
+| Never-do list (design + code, N1-N19) + the reference bar (canonical) | `skills/design-method/references/never-do.md` |
 
 ## Routing
 

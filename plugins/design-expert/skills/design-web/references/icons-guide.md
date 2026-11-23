@@ -100,20 +100,24 @@ Pick ONE style and maintain throughout:
 
 ## ICON LIBRARIES (RECOMMENDED)
 
-### Lucide React (Default for shadcn)
+### Lucide — the web-stack pack (required on Vite, Next.js, Astro, TanStack Start, never-do N19)
+Package per file: `lucide-react` (React, shadcn's default), `@lucide/astro` (`.astro`),
+`lucide` (vanilla JS).
 ```tsx
 import { Home, Search, Settings } from 'lucide-react';
 
 <Home className="h-5 w-5" />
 ```
 
-### Heroicons (Alternative)
+The two packs below are for **off web stacks only** (N19); never on a web stack.
+
+### Heroicons (off web stacks only, N19)
 ```tsx
 import { HomeIcon } from '@heroicons/react/24/outline';
 import { HomeIcon as HomeSolid } from '@heroicons/react/24/solid';
 ```
 
-### Tabler Icons (1800+ icons)
+### Tabler Icons (1800+ icons, off web stacks only, N19)
 ```tsx
 import { IconHome } from '@tabler/icons-react';
 

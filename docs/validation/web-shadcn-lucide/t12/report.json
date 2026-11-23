@@ -1,0 +1,14 @@
+{
+  "url": "http://127.0.0.1:3066",
+  "flows": {
+    "rowsAfterAdd": 3,
+    "filterButtons": 3,
+    "rowsFilteredLast": 1,
+    "rowsAfterDelete": 2,
+    "rowsAfterReload": 2,
+    "emptySubmitError": "Saisissez un nom pour cette tâche."
+  },
+  "errors": [
+    "desktop-light console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ]
+}
