@@ -6,6 +6,8 @@ description: Complete minimal TanStack Start project - every file needed to run
 
 # Minimal TanStack Start Project (complete)
 
+> Reference/explanation only — new projects are scaffolded with the official CLI (start-core 'Scaffolding Shortcut'); never hand-write the scaffold.
+
 Every file for a runnable app (`@tanstack/react-start` v1.169.5). Create these,
 then `npm run dev` → http://localhost:3000. The plugin generates
 `src/routeTree.gen.ts` on first run.
