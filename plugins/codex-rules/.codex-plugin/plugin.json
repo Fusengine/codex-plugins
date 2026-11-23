@@ -1,6 +1,6 @@
 {
   "name": "codex-rules",
-  "version": "1.0.45",
+  "version": "1.0.46",
   "description": "Global rules for all Codex CLI sessions: APEX workflow, SOLID/DRY enforcement, project detection, agent delegation, frontend/git standards",
   "author": {
     "name": "Fusengine",
