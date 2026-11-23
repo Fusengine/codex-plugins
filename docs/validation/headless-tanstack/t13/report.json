@@ -1,0 +1,15 @@
+{
+  "url": "http://127.0.0.1:4320/",
+  "flows": {
+    "initialNotes": 0,
+    "afterCreate": 2,
+    "searchCoursesRows": 1,
+    "afterReload": 2,
+    "deleteButton": true,
+    "confirmDialog": "Supprimer cette note ?\n\nCette suppression est définitive.\n\nAnnuler\nSupprimer",
+    "afterDelete": 1
+  },
+  "errors": [
+    "desktop-light console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ]
+}

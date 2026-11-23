@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.84] - 2026-11-23
+
+### Changed
+
+- feat(frontend): headless empty-folder default = TanStack Start via official CLI — when nobody can answer (headless run) and the folder is empty with no stack named, scaffold TanStack Start (TypeScript) with `@tanstack/cli`, then shadcn/ui via its CLI (`init -t start`) + Lucide; never hand-write the scaffold; interactive empty folder still asks once. `codex-rules` 01 routing row + 05 rule 3 headless definition; `start-core` "Scaffolding Shortcut" recipe; `design-web`, `design-webapp` and `design-expert` agent pointers; owner decision in `docs/decisions.md` 2026-11-23; contract test `scripts/lib/frontend-stack-default-contract.test.ts`
+- chore(release): bump codex-rules 1.0.46 + design-expert 2.1.59 + tanstack-start-expert 1.0.26 (PATCH) + suite to 1.0.84; mirrored in `.agents/plugins/marketplace.json`; README version badge 1.0.84
+
+### Added
+
+- test(validation): real Codex run T13 evidence in `docs/validation/headless-tanstack/t13/` — prompt naming no stack, scaffold by `@tanstack/cli@0.72.16 create`, `shadcn@4.23.0 init -t start`, lucide-react, 0 hand-drawn SVG, build + 5/5 tests, clicked flow; report, 9 captures, rollout excerpt
+
 ## [1.0.83] - 2026-11-23
 
 ### Changed

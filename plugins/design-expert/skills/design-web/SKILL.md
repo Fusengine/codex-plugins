@@ -123,11 +123,10 @@ On a web stack (Vite, Next.js, Astro, TanStack Start, Laravel + Inertia React),
   `lucide-react` in React components (shadcn's default icon library), `@lucide/astro` in
   `.astro` files, `lucide` in vanilla JS. One pack, one stroke width
   (`references/icons-guide.md`). Never a hand-drawn SVG icon set or a custom sprite.
-- **Stack: use the project's existing boilerplate/stack as is.** If the folder has no
-  stack, the lead asks the owner once (TypeScript or JavaScript, and which stack) before
-  scaffolding; never framework-less JS, never a stack picked silently. Owning rule:
-  `codex-rules/rules/05-frontend-rules.md`. The stack is reported in the Design Read
-  constraints.
+- **Stack: use the project's existing boilerplate/stack as is.** A folder with no stack →
+  `codex-rules/rules/05-frontend-rules.md` rule 3 (ask once interactively; headless
+  default = TanStack Start via its CLI); never framework-less JS. The stack is reported in
+  the Design Read constraints.
 - **Exempt:** plain static HTML pages with no build step, and mobile mockups
   (`design-ios`, `design-android`): direct HTML/CSS stays the path there. Brand marks and
   logos are not icons. Violation = never-do N19.

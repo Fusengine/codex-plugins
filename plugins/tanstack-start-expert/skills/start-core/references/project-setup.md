@@ -10,6 +10,8 @@ related: project-anatomy.md, common-mistakes.md, templates/minimal-project.md
 
 # Project Setup — TanStack Start
 
+> Reference/explanation only — new projects are scaffolded with the official CLI (start-core 'Scaffolding Shortcut'); never hand-write the scaffold.
+
 Load when installing Start or configuring the build tool. Targets
 `@tanstack/react-start` v1.169.5 (peer deps: `vite >=8`, `react >=18 || >=19`;
 engines `node >=22.12.0`).

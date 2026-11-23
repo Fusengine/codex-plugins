@@ -204,9 +204,8 @@ table first — if the surface is a marketing/landing page instead, use `design-
     (rule, verified packages and exemptions: `../design-web/SKILL.md` §Component kit and
     icons; violation = never-do N19). Customize through tokens, `cva` variants,
     composition and shadcn blocks; never fork a component's internals. Use the project's existing boilerplate/stack as is;
-    a folder with no stack → the lead asks the owner once (TypeScript or JavaScript, which
-    stack) before scaffolding, never framework-less JS (owning rule:
-    `codex-rules/rules/05-frontend-rules.md`). Gemini Design MCP (`../design-web/references/gemini/`) stays
+    a folder with no stack → `codex-rules/rules/05-frontend-rules.md` rule 3 (ask once
+    interactively; headless default = TanStack Start via its CLI), never framework-less JS. Gemini Design MCP (`../design-web/references/gemini/`) stays
     an optional draft tool — same brief content either way.
 
 ### Declared Elements — the `Je reproduis` line

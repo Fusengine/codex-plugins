@@ -85,7 +85,7 @@ role → `references/project-anatomy.md`. Complete copy-paste project →
 | Install, Vite + Rsbuild config, package.json, tsconfig | `references/project-setup.md` | scaffolding, wiring the build tool |
 | `src/` layout, `getRouter`, `__root.tsx`, generated tree | `references/project-anatomy.md` | understanding where files go |
 | Plugin order, missing `<Scripts />`, `verbatimModuleSyntax` | `references/common-mistakes.md` | blank page, hydration fails, no client JS |
-| Full minimal project (every file) | `references/templates/minimal-project.md` | starting a new app |
+| Full minimal project (every file) | `references/templates/minimal-project.md` | explanation only — a new app is scaffolded with the CLI: "Scaffolding Shortcut" / "Headless empty-folder default" below |
 
 ---
 
@@ -98,6 +98,37 @@ npx @tanstack/cli@latest create
 # or clone an official example:
 npx gitpick TanStack/router/tree/main/examples/react/start-basic start-basic
 ```
+
+### Headless empty-folder default (TanStack Start + shadcn/ui + Lucide)
+
+Used when the folder is empty, no stack is named and nobody can answer (owning rule:
+`codex-rules/rules/05-frontend-rules.md` rule 3). Never hand-write the scaffold.
+Verified 2026-11-23 (`@tanstack/cli` 0.72.16, `shadcn` 4.23.0, node 26, empty dir, `CI=1`,
+stdin closed):
+
+```bash
+# 1. Scaffold in the current dir (`.`; no --target-dir). A failing
+#    `@tanstack/intent install` step is non-blocking.
+npx -y @tanstack/cli@latest create . -y --package-manager npm --no-git </dev/null
+# 2. tsconfig.json: remove the `"#/*": ["./src/*"]` path alias, keep `"@/*": ["./src/*"]`.
+#    Otherwise shadcn init hits a "Would you like to use TypeScript?" prompt and exits 0
+#    WITHOUT writing components.json. tsconfig may be JSONC: edit it with the file-edit
+#    tool (`apply_patch` in Codex), never jq. Check: must print 0. grep exits 1 when the
+#    count is 0 — expected, not a failure (do not run it under `set -e`):
+grep -c '"#/\*"' tsconfig.json
+# 3. shadcn/ui init (Start template, Radix base, preset nova):
+npx -y shadcn@latest init -t start -b radix -p nova -y </dev/null
+# 4. Components:
+npx -y shadcn@latest add <components> -y
+```
+
+- Presets: `nova`, `vega`, `maia`, `lyra`, `mira`, `luma`, `sera`, `rhea` (`-p radix-nova`
+  is rejected). Never `-d` (forces the `next` template). Omitting `-b` → blocking
+  "Select a component library" prompt.
+- Do not use the TanStack `shadcn` add-on; follow ui.shadcn.com/docs/installation/tanstack.
+- **Proof:** `components.json` exists with `"iconLibrary": "lucide"`, `lucide-react` is in
+  `package.json`, `npm run build` exits 0. Exit 0 of `init` alone is NOT success.
+- Sources: tanstack.com/cli/latest/docs/cli-reference, ui.shadcn.com/docs/cli.
 
 ---
 
