@@ -1,6 +1,6 @@
 {
   "name": "fusengine-codex",
-  "version": "1.0.82",
+  "version": "1.0.83",
   "description": "Fusengine plugin ecosystem for Codex CLI: expert agents, APEX workflow, SOLID/DRY enforcement, cartography, security",
   "author": {
     "name": "Fusengine",
@@ -15,7 +15,7 @@
         "source": "local",
         "path": "./plugins/ai-pilot"
       },
-      "version": "1.2.70",
+      "version": "1.2.71",
       "category": "Productivity",
       "policy": {
         "installation": "AVAILABLE",
@@ -28,7 +28,7 @@
         "source": "local",
         "path": "./plugins/astro-expert"
       },
-      "version": "1.0.27",
+      "version": "1.0.28",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
@@ -67,7 +67,7 @@
         "source": "local",
         "path": "./plugins/codex-rules"
       },
-      "version": "1.0.44",
+      "version": "1.0.45",
       "category": "Productivity",
       "policy": {
         "installation": "AVAILABLE",
@@ -106,7 +106,7 @@
         "source": "local",
         "path": "./plugins/design-expert"
       },
-      "version": "2.1.57",
+      "version": "2.1.58",
       "category": "Design",
       "policy": {
         "installation": "AVAILABLE",
@@ -132,7 +132,7 @@
         "source": "local",
         "path": "./plugins/laravel-expert"
       },
-      "version": "1.2.28",
+      "version": "1.2.29",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
@@ -184,7 +184,7 @@
         "source": "local",
         "path": "./plugins/nextjs-expert"
       },
-      "version": "1.1.44",
+      "version": "1.1.45",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
@@ -223,7 +223,7 @@
         "source": "local",
         "path": "./plugins/react-expert"
       },
-      "version": "1.0.40",
+      "version": "1.0.41",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",
@@ -327,7 +327,7 @@
         "source": "local",
         "path": "./plugins/tanstack-start-expert"
       },
-      "version": "1.0.24",
+      "version": "1.0.25",
       "category": "Framework",
       "policy": {
         "installation": "AVAILABLE",

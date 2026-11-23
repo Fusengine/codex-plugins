@@ -1,6 +1,6 @@
 {
   "name": "design-expert",
-  "version": "2.1.57",
+  "version": "2.1.58",
   "description": "Design Director for websites, web apps, iOS, and Android. Builds web stacks (Vite, Next.js, Astro, TanStack Start, marketing sites included) on shadcn/ui + Lucide (required) and plain static pages in direct HTML/CSS, with Gemini Design MCP and Magic/21st.dev as optional tools. Mobile targets produce tokens, device-framed mockups, and handoff specs, never SwiftUI/Compose implementation code. Anti-AI-Slop, WCAG 2.2.",
   "author": {
     "name": "Fusengine",
